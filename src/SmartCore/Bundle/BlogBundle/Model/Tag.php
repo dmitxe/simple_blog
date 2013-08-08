@@ -69,7 +69,7 @@ abstract class Tag implements TagInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -113,7 +113,7 @@ abstract class Tag implements TagInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getWeight()
     {
@@ -121,7 +121,7 @@ abstract class Tag implements TagInterface
     }
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      * @return $this
      */
     public function setSlug($slug)
@@ -132,7 +132,7 @@ abstract class Tag implements TagInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSlug()
     {

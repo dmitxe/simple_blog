@@ -1,14 +1,11 @@
 dmitxe_demo:
     resource: "@DmitxeDemoBundle/Resources/config/routing.yml"
-    prefix:   /
 
 smart_media:
     resource: "@SmartMediaBundle/Resources/config/routing.yml"
-    prefix:   /
 
 dmitxe_site:
     resource: "@DmitxeSiteBundle/Resources/config/routing.yml"
-    prefix:   /
 
 dmitxe_blog:
     resource: "@DmitxeBlogBundle/Resources/config/routing.yml"
@@ -16,4 +13,3 @@ dmitxe_blog:
 
 dmitxe_user:
     resource: "@DmitxeUserBundle/Resources/config/routing.yml"
-    prefix:   /

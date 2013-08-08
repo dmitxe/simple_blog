@@ -57,7 +57,6 @@ doctrine:
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: %kernel.root_dir%/data/data.db3
         # path: %database_path%
-
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
@@ -88,14 +87,13 @@ fos_user:
         group_class: Dmitxe\UserBundle\Entity\Group
 
 stfalcon_tinymce:
-    include_jquery: true
+    include_jquery: false
     tinymce_jquery: true
-    selector: ".tinymce"
+    selector: '.tinymce'
     language: %locale%
     theme:
         simple:
-            theme: "modern"
-
+            theme: 'modern'
 
 vich_uploader:
     db_driver: orm
@@ -103,6 +101,10 @@ vich_uploader:
         blog_image:
             uri_prefix: /images/blog
             upload_destination: %kernel.root_dir%/../web/images/blog
+
+smart_blog:
+    article_class: Dmitxe\BlogBundle\Entity\Article
+    tag_class: Dmitxe\BlogBundle\Entity\Tag
 
 services:
     twig_extension.intl:

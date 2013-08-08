@@ -10,16 +10,21 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TagController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @todo сделать в сущности тэга weight, который будет автоматически инкрементироваться и декрементироваться при измнениях в статьях.
+     */
     public function indexAction()
     {
-        $blog = $this->get('smart_blog');
+        $tagService = $this->get('smart_blog.tag');
 
         $cloud = [];
-        $tags = $blog->getTagsCloud();
+        $tags = $tagService->getCloud();
 
         foreach ($tags as $tag) {
             $cloud[] = [
-                'count' => $blog->getArticlesCountByTag($tag),
+                'count' => $tagService->getArticlesCountByTag($tag),
                 'tag'   => $tag,
             ];
         }
@@ -36,12 +41,12 @@ class TagController extends Controller
      */
     public function showArticlesAction(Request $requst, $slug)
     {
-        $blog = $this->get('smart_blog');
+        $tagService = $this->get('smart_blog.tag');
 
-        $tag = $blog->getTagBySlug($slug);
+        $tag = $tagService->getBySlug($slug);
 
-        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($blog->getFindByTagQuery($tag)));
-        $pagerfanta->setMaxPerPage($blog->getArticlesPerPage());
+        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($tagService->getFindByTagQuery($tag)));
+        $pagerfanta->setMaxPerPage($tagService->getItemsCountPerPage());
 
         try {
             $pagerfanta->setCurrentPage($requst->query->get('page', 1));

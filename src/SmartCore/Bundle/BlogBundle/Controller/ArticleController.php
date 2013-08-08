@@ -2,7 +2,6 @@
 
 namespace SmartCore\Bundle\BlogBundle\Controller;
 
-use Dmitxe\BlogBundle\Entity\Article;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +19,7 @@ class ArticleController extends Controller
     public function showAction($slug)
     {
         return $this->render('SmartBlogBundle::article.html.twig', [
-            'article' => $this->get('smart_blog')->getArticleBySlug($slug),
+            'article' => $this->get('smart_blog.article')->getBySlug($slug),
         ]);
     }
 
@@ -30,10 +29,10 @@ class ArticleController extends Controller
      */
     public function pageAction($page = 1)
     {
-        $blog = $this->get('smart_blog');
+        $articleService = $this->get('smart_blog.article');
 
-        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($blog->getFindByCategoryQuery()));
-        $pagerfanta->setMaxPerPage($blog->getArticlesPerPage());
+        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoryQuery()));
+        $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
 
         try {
             $pagerfanta->setCurrentPage($page);
@@ -48,19 +47,21 @@ class ArticleController extends Controller
 
     /**
      * @param Request $request
-     * @param integer $id
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request, $id)
     {
-        $article = $this->get('smart_blog')->getArticle($id);
+        $article = $this->get('smart_blog.article')->get($id);
 
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
             $form->submit($request);
 
             if ($form->isValid()) {
+                /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
                 $article = $form->getData();
+                $article->setUpdated();
 
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
@@ -76,30 +77,21 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function newAction(Request $request)
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function createAction(Request $request)
     {
-        $article = new Article();
-//      Андрею - закомментированный код ниже - из админки на Симфони, сравни с кодом Артема.
-//        $form = $this->createForm(new ServiceType(), $service);
+        $article = $this->get('smart_blog.article')->create();
+
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
 
- /*       if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request, false);
-
-            if ($form->isValid()) {
-                // выполняем прочие действие, например, сохраняем задачу в базе данных
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($service);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success','Новая услуга создана!');
-
-                return $this->redirect($this->generateUrl('monolith_cabinet_service'));
-            }
-        }*/
         if ($request->isMethod('POST')) {
             $form->submit($request);
 
             if ($form->isValid()) {
+                /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
                 $article = $form->getData();
 
                 /** @var \Doctrine\ORM\EntityManager $em */
@@ -111,14 +103,8 @@ class ArticleController extends Controller
             }
         }
 
-/*        return $this->render('MonolithAdminBundle:Service:new.html.twig', array(
-            'form' => $form->createView(),
-        ));*/
         return $this->render('SmartBlogBundle::article_new.html.twig', [
             'form' => $form->createView(),
         ]);
-
     }
-
 }
-

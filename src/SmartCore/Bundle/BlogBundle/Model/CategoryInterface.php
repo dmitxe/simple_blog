@@ -5,7 +5,7 @@ namespace SmartCore\Bundle\BlogBundle\Model;
 interface CategoryInterface
 {
     /**
-     * @return integer
+     * @return int
      */
     public function getId();
 

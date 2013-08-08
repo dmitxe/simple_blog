@@ -7,7 +7,7 @@ use SmartCore\Bundle\BlogBundle\Model\ArticleInterface;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
 use SmartCore\Bundle\BlogBundle\Model\TagInterface;
 
-class ArticleRepository extends EntityRepository
+class ArticleRepository extends EntityRepository implements ArticleRepositoryInterface
 {
     /**
      * @param integer|null $limit
@@ -18,7 +18,6 @@ class ArticleRepository extends EntityRepository
         return $this->findBy([
             'enabled'    => true,
         ], [
-            'created_at' => 'DESC',
             'id'         => 'DESC',
         ], $limit);
     }
@@ -38,7 +37,7 @@ class ArticleRepository extends EntityRepository
      * @param integer|null $limit
      * @return ArticleInterface[]|null
      */
-    public function findByCategory(CategoryInterface $category = null, $limit  = null, $offset = null)
+    public function findByCategory(CategoryInterface $category = null, $limit = null, $offset = null)
     {
         $query = $this->getFindByCategoryQuery($category);
         $query
@@ -61,7 +60,7 @@ class ArticleRepository extends EntityRepository
             SELECT a
             FROM {$this->_entityName} AS a
             WHERE a.enabled = true
-            ORDER BY a.created_at, a.id DESC
+            ORDER BY a.id DESC
         ");
     }
 
@@ -79,7 +78,7 @@ class ArticleRepository extends EntityRepository
             JOIN a.tags AS t
             WHERE t = :tag
             AND a.enabled = true
-            ORDER BY a.created_at, a.id DESC
+            ORDER BY a.id DESC
         ")->setParameter('tag', $tag);
     }
 
@@ -96,25 +95,6 @@ class ArticleRepository extends EntityRepository
             FROM {$this->_entityName} a
             WHERE a.enabled = true
         ");
-
-        return $query->getSingleScalarResult();
-    }
-
-    /**
-     * @param TagInterface $tag
-     * @return integer
-     *
-     * @todo возможность выбора по нескольким тэгам.
-     */
-    public function getCountByTag(TagInterface $tag)
-    {
-        $query = $this->_em->createQuery("
-            SELECT COUNT(a.id)
-            FROM {$this->_entityName} AS a
-            JOIN a.tags AS t
-            WHERE t = :tag
-            AND a.enabled = true
-        ")->setParameter('tag', $tag);
 
         return $query->getSingleScalarResult();
     }

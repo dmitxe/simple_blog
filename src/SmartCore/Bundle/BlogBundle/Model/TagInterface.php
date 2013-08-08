@@ -5,7 +5,17 @@ namespace SmartCore\Bundle\BlogBundle\Model;
 interface TagInterface
 {
     /**
-     * @return integer
+     * @return $this
+     */
+    public function increment();
+
+    /**
+     * @return $this
+     */
+    public function decrement();
+
+    /**
+     * @return int
      */
     public function getId();
 
@@ -15,7 +25,7 @@ interface TagInterface
     public function getSlug();
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      * @return $this
      */
     public function setSlug($slug);

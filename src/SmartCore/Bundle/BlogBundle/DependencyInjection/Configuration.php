@@ -20,9 +20,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('smart_blog');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('article_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('tag_class')->defaultNull()->end()
+                ->integerNode('items_per_page')->defaultValue(10)->end()
+            ->end();
 
         return $treeBuilder;
     }

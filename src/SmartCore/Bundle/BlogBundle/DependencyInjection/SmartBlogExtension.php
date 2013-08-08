@@ -24,5 +24,9 @@ class SmartBlogExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter('smart_blog.model.article.class', $config['article_class']);
+        $container->setParameter('smart_blog.model.tag.class',     $config['tag_class']);
+        $container->setParameter('smart_blog.items_per_page',      $config['items_per_page']);
     }
 }

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+app/console doctrine:schema:drop --force
+app/console doctrine:schema:cre
+app/console doctrine:fi:lo

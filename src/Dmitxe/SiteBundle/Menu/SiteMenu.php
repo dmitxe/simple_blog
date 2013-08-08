@@ -7,6 +7,11 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class SiteMenu extends ContainerAware
 {
+    /**
+     * @param FactoryInterface $factory
+     * @param array $options
+     * @return \Knp\Menu\ItemInterface
+     */
     public function main(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('site_main');
@@ -17,24 +22,34 @@ class SiteMenu extends ContainerAware
             $menu->setChildrenAttribute('class', 'nav');
         }
 
-        $menu->addChild('Homepage',     ['route' => 'dmitxe_site_index']);
+        $menu->addChild('Homepage', ['route' => 'dmitxe_site_index']);
         $title = 'Blog';
-        if (true === $this->container->get('security.context')->isGranted('ROLE_BLOGGER'))
-        {
-           $menu->addChild($title,         array('route' => 'smart_blog_index', 'attributes' => array('class' => 'dropdown')));
-           $menu[$title]->addChild(NULL, array('attributes' => array('class' => 'divider')));
-           $menu[$title]->setLinkAttributes(array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown', 'role'=>'button', 'id'=>'mmi_finance'));
-//        $menu[$title]->setLabel($title. ' <b class="caret"></b>')->setExtra('safe_label', TRUE);
-            $menu[$title]->setLabel($title, TRUE);
-            $menu[$title]->setChildrenAttributes(array('class' => 'dropdown-menu','role'=>'menu', 'aria-labelledby'=>'mmi_finance'));
-            $menu[$title]->addChild('Все записи', array('route' => 'smart_blog_index'));
-            $menu[$title]->addChild('Новая запись', array('route' => 'smart_blog_article_new'));
+
+        if ($this->container->get('security.context')->isGranted('ROLE_BLOGGER')) {
+            $blogSubmenu = $menu->addChild($title, [
+                'route'      => 'smart_blog_index',
+                'attributes' => ['class' => 'dropdown']
+            ]);
+
+            $blogSubmenu->setLinkAttributes([
+                    'class'       => 'dropdown-toggle',
+                    'data-toggle' => 'dropdown',
+                    'role'        => 'button',
+                    'id'          => 'mmi_finance'
+                ])
+                //->setLabel($title . ' <b class="caret"></b>')->setExtra('safe_label', true)
+                //->setLabel($title, true)
+                ->setChildrenAttributes([
+                    'class'           => 'dropdown-menu',
+                    'role'            => 'menu',
+                    'aria-labelledby' => 'mmi_finance']);
+
+            $blogSubmenu->addChild('Все записи',    ['route' => 'smart_blog_index']);
+            $blogSubmenu->addChild(null,            ['attributes' => ['class' => 'divider']]);
+            $blogSubmenu->addChild('Новая запись',  ['route' => 'smart_blog_article_new']);
+        } else {
+            $menu->addChild($title, ['route' => 'smart_blog_index']);
         }
-        else
-        {
-            $menu->addChild($title,        ['route' => 'smart_blog_index']);
-        }
-        $menu->addChild('Forum',        ['uri'   => 'http://forum.timedev.net/']);
 
         return $menu;
     }

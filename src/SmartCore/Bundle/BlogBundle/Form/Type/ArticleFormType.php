@@ -23,15 +23,10 @@ class ArticleFormType extends AbstractType
             ->add('title')
             ->add('slug')
             ->add('annotation')
-            ->add('text', 'textarea', array(
-                'attr' => array(
-                    'class' => 'tinymce',
-                    'data-theme' => 'bbcode' // Skip it if you want to use default theme
-                ))
-            )
+            ->add('text')
             ->add('description')
             ->add('keywords')
-            ->add('tags', null, ['expanded' => true])
+            ->add('tags', null, ['expanded' => true]) // @todo сделать проверку на наличие примеси тегов.
         ;
     }
 
@@ -44,7 +39,6 @@ class ArticleFormType extends AbstractType
 
     public function getName()
     {
-        return 'smart_article';
+        return 'smart_blog_article';
     }
 }
-

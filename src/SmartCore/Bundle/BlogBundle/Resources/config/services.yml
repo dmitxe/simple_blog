@@ -1,11 +1,29 @@
-parameters:
-#    smart_blog.example.class: SmartCore\Bundle\BlogBundle\Example
-
 services:
-#    smart_blog.example:
-#        class: %smart_blog.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    smart_blog.article:
+        class: SmartCore\Bundle\BlogBundle\Service\ArticleService
+        arguments:
+            - @smart_blog.article.repository
+            - %smart_blog.items_per_page%
 
-    smart_blog:
-        class: SmartCore\Bundle\BlogBundle\Service\BlogService
-        arguments: [@doctrine.orm.default_entity_manager]
+    smart_blog.tag:
+        class: SmartCore\Bundle\BlogBundle\Service\TagService
+        arguments:
+            - @smart_blog.article.repository
+            - @smart_blog.tag.repository
+            - %smart_blog.items_per_page%
+
+    smart_blog.article.form:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleFormType
+        arguments: [%smart_blog.model.article.class%]
+
+    smart_blog.article.repository:
+        class:           SmartCore\Bundle\BlogBundle\Repository\ArticleRepository
+        factory_service: doctrine
+        factory_method:  getRepository
+        arguments:       [%smart_blog.model.article.class%]
+
+    smart_blog.tag.repository:
+        class:           SmartCore\Bundle\BlogBundle\Repository\TagRepository
+        factory_service: doctrine
+        factory_method:  getRepository
+        arguments:       [%smart_blog.model.tag.class%]

@@ -2,10 +2,10 @@
 
 namespace SmartCore\Bundle\BlogBundle\Model;
 
-interface  ArticleInterface
+interface ArticleInterface
 {
     /**
-     * @return integer
+     * @return int
      */
     public function getId();
 
@@ -48,13 +48,13 @@ interface  ArticleInterface
     public function getKeywords();
 
     /**
-     * @param boolean $enabled
+     * @param bool $enabled
      * @return $this
      */
     public function setEnabled($enabled);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getEnabled();
 
@@ -84,6 +84,11 @@ interface  ArticleInterface
      * @return \DateTime|null
      */
     public function getUpdatedAt();
+
+    /**
+     * @return $this
+     */
+    public function setUpdated();
 
     /**
      * @param string $slug

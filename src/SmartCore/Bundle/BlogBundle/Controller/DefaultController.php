@@ -11,12 +11,8 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $blog = $this->get('smart_blog');
-
-        $articles = $blog->getLastArticles();
-
         return $this->render('SmartBlogBundle::articles.html.twig', [
-            'articles' => $articles
+            'articles' => $this->get('smart_blog.article')->getLast(),
         ]);
     }
 }
