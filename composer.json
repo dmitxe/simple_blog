@@ -35,7 +35,7 @@
         "sonata-project/intl-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "dev-master",
         "smart-core/html-bundle": "dev-master",
-        "stfalcon/tinymce-bundle": "dev-master",
+        "stfalcon/tinymce-bundle": "0.2.1",
         "helios-ag/fm-elfinder-bundle": "1.2"
     },
     "scripts": {

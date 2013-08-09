@@ -8,7 +8,9 @@
 /var/*
 /bin/doctrine*
 /vendor/
+/web/assetic/
 /web/bundles/
+/web/uploads/
 /composer.lock
 /composer.phar
 !*.gitkeep
