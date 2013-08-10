@@ -13,13 +13,52 @@ use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 class ArticleController extends Controller
 {
     /**
+     * Имя сервиса по работе со статьями.
+     *
+     * @var string
+     */
+    protected $articleServiceName;
+
+    /**
+     * Маршрут на список статей.
+     *
+     * @var string
+     */
+    protected $routeIndex;
+
+    /**
+     * Маршрут просмотра статьи.
+     *
+     * @var string
+     */
+    protected $routeArticle;
+
+    /**
+     * Имя бандла. Для перегрузки шаблонов.
+     *
+     * @var string
+     */
+    protected $bundleName;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->articleServiceName   = 'smart_blog.article';
+        $this->routeIndex           = 'smart_blog_index';
+        $this->routeArticle         = 'smart_blog_article';
+        $this->bundleName           = 'SmartBlogBundle';
+    }
+
+    /**
      * @param string $slug
      * @return Response
      */
     public function showAction($slug)
     {
-        return $this->render('SmartBlogBundle::article.html.twig', [
-            'article' => $this->get('smart_blog.article')->getBySlug($slug),
+        return $this->render($this->bundleName . '::article.html.twig', [
+            'article' => $this->get($this->articleServiceName)->getBySlug($slug),
         ]);
     }
 
@@ -29,7 +68,7 @@ class ArticleController extends Controller
      */
     public function pageAction($page = 1)
     {
-        $articleService = $this->get('smart_blog.article');
+        $articleService = $this->get($this->articleServiceName);
 
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoryQuery()));
         $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
@@ -37,10 +76,10 @@ class ArticleController extends Controller
         try {
             $pagerfanta->setCurrentPage($page);
         } catch (NotValidCurrentPageException $e) {
-            return $this->redirect($this->generateUrl('smart_blog_index'));
+            return $this->redirect($this->generateUrl($this->routeIndex));
         }
 
-        return $this->render('SmartBlogBundle::articles.html.twig', [
+        return $this->render($this->bundleName . '::articles.html.twig', [
             'pagerfanta' => $pagerfanta,
         ]);
     }
@@ -52,7 +91,7 @@ class ArticleController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        $article = $this->get('smart_blog.article')->get($id);
+        $article = $this->get($this->articleServiceName)->get($id);
 
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
@@ -68,11 +107,11 @@ class ArticleController extends Controller
                 $em->persist($article);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('smart_blog_article', ['slug' => $article->getSlug()] ));
+                return $this->redirect($this->generateUrl($this->routeArticle, ['slug' => $article->getSlug()] ));
             }
         }
 
-        return $this->render('SmartBlogBundle::article_edit.html.twig', [
+        return $this->render($this->bundleName . '::article_edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -83,7 +122,7 @@ class ArticleController extends Controller
      */
     public function createAction(Request $request)
     {
-        $article = $this->get('smart_blog.article')->create();
+        $article = $this->get($this->articleServiceName)->create();
 
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
 
@@ -99,11 +138,11 @@ class ArticleController extends Controller
                 $em->persist($article);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('smart_blog_article', ['slug' => $article->getSlug()] ));
+                return $this->redirect($this->generateUrl($this->routeArticle, ['slug' => $article->getSlug()] ));
             }
         }
 
-        return $this->render('SmartBlogBundle::article_new.html.twig', [
+        return $this->render($this->bundleName . '::article_new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

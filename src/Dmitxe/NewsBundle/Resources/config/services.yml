@@ -1,0 +1,15 @@
+parameters:
+#    dmitxe_news.example.class: Dmitxe\NewsBundle\Example
+
+services:
+    dmitxe_news.article:
+        class: SmartCore\Bundle\BlogBundle\Service\ArticleService
+        arguments:
+            - @dmitxe_news.article.repository
+            - %smart_blog.items_per_page%
+
+    dmitxe_news.article.repository:
+        class:           SmartCore\Bundle\BlogBundle\Repository\ArticleRepository
+        factory_service: doctrine
+        factory_method:  getRepository
+        arguments:       ['Dmitxe\NewsBundle\Entity\Article']

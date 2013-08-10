@@ -26,8 +26,11 @@ class ArticleFormType extends AbstractType
             ->add('text')
             ->add('description')
             ->add('keywords')
-            ->add('tags', null, ['expanded' => true]) // @todo сделать проверку на наличие примеси тегов.
         ;
+
+        if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\TagTrait', class_uses($this->class, false))) {
+            $builder->add('tags', null, ['expanded' => true]);
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

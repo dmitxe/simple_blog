@@ -47,6 +47,20 @@ class Article extends SmartArticle
     protected $image_name;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $is_commentable;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->is_commentable = true;
+    }
+
+    /**
      * @param UserInterface $author
      * @return $this
      */
@@ -63,5 +77,24 @@ class Article extends SmartArticle
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * @param bool $is_commentable
+     * @return $this
+     */
+    public function setIsCommentable($is_commentable)
+    {
+        $this->is_commentable = $is_commentable;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsCommentable()
+    {
+        return $this->is_commentable;
     }
 }

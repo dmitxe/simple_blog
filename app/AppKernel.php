@@ -40,6 +40,7 @@ class AppKernel extends Kernel
             new Dmitxe\FixturesBundle\DmitxeFixturesBundle(),
             new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
             new Dmitxe\DemoBundle\DmitxeDemoBundle(),
+            new Dmitxe\NewsBundle\DmitxeNewsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

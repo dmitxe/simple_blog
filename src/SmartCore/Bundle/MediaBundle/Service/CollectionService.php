@@ -14,7 +14,7 @@ class CollectionService
 
     /**
      * @param UploadedFile $file
-     * @return integer - ID файла в коллекции.
+     * @return int - ID файла в коллекции.
      */
     public function createFile(UploadedFile $file)
     {
@@ -22,7 +22,7 @@ class CollectionService
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      * @return bool
      */
     public function deleteFile($id)
@@ -31,10 +31,10 @@ class CollectionService
     }
 
     /**
-     * @param integer|null $categoryId
+     * @param int|null $categoryId
      * @param array|null $orderBy
-     * @param integer|null $limit
-     * @param integer|null $offset
+     * @param int|null $limit
+     * @param int|null $offset
      * @return File[]|null
      */
     public function getFilesList($categoryId = null, array $orderBy = null, $limit = null, $offset = null)
@@ -43,16 +43,17 @@ class CollectionService
     }
 
     /**
-     * @param integer $id
+     * @param int $id
+     * @param array|null $params
      * @return string
      */
-    public function getUriByFileId($id)
+    public function getUriByFileId($id, array $params = null)
     {
         // @todo
     }
 
     /**
-     * @param integer|null $categoryId
+     * @param int|null $categoryId
      */
     public function getCategories($categoryId = null)
     {

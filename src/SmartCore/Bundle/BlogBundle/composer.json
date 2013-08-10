@@ -13,6 +13,7 @@
     ],
     "require": {
         "php": ">=5.4.1",
+        "sonata-project/intl-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "dev-master",
         "white-october/pagerfanta-bundle": "dev-master"
     },

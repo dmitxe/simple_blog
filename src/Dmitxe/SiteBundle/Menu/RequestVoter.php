@@ -17,15 +17,17 @@ class RequestVoter implements VoterInterface
 
     public function matchItem(ItemInterface $item)
     {
-        if ($item->getUri() === $this->container->get('request')->getBaseUrl() . '/') {
+        $request = $this->container->get('request');
+
+        if ($item->getUri() === $request->getBaseUrl() . '/') {
             return false;
         }
 
-        if ($item->getUri() === $this->container->get('request')->getRequestUri()) {
+        if ($item->getUri() === $request->getRequestUri()) {
             return true;
         } else {
             if ($item->getUri() !== '/' && (substr(
-                        $this->container->get('request')->getRequestUri(),
+                        $request->getRequestUri(),
                         0,
                         strlen($item->getUri())
                     ) === $item->getUri())

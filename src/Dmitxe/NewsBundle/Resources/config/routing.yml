@@ -1,0 +1,25 @@
+dmitxe_news_index:
+    path: /
+    defaults: { _controller: DmitxeNewsBundle:Article:page }
+
+dmitxe_news_article:
+    path: /{slug}.html
+    defaults: { _controller: DmitxeNewsBundle:Article:show }
+
+dmitxe_news_article_create:
+    path: /create/
+    defaults: { _controller: DmitxeNewsBundle:Article:create }
+
+dmitxe_news_article_edit:
+    path: /edit/{id}/
+    defaults: { _controller: DmitxeNewsBundle:Article:edit }
+    requirements:
+        id: \d+
+
+dmitxe_news_page_index:
+    path: /page/
+    defaults: { _controller: DmitxeNewsBundle:Article:page }
+
+dmitxe_news_page:
+    path: /page/{page}/
+    defaults: { _controller: DmitxeNewsBundle:Article:page }

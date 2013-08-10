@@ -2,11 +2,7 @@ parameters:
 #    dmitxe_site.example.class: Dmitxe\SiteBundle\Example
 
 services:
-#    dmitxe_site.example:
-#        class: %dmitxe_site.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
-
-# Menu selected items
+    # Menu selected items
     dmitxe_site.menu.voter.request:
         class: Dmitxe\SiteBundle\Menu\RequestVoter
         arguments:

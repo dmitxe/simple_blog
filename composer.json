@@ -1,8 +1,8 @@
 {
-    "name": "smart-core/symfony-boilerplate",
+    "name": "dmitxe/blog",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Dmitry Xe's Personal Site",
     "autoload": {
         "psr-0": { "": "src/" }
     },

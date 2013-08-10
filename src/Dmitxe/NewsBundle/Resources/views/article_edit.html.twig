@@ -1,4 +1,4 @@
-{% extends 'SmartBlogBundle::layout.html.twig' %}
+{% extends 'DmitxeNewsBundle::layout.html.twig' %}
 
 {% block smart_blog_content %}
 
@@ -46,12 +46,6 @@
         {{ form_label(form.keywords) }}
         {{ form_errors(form.keywords) }}
         {{ form_widget(form.keywords, {'attr': {'class': 'input-block-level'} }) }}
-    </div>
-
-    <div class="control-group">
-        {{ form_label(form.tags) }}
-        {{ form_errors(form.tags) }}
-        {{ form_widget(form.tags) }}
     </div>
 
     <button type="submit" name="update" class="btn btn-primary">{{ 'Save'|trans }}</button>

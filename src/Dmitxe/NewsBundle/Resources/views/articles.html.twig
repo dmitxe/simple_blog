@@ -1,18 +1,14 @@
-{% extends 'SmartBlogBundle::layout.html.twig' %}
+{% extends 'DmitxeNewsBundle::layout.html.twig' %}
 
 {% block smart_blog_content %}
 
     {% block smart_blog_content_articles %}
         {% for article in pagerfanta.currentPageResults %}
-            <h2><a href="{{ path('smart_blog_article', {'slug': article.slug}) }}">{{ article.title }}</a></h2>
+            <h2><a href="{{ path('dmitxe_news_article', {'slug': article.slug}) }}">{{ article.title }}</a></h2>
 
-            <p><i class="icon-calendar"></i> {{ article.createdAt | localizeddate('full') }}</p>
+            <p><i class="icon-calendar"></i> {{ article.createdAt | localizeddate('full') }}</a></p>
 
             <p>{{ article.annotation }}</p>
-
-            {% for tag in article.tags %}
-                <a href="{{ path('smart_blog_tag', {'slug': tag.slug}) }}"><span class="label label-info">{{ tag }}</span></a>
-            {% endfor %}
 
             <hr/>
         {% endfor %}
@@ -21,7 +17,7 @@
     {% block smart_blog_articles_paginator %}
         {% if pagerfanta.haveToPaginate %}
             {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                'routeName': 'smart_blog_page',
+                'routeName': 'dmitxe_news_page',
                 'css_container_class': 'pagination pagination-centered',
             }) }}
         {% endif %}

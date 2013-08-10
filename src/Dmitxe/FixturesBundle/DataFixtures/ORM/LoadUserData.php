@@ -37,7 +37,7 @@ class LoadUserData extends ContainerAware implements FixtureInterface, OrderedFi
             ->setPassword($encoder->encodePassword('123', $user->getSalt()))
             ->setEmail('digi@mail.ru')
             ->setEnabled(true) // @todo убрать на продакшине.
-            ->addGroup($group_admin);
+            ->addGroup($group_blogger);
         $manager->persist($user);
 
         $manager->flush();

@@ -152,6 +152,7 @@ vich_uploader:
 smart_blog:
     article_class: Dmitxe\BlogBundle\Entity\Article
     tag_class: Dmitxe\BlogBundle\Entity\Tag
+    items_per_page: 3
 
 services:
     twig_extension.intl:

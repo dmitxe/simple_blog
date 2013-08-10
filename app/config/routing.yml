@@ -11,6 +11,10 @@ dmitxe_blog:
     resource: "@DmitxeBlogBundle/Resources/config/routing.yml"
     prefix:   /blog/
 
+dmitxe_news:
+    resource: "@DmitxeNewsBundle/Resources/config/routing.yml"
+    prefix:   /news/
+
 dmitxe_user:
     resource: "@DmitxeUserBundle/Resources/config/routing.yml"
 

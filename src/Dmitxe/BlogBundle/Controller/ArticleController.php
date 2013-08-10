@@ -3,18 +3,22 @@
 namespace Dmitxe\BlogBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use SmartCore\Bundle\BlogBundle\Controller\ArticleController as BaseArticleController;
 use SmartCore\Bundle\BlogBundle\Form\Type\ArticleFormType;
 
 class ArticleController extends BaseArticleController
 {
     /**
+     * Метод createAction в данном случае перегражается только для того, чтобы вставить $article->setAuthor($this->getUser());
+     *
+     * @todo сделать события в формах и через него добавлять пользователя.
+     *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
+        /** @var \Dmitxe\BlogBundle\Entity\Article $article */
         $article = $this->get('smart_blog.article')->create();
 
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
@@ -23,7 +27,6 @@ class ArticleController extends BaseArticleController
             $form->submit($request);
 
             if ($form->isValid()) {
-                /** @var \Dmitxe\BlogBundle\Entity\Article $article */
                 $article = $form->getData();
                 $article->setAuthor($this->getUser());
 
@@ -36,8 +39,8 @@ class ArticleController extends BaseArticleController
             }
         }
 
-        return $this->container->get('templating')->renderResponse('SmartBlogBundle::article_new.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('SmartBlogBundle::article_new.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }
