@@ -48,6 +48,40 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
     }
 
     /**
+     * @param CategoryInterface[]|array $categories
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return ArticleInterface[]|null
+     */
+    public function findByCategories(array $categories = [], $limit = null, $offset = null)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('a')
+           ->from($this->_entityName, 'a')
+           ->orderBy('a.id', 'DESC');
+
+        foreach ($categories as $key => $category) {
+            $id = $category->getId();
+
+            if (0 == $key) {
+                $qb->where('a.category = :id' . $id);
+            } else {
+                $qb->orWhere('a.category = :id' . $id);
+            }
+
+            $qb->setParameter('id' . $id, $category);
+        }
+
+        $query = $qb->getQuery();
+
+        $query
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $query->getResult();
+    }
+
+    /**
      * @param CategoryInterface|null $category
      * @return \Doctrine\ORM\Query
      *

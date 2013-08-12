@@ -5,7 +5,7 @@ namespace SmartCore\Bundle\BlogBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @todo разобраться с инкрементами, притоме надо учесть, что если статья удаляется или деактивируется, тогда декрементить все счетчики тэгов.
+ * @todo разобраться с инкрементами, притом надо учесть, что если статья удаляется или деактивируется, тогда декрементить все счетчики тэгов.
  */
 trait TagTrait
 {
@@ -24,7 +24,7 @@ trait TagTrait
      * @param Tag $tag
      * @return $this
      */
-    public function addTag(Tag $tag)
+    public function addTag(TagInterface $tag)
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
@@ -38,7 +38,7 @@ trait TagTrait
      * @param Tag $tag
      * @return $this
      */
-    public function removeTag(Tag $tag)
+    public function removeTag(TagInterface $tag)
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);

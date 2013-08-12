@@ -1,0 +1,49 @@
+{#{% extends 'SmartBlogBundle:Article:list.html.twig' %}#}
+{% extends 'SmartBlogBundle::layout.html.twig' %}
+
+{% block smart_blog_content %}
+
+    <h1>Статьи в категории:
+        {% for category in categories %}
+            <a href="{{ path('smart_blog_category', {'slug': category.slugFull}) }}">{{ category }}</a> /
+        {% endfor %}
+    </h1>
+
+    {% set childenCategories = lastCategory.children %}
+
+    {% if childenCategories|length %}
+        <h3>Вложенные категории:</h3>
+        <ul>
+        {% for category in childenCategories %}
+            <li><a href="{{ path('smart_blog_category', {'slug': category.slugFull}) }}">{{ category }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <hr />
+
+    {% block smart_blog_content_articles %}
+        {% for article in articles %}
+            <h2><a href="{{ path('smart_blog_article', {'slug': article.slug}) }}">{{ article.title }}</a></h2>
+
+            <p><i class="icon-calendar"></i> {{ article.createdAt | localizeddate('full') }}</p>
+
+            <p>{{ article.annotation }}</p>
+
+            {% if article.tags|length %}
+                {{ 'Tags'|trans }}:
+                {% for tag in article.tags %}
+                    <a href="{{ path('smart_blog_tag', {'slug': tag.slug}) }}"><span class="label label-info">{{ tag }}</span></a>
+                {% endfor %}
+            {% endif %}
+
+            {% if article.category %}
+                {{ 'Category'|trans }}:
+                <a href="{{ path('smart_blog_category', {'slug': article.category.slugFull}) }}"><span class="label label-success">{{ article.category }}</span></a>
+            {% endif %}
+
+            <hr/>
+        {% endfor %}
+    {% endblock smart_blog_content_articles %}
+
+{% endblock smart_blog_content %}

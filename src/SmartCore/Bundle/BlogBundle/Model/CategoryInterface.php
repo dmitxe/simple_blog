@@ -10,6 +10,11 @@ interface CategoryInterface
     public function getId();
 
     /**
+     * @return Category[]|\Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getChildren();
+
+    /**
      * @param CategoryInterface $parent
      * @return $this
      */
@@ -21,12 +26,17 @@ interface CategoryInterface
     public function getParent();
 
     /**
-     * @return mixed
+     * @return string
+     */
+    public function getSlugFull();
+
+    /**
+     * @return string
      */
     public function getSlug();
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      * @return $this
      */
     public function setSlug($slug);

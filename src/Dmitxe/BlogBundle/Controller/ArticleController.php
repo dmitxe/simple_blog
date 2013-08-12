@@ -39,7 +39,7 @@ class ArticleController extends BaseArticleController
             }
         }
 
-        return $this->render('SmartBlogBundle::article_new.html.twig', [
+        return $this->render('SmartBlogBundle:Article:create.html.twig', [
             'form' => $form->createView()
         ]);
     }

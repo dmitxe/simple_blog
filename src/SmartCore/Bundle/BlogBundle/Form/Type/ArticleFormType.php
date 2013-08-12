@@ -28,6 +28,10 @@ class ArticleFormType extends AbstractType
             ->add('keywords')
         ;
 
+        if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\CategoryTrait', class_uses($this->class, false))) {
+            $builder->add('category'); // @todo сделать отображение вложенных категорий.
+        }
+
         if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\TagTrait', class_uses($this->class, false))) {
             $builder->add('tags', null, ['expanded' => true]);
         }

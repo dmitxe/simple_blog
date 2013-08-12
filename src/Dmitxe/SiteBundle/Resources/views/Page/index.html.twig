@@ -22,8 +22,17 @@
                 <ul>
                     <li>Разработка &laquo;Бандла&raquo; для распределённого хранения файлов.</li>
                     <li>Форма обратной связи.</li>
-                    <li>Возможность управлять тэгами для статей админу сайта.</li>
+                    <li>Возможность управлять тэгами и категориями блога админу сайта.</li>
+                    <li>Фабрики для форм блога.</li>
                 </ul>
+
+                <h2>Категории блога:</h2>
+
+                {{ knp_menu_render('SmartBlogBundle:CategoryMenu:full', {'currentClass': 'active'}) }}
+
+                <h2>Тэги блога:</h2>
+
+                {{ render(controller('SmartBlogBundle:Tag:cloud')) }}
 
             </div>
         </div>

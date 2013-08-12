@@ -52,6 +52,17 @@ class ArticleService extends AbstractBlogService
     }
 
     /**
+     * @param CategoryInterface[]|array $categories
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return ArticleInterface[]|null
+     */
+    public function getByCategories(array $categories = [], $limit = null, $offset = null)
+    {
+        return $this->articlesRepo->findByCategories($categories, $limit, $offset);
+    }
+
+    /**
      * @param CategoryInterface|null $category
      * @return \Doctrine\ORM\Query
      */

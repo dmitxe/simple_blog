@@ -1,4 +1,9 @@
-{% extends 'DmitxeNewsBundle::layout.html.twig' %}
+{% extends '@DmitxeNews/layout.html.twig' %}
+
+{% block html_head_title %}
+    {{ parent() }}
+    {% if pagerfanta.currentPage > 1%}(Страница: {{ pagerfanta.currentPage }}){% endif %}
+{% endblock html_head_title %}
 
 {% block smart_blog_content %}
 
@@ -17,9 +22,10 @@
     {% block smart_blog_articles_paginator %}
         {% if pagerfanta.haveToPaginate %}
             {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                'routeName': 'dmitxe_news_page',
-                'css_container_class': 'pagination pagination-centered',
-            }) }}
+                    'routeName': 'dmitxe_news_page',
+                    'css_container_class': 'pagination pagination-centered',
+                })
+            }}
         {% endif %}
     {% endblock smart_blog_articles_paginator %}
 

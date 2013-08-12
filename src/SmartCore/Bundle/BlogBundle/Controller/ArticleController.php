@@ -57,7 +57,7 @@ class ArticleController extends Controller
      */
     public function showAction($slug)
     {
-        return $this->render($this->bundleName . '::article.html.twig', [
+        return $this->render($this->bundleName . ':Article:show.html.twig', [
             'article' => $this->get($this->articleServiceName)->getBySlug($slug),
         ]);
     }
@@ -68,6 +68,7 @@ class ArticleController extends Controller
      */
     public function pageAction($page = 1)
     {
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
 
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoryQuery()));
@@ -79,7 +80,7 @@ class ArticleController extends Controller
             return $this->redirect($this->generateUrl($this->routeIndex));
         }
 
-        return $this->render($this->bundleName . '::articles.html.twig', [
+        return $this->render($this->bundleName . ':Article:list.html.twig', [
             'pagerfanta' => $pagerfanta,
         ]);
     }
@@ -88,17 +89,22 @@ class ArticleController extends Controller
      * @param Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function editAction(Request $request, $id)
     {
+        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
         $article = $this->get($this->articleServiceName)->get($id);
+
+        if (null === $article) {
+            throw $this->createNotFoundException();
+        }
 
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
             $form->submit($request);
 
             if ($form->isValid()) {
-                /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
                 $article = $form->getData();
                 $article->setUpdated();
 
@@ -111,7 +117,7 @@ class ArticleController extends Controller
             }
         }
 
-        return $this->render($this->bundleName . '::article_edit.html.twig', [
+        return $this->render($this->bundleName . ':Article:edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -122,15 +128,14 @@ class ArticleController extends Controller
      */
     public function createAction(Request $request)
     {
+        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
         $article = $this->get($this->articleServiceName)->create();
 
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
-
         if ($request->isMethod('POST')) {
             $form->submit($request);
 
             if ($form->isValid()) {
-                /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
                 $article = $form->getData();
 
                 /** @var \Doctrine\ORM\EntityManager $em */
@@ -142,7 +147,7 @@ class ArticleController extends Controller
             }
         }
 
-        return $this->render($this->bundleName . '::article_new.html.twig', [
+        return $this->render($this->bundleName . ':Article:create.html.twig', [
             'form' => $form->createView(),
         ]);
     }

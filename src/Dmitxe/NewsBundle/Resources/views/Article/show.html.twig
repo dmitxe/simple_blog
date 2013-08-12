@@ -1,8 +1,10 @@
-{% extends 'DmitxeNewsBundle::layout.html.twig' %}
+{% extends '@DmitxeNews/layout.html.twig' %}
+
+{% block html_head_title %} {{ article.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
 
 {% block smart_blog_content %}
 
-    <h2><a href="{{ path('smart_blog_article', {'slug': article.slug}) }}">{{ article.title }}</a></h2>
+    <h2>{{ article.title }}</h2>
 
     <p><i class="icon-calendar"></i> {{ article.createdAt | localizeddate('full') }}</p>
 

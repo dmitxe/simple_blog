@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "license": "MIT",
     "description": "Symfony SmartBlogBundle",
-    "keywords": ["Blog"],
+    "keywords": ["blog", "news"],
     "authors": [
         {
             "name": "Artem Ryzhkov",
@@ -15,7 +15,9 @@
         "php": ">=5.4.1",
         "sonata-project/intl-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "dev-master",
-        "white-october/pagerfanta-bundle": "dev-master"
+        "white-october/pagerfanta-bundle": "dev-master",
+        "zendframework/zend-servicemanager": "2.2.*",
+        "zendframework/zend-tag": "2.2.*"
     },
     "autoload": {
         "psr-0": { "SmartCore\\Bundle\\BlogBundle": "" }

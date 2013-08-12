@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @UniqueEntity(fields={"uri_part"}, message="Категория с таким сегментом URI уже существует.")
+ * @UniqueEntity(fields={"slug", "parent"}, message="В каждой категории должен быть уникальный сегмент URI.")
  */
 abstract class Category implements CategoryInterface
 {
@@ -19,12 +19,18 @@ abstract class Category implements CategoryInterface
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="pid")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children", cascade={"persist"})
+     * @ORM\JoinColumn(name="parent")
      *
      * @var Category
      **/
     protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     * ORM\OrderBy({"position" = "ASC"})
+     */
+    protected $children;
 
     /**
      * @ORM\Column(type="string", length=32, unique=true)
@@ -52,6 +58,7 @@ abstract class Category implements CategoryInterface
     public function __construct()
     {
         $this->articles   = new ArrayCollection();
+        $this->children   = new ArrayCollection();
         $this->created_at = new \DateTime();
     }
 
@@ -61,6 +68,14 @@ abstract class Category implements CategoryInterface
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * @return Category[]|ArrayCollection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 
     /**
@@ -85,25 +100,6 @@ abstract class Category implements CategoryInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -145,7 +141,7 @@ abstract class Category implements CategoryInterface
     }
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      * @return $this
      */
     public function setSlug($slug)
@@ -156,10 +152,26 @@ abstract class Category implements CategoryInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Получить полный путь, включая родительские категории.
+     *
+     * @return string
+     */
+    public function getSlugFull()
+    {
+        $slug = $this->getSlug();
+
+        if ($this->getParent()) {
+            $slug  = $this->getParent()->getSlugFull() . '/' . $slug;
+        }
+
+        return $slug;
     }
 }

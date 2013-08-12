@@ -10,7 +10,16 @@ services:
         arguments:
             - @smart_blog.article.repository
             - @smart_blog.tag.repository
+            - @router
             - %smart_blog.items_per_page%
+
+    smart_blog.category:
+        class: SmartCore\Bundle\BlogBundle\Service\CategoryService
+        arguments:
+#            - @smart_blog.article.repository
+#            - @smart_blog.tag.repository
+#            - @router
+#            - %smart_blog.items_per_page%
 
     smart_blog.article.form:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleFormType
