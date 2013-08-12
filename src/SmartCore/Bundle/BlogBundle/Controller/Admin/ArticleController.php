@@ -24,14 +24,14 @@ class ArticleController extends Controller
      *
      * @var string
      */
-    protected $routeIndex;
+    protected $routeAdminArticle;
 
     /**
-     * Маршрут просмотра статьи.
+     * Маршрут редактирования статьи.
      *
      * @var string
      */
-    protected $routeArticle;
+    protected $routeAdminArticleEdit;
 
     /**
      * Имя бандла. Для перегрузки шаблонов.
@@ -45,17 +45,17 @@ class ArticleController extends Controller
      */
     public function __construct()
     {
-        $this->articleServiceName   = 'smart_blog.article';
-        $this->routeIndex           = 'smart_blog_index';
-        $this->routeArticle         = 'smart_blog_article';
-        $this->bundleName           = 'SmartBlogBundle';
+        $this->articleServiceName    = 'smart_blog.article';
+        $this->routeAdminArticle     = 'smart_blog_admin_article';
+        $this->routeAdminArticleEdit = 'smart_blog_admin_article_edit';
+        $this->bundleName            = 'SmartBlogBundle';
     }
 
     /**
-     * @param int $page
+     * @param Request $requst
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function indexAction($page = 1)
+    public function indexAction(Request $requst)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
@@ -64,7 +64,7 @@ class ArticleController extends Controller
         $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
 
         try {
-            $pagerfanta->setCurrentPage($page);
+            $pagerfanta->setCurrentPage($requst->query->get('page', 1));
         } catch (NotValidCurrentPageException $e) {
             return $this->redirect($this->generateUrl($this->routeIndex));
         }
@@ -74,4 +74,70 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function editAction(Request $request, $id)
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
+        $article = $this->get($this->articleServiceName)->get($id);
+
+        if (null === $article) {
+            throw $this->createNotFoundException();
+        }
+
+        $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+
+            if ($form->isValid()) {
+                $article = $form->getData();
+                $article->setUpdated();
+
+                /** @var \Doctrine\ORM\EntityManager $em */
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($this->routeAdminArticle));
+            }
+        }
+
+        return $this->render($this->bundleName . ':Admin/Article:edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function createAction(Request $request)
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
+        $article = $this->get($this->articleServiceName)->create();
+
+        $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+
+            if ($form->isValid()) {
+                $article = $form->getData();
+
+                /** @var \Doctrine\ORM\EntityManager $em */
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($this->routeAdminArticle));
+            }
+        }
+
+        return $this->render($this->bundleName . ':Admin/Article:create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 }

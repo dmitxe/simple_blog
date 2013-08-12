@@ -1,32 +1,35 @@
-{% extends 'SmartBlogBundle::layout.html.twig' %}
+{% extends 'SmartBlogBundle:Admin:layout.html.twig' %}
 
 {% block smart_blog_content %}
 
     {% block smart_blog_content_articles %}
+
+        <a href="{{ path('smart_blog_admin_article_create') }}" class="btn">Добавить статью</a>
+
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Id</th>
                     <th>Заголовок</th>
-                    <th>Категория</th>
-                    <th>Время создания</th>
+                    <th>Категория</th> {# @todo убрать или сделать гибкую логику опознания налиция категорий у статей #}
+                    <th>Дата создания</th>
                     <th>Автор</th>
                 </tr>
             </thead>
             <tbody>
-        {% for article in pagerfanta.currentPageResults %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>
-                    <a href="{{ path('smart_blog_article_edit', {'id': article.id}) }}" title="Править">
-                        {{ article.title }}
-                    </a>
-                </td>
-                <td>{{ article.category }}</td>
-                <td>{{ article.createdAt|date("d.m.Y h:i:s") }}</td>
-                <td>{{ article.author }}</td>
-            </tr>
-        {% endfor %}
+            {% for article in pagerfanta.currentPageResults %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>
+                        <a href="{{ path('smart_blog_admin_article_edit', {'id': article.id}) }}" title="Редактировать">
+                            {{ article.title }}
+                        </a>
+                    </td>
+                    <td>{{ article.category }}</td>
+                    <td>{{ article.createdAt | localizeddate() }}</td>
+                    <td>{{ article.author }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     {% endblock smart_blog_content_articles %}
@@ -34,7 +37,7 @@
     {% block smart_blog_articles_paginator %}
         {% if pagerfanta.haveToPaginate %}
             {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                    'routeName': 'smart_blog_admin_articles_list',
+                    'routeName': 'smart_blog_admin_article',
                     'css_container_class': 'pagination pagination-centered',
                 })
             }}

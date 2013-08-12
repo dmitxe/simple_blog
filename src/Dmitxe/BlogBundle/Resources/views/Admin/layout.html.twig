@@ -1,0 +1,15 @@
+{% extends '@DmitxeSite/Admin/index.html.twig' %}
+
+{% block html_head_title %} Блог &raquo; {{ parent() }} {% endblock html_head_title %}
+
+{% block content %}
+    {{ parent() }}
+
+    {{ knp_menu_render('SmartBlogBundle:AdminMenu:main', {
+            'currentClass': 'active',
+            'clear_matcher': false,
+        })
+    }}
+
+    {% block smart_blog_content %}{% endblock %}
+{% endblock %}

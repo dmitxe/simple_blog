@@ -1,0 +1,13 @@
+smart_blog_admin_category:
+    path: /
+    defaults: { _controller: SmartBlogBundle:Admin/Category:index }
+
+smart_blog_admin_category_edit:
+    path: /{id}/
+    defaults: { _controller: SmartBlogBundle:Admin/Article:edit }
+    requirements:
+        id: \d+
+
+#smart_blog_admin_category_create:
+#    path: /create/
+#    defaults: { _controller: SmartBlogBundle:Admin/Article:create }

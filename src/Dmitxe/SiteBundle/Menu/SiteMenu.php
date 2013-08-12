@@ -28,6 +28,10 @@ class SiteMenu extends ContainerAware
             $menu->addChild('Create News', ['route' => 'dmitxe_news_article_create']);
         }
 
+        if (true === $this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $menu->addChild('Admin', ['route' => 'dmitxe_site_admin']);
+        }
+
         return $menu;
     }
 }

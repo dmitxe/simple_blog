@@ -7,13 +7,21 @@ smart_media:
 dmitxe_site:
     resource: "@DmitxeSiteBundle/Resources/config/routing.yml"
 
+smart_blog_admin_article:
+    resource: "@SmartBlogBundle/Resources/config/routing_admin_article.yml"
+    prefix:   /admin/blog/article/
+
+smart_blog_admin_category:
+    resource: "@SmartBlogBundle/Resources/config/routing_admin_category.yml"
+    prefix:   /admin/blog/category/
+
+smart_blog_admin_tag:
+    resource: "@SmartBlogBundle/Resources/config/routing_admin_tag.yml"
+    prefix:   /admin/blog/tag/
+
 dmitxe_blog:
     resource: "@DmitxeBlogBundle/Resources/config/routing.yml"
     prefix:   /blog/
-
-smart_blog_admin:
-    resource: "@SmartBlogBundle/Resources/config/routing_admin.yml"
-    prefix: /admin/blog/
 
 dmitxe_news:
     resource: "@DmitxeNewsBundle/Resources/config/routing.yml"
@@ -23,4 +31,4 @@ dmitxe_user:
     resource: "@DmitxeUserBundle/Resources/config/routing.yml"
 
 elfinder:
-     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+    resource: "@FMElfinderBundle/Resources/config/routing.yml"

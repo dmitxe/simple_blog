@@ -1,3 +1,0 @@
-smart_blog_admin_articles_list:
-    path: /article/
-    defaults: { _controller: SmartBlogBundle:Admin/Article:index }

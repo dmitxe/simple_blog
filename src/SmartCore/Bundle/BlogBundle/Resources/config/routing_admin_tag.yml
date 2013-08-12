@@ -1,0 +1,13 @@
+smart_blog_admin_tag:
+    path: /
+    defaults: { _controller: SmartBlogBundle:Admin/Tag:index }
+
+smart_blog_admin_tag_edit:
+    path: /{id}/
+    defaults: { _controller: SmartBlogBundle:Admin/Tag:edit }
+    requirements:
+        id: \d+
+
+#smart_blog_admin_tag_create:
+#    path: /create/
+#    defaults: { _controller: SmartBlogBundle:Admin/Article:create }
