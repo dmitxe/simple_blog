@@ -6,6 +6,12 @@
 </head>
 <body>
 <div>
+    {{ knp_menu_render('SmartBlogBundle:AdminMenu:main', {
+            'currentClass': 'active',
+            'clear_matcher': false,
+        })
+    }}
+
     {% block smart_blog_content %}
     {% endblock smart_blog_content %}
 </div>

@@ -1,14 +1,10 @@
 {% extends 'SmartBlogBundle::layout.html.twig' %}
 
+{% block html_head_title %} {{ 'Create article'|trans }}: &raquo; {{ parent() }} {% endblock html_head_title %}
+
 {% block smart_blog_content %}
 
-    {{ form_start(form) }}
-
-    {% include 'SmartBlogBundle:Article:form.html.twig' %}
-
-    <button type="submit" name="update" class="btn btn-primary">{{ 'Create'|trans }}</button>
-
-    {{ form_end(form) }}
+    {% include 'SmartBlogBundle:Article:form_create.html.twig' %}
 
 {% endblock smart_blog_content %}
 
