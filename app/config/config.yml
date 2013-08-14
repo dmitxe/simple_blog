@@ -90,7 +90,8 @@ stfalcon_tinymce:
     include_jquery: false
     tinymce_jquery: true
 #    selector: '.tinymce'
-    textarea_class: 'tinymce'
+#    textarea_class: 'tinymce'
+    textarea_class: 'wysiwyg'
     language: %locale%
     theme:
 #        simple:

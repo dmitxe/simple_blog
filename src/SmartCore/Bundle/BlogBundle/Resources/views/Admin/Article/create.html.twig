@@ -2,12 +2,6 @@
 
 {% block smart_blog_content %}
 
-    {{ form_start(form) }}
-
     {% include 'SmartBlogBundle:Article:form.html.twig' %}
-
-    <button type="submit" name="update" class="btn btn-primary">{{ 'Create'|trans }}</button>
-
-    {{ form_end(form) }}
 
 {% endblock smart_blog_content %}

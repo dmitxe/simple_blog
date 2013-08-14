@@ -1,47 +1,4 @@
-{{ form_errors(form) }}
-
-<div class="control-group">
-    {{ form_label(form.title) }}
-    {{ form_errors(form.title) }}
-    {{ form_widget(form.title, {'attr': {'class': 'input-block-level'} }) }}
-</div>
-
-<div class="control-group">
-    {{ form_label(form.slug) }}
-    {{ form_errors(form.slug) }}
-    {{ form_widget(form.slug, {'attr': {'class': 'input-block-level'} }) }}
-</div>
-
-<div class="control-group">
-    {{ form_label(form.annotation) }}
-    {{ form_errors(form.annotation) }}
-    {{ form_widget(form.annotation, {'attr': {'class': 'input-block-level'} }) }}
-</div>
-
-<div class="control-group">
-    {{ form_label(form.text) }}
-    {{ form_errors(form.text) }}
-    {{ form_widget(form.text, {
-        'attr': {
-            'class': 'tinymce',
-            'data-theme' : 'advanced',
-            'style': 'height: 500px; width: 100%',
-        }
-        })
-    }}
-</div>
-
-<div class="control-group">
-    {{ form_label(form.description) }}
-    {{ form_errors(form.description) }}
-    {{ form_widget(form.description, {'attr': {'class': 'input-block-level'} }) }}
-</div>
-
-<div class="control-group">
-    {{ form_label(form.keywords) }}
-    {{ form_errors(form.keywords) }}
-    {{ form_widget(form.keywords, {'attr': {'class': 'input-block-level'} }) }}
-</div>
+{{ form(form) }}
 
 {{ tinymce_init() }}
 {{ elfinder_tinymce_init() }}

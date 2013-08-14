@@ -1,9 +1,9 @@
 {% extends '@DmitxeNews/layout.html.twig' %}
 
-{% block html_head_title %} Написать новость: {{ form.vars.data.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
+{% block html_head_title %} Редактировать новость: {{ form.vars.data.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
 
 {% block smart_blog_content %}
 
-    {% include '@DmitxeNews/Article/form_edit.html.twig' %}
+    {% include '@DmitxeNews/Article/form.html.twig' %}
 
 {% endblock smart_blog_content %}

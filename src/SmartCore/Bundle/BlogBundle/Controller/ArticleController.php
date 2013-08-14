@@ -7,7 +7,8 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use SmartCore\Bundle\BlogBundle\Form\Type\ArticleFormType;
+use SmartCore\Bundle\BlogBundle\Form\Type\ArticleCreateFormType;
+use SmartCore\Bundle\BlogBundle\Form\Type\ArticleEditFormType;
 use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 
 class ArticleController extends Controller
@@ -111,9 +112,9 @@ class ArticleController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
+        $form = $this->createForm(new ArticleEditFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $article = $form->getData();
@@ -141,9 +142,9 @@ class ArticleController extends Controller
 
         $article = $articleService->create();
 
-        $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
+        $form = $this->createForm(new ArticleCreateFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $article = $form->getData();
