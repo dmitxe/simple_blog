@@ -2,22 +2,33 @@
 
 namespace SmartCore\Bundle\BlogBundle\Service;
 
+use Doctrine\ORM\EntityManager;
+use SmartCore\Bundle\BlogBundle\Event\FilterArticleEvent;
 use SmartCore\Bundle\BlogBundle\Model\ArticleInterface;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
 use SmartCore\Bundle\BlogBundle\Model\TagInterface;
 use SmartCore\Bundle\BlogBundle\Repository\ArticleRepositoryInterface;
+use SmartCore\Bundle\BlogBundle\SmartBlogEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ArticleService extends AbstractBlogService
 {
+    /**
+     * @var EntityManager
+     */
+    protected $em;
+
     /**
      * Constructor.
      *
      * @param \SmartCore\Bundle\BlogBundle\Repository\ArticleRepository $articlesRepo
      * @param int $itemsPerPage
      */
-    public function __construct(ArticleRepositoryInterface $articlesRepo, $itemsPerPage = 10)
+    public function __construct(EntityManager $em, ArticleRepositoryInterface $articlesRepo, EventDispatcherInterface $eventDispatcher, $itemsPerPage = 10)
     {
-        $this->articlesRepo = $articlesRepo;
+        $this->articlesRepo     = $articlesRepo;
+        $this->em               = $em;
+        $this->eventDispatcher  = $eventDispatcher;
         $this->setItemsCountPerPage($itemsPerPage);
     }
 
@@ -28,7 +39,12 @@ class ArticleService extends AbstractBlogService
     {
         $class = $this->articlesRepo->getClassName();
 
-        return new $class();
+        $article = new $class();
+
+        $event = new FilterArticleEvent($article);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_CREATE, $event);
+
+        return $article;
     }
     
     /**
@@ -124,5 +140,23 @@ class ArticleService extends AbstractBlogService
         }
 
         return $this->articlesRepo->findLast($limit);
+    }
+
+    /**
+     * @param ArticleInterface $article
+     *
+     * @todo выделить методы create, update, detele в "article manager".
+     */
+    public function update(ArticleInterface $article)
+    {
+        $event = new FilterArticleEvent($article);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_PRE_UPDATE, $event);
+
+        // @todo убрать в мэнеджер.
+        $this->em->persist($article);
+        $this->em->flush($article);
+
+        $event = new FilterArticleEvent($article);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_UPDATE, $event);
     }
 }

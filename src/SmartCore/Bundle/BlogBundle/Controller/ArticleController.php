@@ -54,11 +54,19 @@ class ArticleController extends Controller
     /**
      * @param string $slug
      * @return Response
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function showAction($slug)
     {
+        $article = $this->get($this->articleServiceName)->getBySlug($slug);
+
+        if (!$article) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render($this->bundleName . ':Article:show.html.twig', [
-            'article' => $this->get($this->articleServiceName)->getBySlug($slug),
+            'article' => $article,
         ]);
     }
 
@@ -89,12 +97,15 @@ class ArticleController extends Controller
      * @param Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
-        $article = $this->get($this->articleServiceName)->get($id);
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
+
+        $article = $articleService->get($id);
 
         if (null === $article) {
             throw $this->createNotFoundException();
@@ -106,12 +117,9 @@ class ArticleController extends Controller
 
             if ($form->isValid()) {
                 $article = $form->getData();
-                $article->setUpdated();
+                $article->setUpdated(); // @todo убрать в сервис.
 
-                /** @var \Doctrine\ORM\EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
+                $articleService->update($article);
 
                 return $this->redirect($this->generateUrl($this->routeArticle, ['slug' => $article->getSlug()] ));
             }
@@ -128,8 +136,10 @@ class ArticleController extends Controller
      */
     public function createAction(Request $request)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
-        $article = $this->get($this->articleServiceName)->create();
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
+
+        $article = $articleService->create();
 
         $form = $this->createForm(new ArticleFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
@@ -137,11 +147,7 @@ class ArticleController extends Controller
 
             if ($form->isValid()) {
                 $article = $form->getData();
-
-                /** @var \Doctrine\ORM\EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
+                $articleService->update($article);
 
                 return $this->redirect($this->generateUrl($this->routeArticle, ['slug' => $article->getSlug()] ));
             }

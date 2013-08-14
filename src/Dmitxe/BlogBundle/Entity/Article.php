@@ -5,6 +5,7 @@ namespace Dmitxe\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\Bundle\BlogBundle\Model\Article as SmartArticle;
 use SmartCore\Bundle\BlogBundle\Model\CategoryTrait;
+use SmartCore\Bundle\BlogBundle\Model\SignedArticleInterface;
 use SmartCore\Bundle\BlogBundle\Model\TagTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -19,7 +20,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      }
  * )
  */
-class Article extends SmartArticle
+class Article extends SmartArticle implements SignedArticleInterface
 {
     use CategoryTrait;
     use TagTrait;

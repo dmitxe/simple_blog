@@ -1,7 +1,9 @@
 parameters:
-#    dmitxe_blog.example.class: Dmitxe\BlogBundle\Example
+    dmitxe_blog.listener.article_author.class: SmartCore\Bundle\BlogBundle\EventListener\ArticleAuthorListener
 
 services:
-#    dmitxe_blog.example:
-#        class: %dmitxe_blog.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    dmitxe_blog.listener.article_author:
+        class: %dmitxe_blog.listener.article_author.class%
+        arguments: [@security.context, @logger]
+        tags:
+            - { name: kernel.event_subscriber }

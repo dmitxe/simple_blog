@@ -23,6 +23,11 @@
 {% endblock html_head_styles %}
 #}
 
+{% block html_head_scripts %}{{ parent() }}
+    <script src="{{ asset('assets/jquery/1.10.2/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap/2.3.2/js/bootstrap.min.js') }}"></script>
+{% endblock html_head_scripts %}
+
 {% block body %}
 
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -84,6 +89,4 @@
 {% endblock body %}
 
 {% block body_js %}
-    <script src="{{ asset('assets/jquery/1.10.2/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap/2.3.2/js/bootstrap.min.js') }}"></script>
 {% endblock body_js %}

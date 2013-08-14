@@ -10,6 +10,11 @@ abstract class AbstractBlogService
     protected $articlesRepo;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @var integer
      */
     protected $itemsPerPage;

@@ -5,7 +5,9 @@ services:
     dmitxe_news.article:
         class: SmartCore\Bundle\BlogBundle\Service\ArticleService
         arguments:
+            - @doctrine.orm.default_entity_manager
             - @dmitxe_news.article.repository
+            - @event_dispatcher
             - %smart_blog.items_per_page%
 
     dmitxe_news.article.repository:
