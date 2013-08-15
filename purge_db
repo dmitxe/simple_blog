@@ -1,5 +1,5 @@
 #!/bin/bash
 
 app/console doctrine:schema:drop --force
-app/console doctrine:schema:cre
-app/console doctrine:fi:lo
+app/console doctrine:schema:create
+app/console doctrine:fixtures:load -n

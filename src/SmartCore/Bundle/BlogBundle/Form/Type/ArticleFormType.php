@@ -48,7 +48,10 @@ class ArticleFormType extends AbstractType
         }
 
         if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\TagTrait', class_uses($this->class, false))) {
-            $builder->add('tags', null, ['expanded' => true]);
+            $builder->add('tags', null, [
+                'expanded' => true,
+                'required' => false,
+            ]);
         }
     }
 

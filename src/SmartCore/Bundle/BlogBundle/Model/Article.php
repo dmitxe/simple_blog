@@ -37,7 +37,7 @@ abstract class Article implements ArticleInterface
     protected $slug;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $annotation;
 
