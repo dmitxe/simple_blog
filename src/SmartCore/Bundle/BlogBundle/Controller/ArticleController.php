@@ -147,7 +147,6 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $article = $form->getData();
                 $articleService->update($article);
 
                 return $this->redirect($this->generateUrl($this->routeArticle, ['slug' => $article->getSlug()] ));
