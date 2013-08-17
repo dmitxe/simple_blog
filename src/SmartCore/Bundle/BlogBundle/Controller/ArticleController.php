@@ -142,6 +142,13 @@ class ArticleController extends Controller
 
         $article = $articleService->create();
 
+        $this->class = 'SmartCore\Bundle\BlogBundle\SmartBlogEvents';
+        /** @var \SmartCore\Bundle\BlogBundle\Events $class */
+        $class = $this->class;
+
+        ld(\SmartCore\Bundle\BlogBundle\SmartBlogEvents::ARTICLE_CREATE);
+        ld($class::articleCreate());
+
         $form = $this->createForm(new ArticleCreateFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

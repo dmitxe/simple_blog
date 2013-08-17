@@ -19,16 +19,28 @@ class ArticleService extends AbstractBlogService
     protected $em;
 
     /**
+     * @var \SmartCore\Bundle\BlogBundle\SmartBlogEvents
+     *
+     * @todo эксперименты с событиями.
+     */
+    protected $eventClass;
+
+    /**
      * Constructor.
      *
      * @param \SmartCore\Bundle\BlogBundle\Repository\ArticleRepository $articlesRepo
      * @param int $itemsPerPage
      */
-    public function __construct(EntityManager $em, ArticleRepositoryInterface $articlesRepo, EventDispatcherInterface $eventDispatcher, $itemsPerPage = 10)
-    {
+    public function __construct(
+        EntityManager $em,
+        ArticleRepositoryInterface $articlesRepo,
+        EventDispatcherInterface $eventDispatcher,
+        $itemsPerPage = 10
+    ) {
         $this->articlesRepo     = $articlesRepo;
         $this->em               = $em;
         $this->eventDispatcher  = $eventDispatcher;
+        $this->eventClass       = 'SmartCore\Bundle\BlogBundle\SmartBlogEvents'; // @todo эксперименты с событиями.
         $this->setItemsCountPerPage($itemsPerPage);
     }
 
@@ -41,8 +53,10 @@ class ArticleService extends AbstractBlogService
 
         $article = new $class();
 
+        // @todo эксперименты с событиями.
         $event = new FilterArticleEvent($article);
-        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_CREATE, $event);
+        $class = $this->eventClass;
+        $this->eventDispatcher->dispatch($class::ARTICLE_CREATE, $event);
 
         return $article;
     }

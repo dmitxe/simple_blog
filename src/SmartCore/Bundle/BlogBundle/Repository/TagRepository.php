@@ -57,6 +57,4 @@ class TagRepository extends EntityRepository
           ORDER BY tags.id DESC
         ");
     }
-
-
 }

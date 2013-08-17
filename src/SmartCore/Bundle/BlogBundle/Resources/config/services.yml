@@ -10,8 +10,10 @@ services:
     smart_blog.tag:
         class: SmartCore\Bundle\BlogBundle\Service\TagService
         arguments:
+            - @doctrine.orm.default_entity_manager
             - @smart_blog.article.repository
             - @smart_blog.tag.repository
+            - @event_dispatcher
             - @router
             - %smart_blog.items_per_page%
 

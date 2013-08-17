@@ -4,7 +4,9 @@
 
     {% block smart_blog_content_articles %}
 
-        <a href="{{ path('smart_blog_admin_article_create') }}" class="btn">Добавить статью</a>
+        <p><a href="{{ path('smart_blog_admin_article_create') }}" class="btn">Добавить статью</a></p>
+
+        <p>Всего статй: {{ pagerfanta.count }}</p>
 
         <table class="table table-striped">
             <thead>

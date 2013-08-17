@@ -4,7 +4,12 @@ namespace SmartCore\Bundle\BlogBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/**
+ * @UniqueEntity(fields={"slug"}, message="Тэг с таким сегментом URI уже существует.")
+ */
 abstract class Tag implements TagInterface
 {
     /**
@@ -16,11 +21,13 @@ abstract class Tag implements TagInterface
 
     /**
      * @ORM\Column(type="string", length=32, unique=true)
+     * @Assert\NotBlank(message="Slug can't be empty.")
      */
     protected $slug;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", length=32, unique=true)
+     * @Assert\NotBlank(message="Title can't be empty.")
      */
     protected $title;
 
@@ -47,7 +54,7 @@ abstract class Tag implements TagInterface
      * @param string $slug
      * @param string $title
      */
-    public function __construct($slug, $title = null)
+    public function __construct($slug = null, $title = null)
     {
         if (!$title) {
             $title = $slug;
