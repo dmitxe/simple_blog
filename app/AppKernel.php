@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -34,16 +34,18 @@ class AppKernel extends Kernel
             new FM\ElfinderBundle\FMElfinderBundle(),
             new SmartCore\Bundle\HtmlBundle\HtmlBundle(),
             new SmartCore\Bundle\BlogBundle\SmartBlogBundle(),
+            new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
+            new SmartCore\Bundle\GalleryBundle\SmartGalleryBundle(),
             new Dmitxe\SiteBundle\DmitxeSiteBundle(),
             new Dmitxe\UserBundle\DmitxeUserBundle(),
             new Dmitxe\BlogBundle\DmitxeBlogBundle(),
             new Dmitxe\FixturesBundle\DmitxeFixturesBundle(),
-            new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
             new Dmitxe\DemoBundle\DmitxeDemoBundle(),
             new Dmitxe\NewsBundle\DmitxeNewsBundle(),
-        );
+            new Dmitxe\GalleryBundle\DmitxeGalleryBundle(),
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+        if (in_array($this->getEnvironment(), ['dev'])) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
@@ -51,6 +53,11 @@ class AppKernel extends Kernel
             $bundles[] = new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle();
             $bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
             $bundles[] = new JMS\DebuggingBundle\JMSDebuggingBundle($this); //"jms/debugging-bundle": "dev-master",
+        }
+
+        if (in_array($this->getEnvironment(), ['test'])) {
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+            $bundles[] = new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle();
         }
 
         return $bundles;
@@ -63,7 +70,7 @@ class AppKernel extends Kernel
 
     protected function getContainerBaseClass()
     {
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+        if (in_array($this->getEnvironment(), ['dev'])) {
             return '\JMS\DebuggingBundle\DependencyInjection\TraceableContainer';
         }
 
@@ -80,4 +87,3 @@ class AppKernel extends Kernel
         return $this->rootDir.'/../var/logs';
     }
 }
-

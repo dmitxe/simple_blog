@@ -1,0 +1,3 @@
+smart_gallery_index:
+    path: /
+    defaults: { _controller: SmartGalleryBundle:Default:index }
