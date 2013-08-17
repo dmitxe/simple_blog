@@ -23,7 +23,6 @@ class TagFormType extends AbstractType
             ->add('title')
             ->add('slug')
         ;
-
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -36,5 +35,16 @@ class TagFormType extends AbstractType
     public function getName()
     {
         return 'smart_blog_tag';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class'      => 'SmartCore\Bundle\BlogBundle\Form\Type\TagFormType',
+            'csrf_protection' => false,
+//            'csrf_field_name' => '_token',
+            // уникальный ключ для генерации секретного токена
+//           'intention'       => 'tag_item',
+        );
     }
 }

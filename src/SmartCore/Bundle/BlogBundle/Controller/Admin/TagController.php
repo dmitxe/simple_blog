@@ -67,13 +67,15 @@ class TagController extends Controller
             $form->submit($request);
 
             if ($form->isValid()) {
+                ld($tag);
                 $tag = $form->getData();
-
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($tag);
                 $em->flush();
+                return $this->redirect($this->generateUrl($this->routeAdminTag));
             }
+            else ld($form->getErrors());
         }
 
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($tagService->getFindAllQuery()));

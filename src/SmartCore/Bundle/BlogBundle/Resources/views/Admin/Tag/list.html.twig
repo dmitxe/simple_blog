@@ -1,15 +1,16 @@
 {% extends 'SmartBlogBundle:Admin:layout.html.twig' %}
 
 {% block smart_blog_content %}
- {#   <a href="{{ path('smart_blog_admin_tag_create') }}" class="btn">Добавить тег</a>#}
-    <form method="post" {{ form_enctype(form) }} class="well form-inline">
+{#action={{ path("smart_blog_admin_tag_create") }}#}
+    <form method="post" {{ form_enctype(form) }} class="well form-inline"  "csrf_protection"="false">
         <label class="checkbox">Добавить тег: </label>
-        {{ form_widget(form.title, {"attr":{"placeholder":"заголовок"}}) }}
-        {{ form_widget(form.slug) }}
+        {{ form_widget(form.title, {"attr":{"placeholder":"Введите заголовок"}}) }}
+        {{ form_widget(form.slug, {"attr":{"placeholder":"Введите slug"}}) }}
+     {#  {{ form_rest() }} #}
+        <button type="submit" name="create" class="btn btn-primary">{{ 'Create'|trans }}</button>
+    </form>
 
-    <button type="submit" name="create" class="btn btn-primary">{{ 'Create'|trans }}</button>
-
-   </form>
+{# ToDO: расскомментировать эту строчу для универсализации   {{ form(form) }} #}
 
         <table class="table table-striped">
             <thead>
