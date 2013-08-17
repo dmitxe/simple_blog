@@ -56,22 +56,38 @@ class TagController extends Controller
     /**
      * @return Response
      */
-    public function indexAction(Request $requst)
+    public function indexAction(Request $request)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
         $tagService = $this->get($this->tagServiceName);
+        $tag = $tagService->create();
+
+        $form = $this->createForm(new TagFormType(get_class($tag)), $tag);
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+
+            if ($form->isValid()) {
+                $tag = $form->getData();
+
+                /** @var \Doctrine\ORM\EntityManager $em */
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($tag);
+                $em->flush();
+            }
+        }
 
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($tagService->getFindAllQuery()));
         $pagerfanta->setMaxPerPage($tagService->getItemsCountPerPage());
 
         try {
-            $pagerfanta->setCurrentPage($requst->query->get('page', 1));
+            $pagerfanta->setCurrentPage($request->query->get('page', 1));
         } catch (NotValidCurrentPageException $e) {
             return $this->redirect($this->generateUrl($this->routeAdminTag));
         }
 
         return $this->render($this->bundleName . ':Admin/Tag:list.html.twig', [
             'tags' => $tagService->getCloud($this->routeAdminTag),
+            'form' => $form->createView(),
             'pagerfanta' => $pagerfanta,
         ]);
     }
