@@ -30,8 +30,11 @@ class TagService extends AbstractBlogService
     protected $tagsRepo;
 
     /**
-     * @param \SmartCore\Bundle\BlogBundle\Repository\ArticleRepository $articlesRepo
-     * @param \SmartCore\Bundle\BlogBundle\Repository\TagRepository $tagsRepo
+     * @param EntityManager $em
+     * @param ArticleRepositoryInterface $articlesRepo
+     * @param EntityRepository $tagsRepo
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param RouterInterface $router
      * @param int $itemsPerPage
      */
     public function __construct(
