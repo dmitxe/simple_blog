@@ -27,6 +27,10 @@ dmitxe_news:
     resource: "@DmitxeNewsBundle/Resources/config/routing.yml"
     prefix:   /news/
 
+dmitxe_news_admin:
+    resource: "@DmitxeNewsBundle/Resources/config/routing_admin.yml"
+    prefix:   /news/admin/
+
 smart_gallery:
     resource: "@SmartGalleryBundle/Resources/config/routing.yml"
     prefix:   /gallery/

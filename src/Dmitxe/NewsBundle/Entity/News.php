@@ -3,7 +3,7 @@
 namespace Dmitxe\NewsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use SmartCore\Bundle\BlogBundle\Model\Article as SmartArticle;
+use SmartCore\Bundle\BlogBundle\Model\Article as SmartNews;
 
 /**
  * @ORM\Entity(repositoryClass="SmartCore\Bundle\BlogBundle\Repository\ArticleRepository")
@@ -13,7 +13,7 @@ use SmartCore\Bundle\BlogBundle\Model\Article as SmartArticle;
  *      }
  * )
  */
-class Article extends SmartArticle
+class News extends SmartNews
 {
 
 }

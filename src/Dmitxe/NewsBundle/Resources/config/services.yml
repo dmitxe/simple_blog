@@ -14,4 +14,4 @@ services:
         class:           SmartCore\Bundle\BlogBundle\Repository\ArticleRepository
         factory_service: doctrine
         factory_method:  getRepository
-        arguments:       ['Dmitxe\NewsBundle\Entity\Article']
+        arguments:       ['Dmitxe\NewsBundle\Entity\News']
