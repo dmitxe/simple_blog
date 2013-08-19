@@ -4,7 +4,7 @@ namespace Dmitxe\NewsBundle\Controller\Admin;
 
 use SmartCore\Bundle\BlogBundle\Controller\Admin\ArticleController as BaseArticleController;
 
-class NewsController extends BaseArticleController
+class ArticleController extends BaseArticleController
 {
     /**
      * Constructor.

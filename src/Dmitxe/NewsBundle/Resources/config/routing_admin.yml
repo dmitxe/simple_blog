@@ -1,13 +1,13 @@
 dmitxe_news_admin_index:
     path: /
-    defaults: { _controller: DmitxeNewsBundle:Admin/News:index }
+    defaults: { _controller: DmitxeNewsBundle:Admin/Article:index }
 
 dmitxe_news_admin_create:
     path: /create/
-    defaults: { _controller: DmitxeNewsBundle:Admin/News:create }
+    defaults: { _controller: DmitxeNewsBundle:Admin/Article:create }
 
 dmitxe_news_admin_edit:
     path: /{id}/
-    defaults: { _controller: DmitxeNewsBundle:Admin/News:edit }
+    defaults: { _controller: DmitxeNewsBundle:Admin/Article:edit }
     requirements:
         id: \d+
