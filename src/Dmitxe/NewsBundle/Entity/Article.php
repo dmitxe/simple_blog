@@ -13,7 +13,7 @@ use SmartCore\Bundle\BlogBundle\Model\Article as SmartNews;
  *      }
  * )
  */
-class News extends SmartNews
+class Article extends SmartNews
 {
 
 }
