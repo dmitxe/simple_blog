@@ -2,10 +2,11 @@
 
 namespace SmartCore\Bundle\TexterBundle;
 
-use SmartCore\Bundle\EngineBundle\Module\Bundle;
+//use SmartCore\Bundle\EngineBundle\Module\Bundle;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use SmartCore\Bundle\TexterBundle\Entity\Item;
 
-class TexterModule extends Bundle
+class SmartTexterBundle extends Bundle
 {
     /**
      * Действие при создании ноды.

@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new SmartCore\Bundle\BlogBundle\SmartBlogBundle(),
             new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
             new SmartCore\Bundle\GalleryBundle\SmartGalleryBundle(),
+            new SmartCore\Bundle\TexterBundle\SmartTexterBundle(),
             new Dmitxe\SiteBundle\DmitxeSiteBundle(),
             new Dmitxe\UserBundle\DmitxeUserBundle(),
             new Dmitxe\BlogBundle\DmitxeBlogBundle(),
@@ -43,6 +44,7 @@ class AppKernel extends Kernel
             new Dmitxe\DemoBundle\DmitxeDemoBundle(),
             new Dmitxe\NewsBundle\DmitxeNewsBundle(),
             new Dmitxe\GalleryBundle\DmitxeGalleryBundle(),
+            new Dmitxe\PagesBundle\DmitxePagesBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev'])) {
