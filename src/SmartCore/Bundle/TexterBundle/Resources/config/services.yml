@@ -1,22 +1,12 @@
 services:
-    texter:
+    smart_texter.twig.extension:
         class: SmartCore\Bundle\TexterBundle\Twig\TexterExtension
         arguments:
             - @doctrine.orm.default_entity_manager
         tags:
             - { name: twig.extension }
 
-#    smart_texter.texter:
-#        class: SmartCore\Bundle\TexterBundle\Service\TexterService
-#        arguments:
-#            - @doctrine.orm.default_entity_manager
-#            - @smart_texter.repository
-#            - @event_dispatcher
-#            - @router
-#            - %smart_texter.items_per_page%
-
-#    smart_texter.repository:
-#        class:           SmartCore\Bundle\TexterBundle\Repository\TexterRepository
-#        factory_service: doctrine
-#        factory_method:  getRepository
-#        arguments:       [%smart_texter.model.texter.class%]
+    smart_texter:
+        class: SmartCore\Bundle\TexterBundle\Service\TexterService
+        arguments:
+            - @doctrine.orm.default_entity_manager

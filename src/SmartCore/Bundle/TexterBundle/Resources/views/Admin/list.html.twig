@@ -1,71 +1,42 @@
-{% extends 'SmartBlogBundle:Admin:layout.html.twig' %}
+{% extends 'SmartTexterBundle::layout.html.twig' %}
 
-{% block smart_blog_content %}
+{% block smart_texter_content %}
 
-    <div class="span3">
-        {{ form(form, {'attr': {'class': 'well'} }) }}
+    <p><a href="{{ path('smart_texter_admin_create') }}" class="btn btn-success">Добавить текст</a></p>
 
-        {#
-        <form method="POST" {{ form_enctype(form) }} class="well form-inline">
-            {% if form.vars.errors or form.slug.vars.errors %}
-                <div class="alert alert-error">
-                    {{ form_errors(form) }}
-                    {{ form_errors(form.title) }}
-                    {{ form_errors(form.slug) }}
-                </div>
-            {% endif %}
+    <p>Всего текстов: {{ pagerfanta.count }}</p>
 
-            <label class="checkbox">Добавить тег:&nbsp;</label>
-
-            {{ form_widget(form.title, {"attr": {"placeholder":"Введите заголовок"} }) }}
-            &nbsp;
-            {{ form_widget(form.slug, {"attr": {"placeholder":"Введите slug"} }) }}
-            &nbsp;
-            {{ form_widget(form.create) }}
-            {{ form_rest(form) }}
-        </form>
-        #}
-    </div>
-
-    <div class="span8">
-        <table class="table table-striped">
-            <thead>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Текст</th>
+            <th>Дата создания</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for text in pagerfanta.currentPageResults %}
             <tr>
-                <th>Id</th>
-                <th>Заголовок</th>
-                <th>Slug</th>
-                <th>Вес</th>
-                <th>Дата создания</th>
+                <td>{{ text.id }}</td>
+                <td>
+                    <a href="{{ path('smart_texter_admin_edit', {'id': text.id}) }}" title="Редактировать">
+                        {{ text.announce }}
+                    </a>
+                </td>
+                <td>{{ text.createdAt | localizeddate() }}</td>
             </tr>
-            </thead>
-            <tbody>
-            {% for tag in pagerfanta.currentPageResults %}
-                <tr>
-                    <td>{{ tag.id }}</td>
-                    <td>
-                        <a href="{{ path('smart_blog_admin_tag_edit', {'id': tag.id}) }}" title="Редактировать">
-                            {{ tag.title }}
-                        </a>
-                    </td>
-                    <td>{{ tag.slug }}</td>
-                    <td>{{ tag.weight }}</td>
-                    <td>{{ tag.createdAt | localizeddate() }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% endfor %}
+        </tbody>
+    </table>
 
-        <p>Всего тэгов: {{ pagerfanta.count }}</p>
+    {% block smart_texter_paginator %}
+        {% if pagerfanta.haveToPaginate %}
+            {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+                    'routeName': 'smart_texter_admin_index',
+                    'css_container_class': 'pagination pagination-centered',
+                })
+            }}
+        {% endif %}
+    {% endblock smart_texter_paginator %}
 
-        {% block smart_blog_tags_paginator %}
-            {% if pagerfanta.haveToPaginate %}
-                {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                        'routeName': 'smart_blog_admin_tag',
-                        'css_container_class': 'pagination pagination-centered',
-                    })
-                }}
-            {% endif %}
-        {% endblock smart_blog_tags_paginator %}
-    </div>
-
-{% endblock smart_blog_content %}
+{% endblock smart_texter_content %}

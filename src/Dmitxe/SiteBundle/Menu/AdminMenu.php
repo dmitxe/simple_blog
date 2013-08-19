@@ -20,7 +20,7 @@ class AdminMenu extends ContainerAware
 
         $menu->addChild('Blog',     ['route' => 'smart_blog_admin_article']);
         $menu->addChild('News',     ['route' => 'dmitxe_news_admin_index']);
-        $menu->addChild('Pages',    ['route' => 'dmitxe_site_index']);
+        $menu->addChild('Texts',    ['route' => 'smart_texter_admin_index']);
 
         return $menu;
     }

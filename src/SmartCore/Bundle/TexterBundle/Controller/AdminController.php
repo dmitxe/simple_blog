@@ -2,10 +2,12 @@
 
 namespace SmartCore\Bundle\TexterBundle\Controller;
 
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
-use SmartCore\Bundle\TexterBundle\Form\Type\TexterFormType;
-use SmartCore\Bundle\TexterBundle\Pagerfanta\SimpleDoctrineORMAdapter;
+use SmartCore\Bundle\TexterBundle\Entity\Text;
+use SmartCore\Bundle\TexterBundle\Form\Type\TexterCreateFormType;
+use SmartCore\Bundle\TexterBundle\Form\Type\TexterEditFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,78 +15,51 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     /**
-     * Имя бандла. Для перегрузки шаблонов.
-     *
-     * @var string
-     */
-    protected $bundleName;
-
-    /**
-     * Маршрут на список текстов.
-     *
-     * @var string
-     */
-    protected $routeIndex;
-
-    /**
-     * Маршрут просмотра списка страниц по тексту.
-     *
-     * @var string
-     */
-    protected $routeTexter;
-
-    /**
-     * Имя сервиса по работе с текстом.
-     *
-     * @var string
-     */
-    protected $texterServiceName;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->texterServiceName   = 'smart_texter.texter';
-        $this->routeIndex       = 'smart_texter_index';
-        $this->routeAdminTag    = 'smart_texter_admin';
-        $this->routeAdminTagEdit= 'smart_texter_admin_edit';
-        $this->bundleName       = 'SmartTexterBundle';
-    }
-
-    /**
      * @param Request $request
      * @return Response
      */
     public function indexAction(Request $request)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\TexterService $texterService */
-        $texterService = $this->get($this->texterServiceName);
-        $texter = $texterService->create();
+        $texterService = $this->get('smart_texter');
 
-        $form = $this->createForm(new TexterCreateFormType(get_class($texter)), $texter);
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $texterService->update($texter);
-
-                return $this->redirect($this->generateUrl($this->routeAdminTag));
-            }
-        }
-
-        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($texterService->getFindAllQuery()));
+        $pagerfanta = new Pagerfanta(new DoctrineORMAdapter($texterService->getFindAllQuery()));
         $pagerfanta->setMaxPerPage($texterService->getItemsCountPerPage());
 
         try {
             $pagerfanta->setCurrentPage($request->query->get('page', 1));
         } catch (NotValidCurrentPageException $e) {
-            return $this->redirect($this->generateUrl($this->routeAdminTag));
+            return $this->redirect($this->generateUrl('smart_texter_admin_index'));
         }
 
-        return $this->render($this->bundleName . ':Admin:list.html.twig', [
-            'form'       => $form->createView(),
+        return $this->render('SmartTexterBundle:Admin:list.html.twig', [
             'pagerfanta' => $pagerfanta,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function createAction(Request $request)
+    {
+        $text = new Text();
+
+        $form = $this->createForm(new TexterCreateFormType(), $text);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                /** @var \Doctrine\ORM\EntityManager $em */
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($text);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('smart_texter_admin_index'));
+            }
+        }
+
+        return $this->render('SmartTexterBundle:Admin:create.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -96,28 +71,27 @@ class AdminController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\TexterBundle\Model\TexterInterface $texter */
-        $texter = $this->get($this->texterServiceName)->get($id);
+        $text = $this->get('smart_texter')->get($id);
 
-        if (null === $texter) {
+        if (null === $text) {
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new TexterFormType(get_class($texter)), $texter);
+        $form = $this->createForm(new TexterEditFormType(), $text);
         if ($request->isMethod('POST')) {
             $form->submit($request);
 
             if ($form->isValid()) {
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($texter);
+                $em->persist($text);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl($this->routeAdminTag));
+                return $this->redirect($this->generateUrl('smart_texter_admin_index'));
             }
         }
 
-        return $this->render($this->bundleName . ':Admin:edit.html.twig', [
+        return $this->render('SmartTexterBundle:Admin:edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

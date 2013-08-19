@@ -1,7 +1,3 @@
-dmitxe_pages:
-    resource: "@DmitxePagesBundle/Resources/config/routing.yml"
-    prefix:   /
-
 dmitxe_demo:
     resource: "@DmitxeDemoBundle/Resources/config/routing.yml"
 
@@ -23,9 +19,9 @@ smart_blog_admin_tag:
     resource: "@SmartBlogBundle/Resources/config/routing_admin_tag.yml"
     prefix:   /admin/blog/tag/
 
-#smart_texter:
-#    resource: "@SmartTexterBundle/Resources/config/routing.yml"
-#    prefix:   /texter/
+smart_texter:
+    resource: "@SmartTexterBundle/Resources/config/routing_admin.yml"
+    prefix:   /admin/texter/
 
 dmitxe_blog:
     resource: "@DmitxeBlogBundle/Resources/config/routing.yml"
@@ -38,10 +34,6 @@ dmitxe_news:
 dmitxe_news_admin:
     resource: "@DmitxeNewsBundle/Resources/config/routing_admin.yml"
     prefix:   /news/admin/
-
-dmitxe_pages:
-    resource: "@DmitxePagesBundle/Resources/config/routing.yml"
-    prefix:   /pages/
 
 smart_gallery:
     resource: "@SmartGalleryBundle/Resources/config/routing.yml"

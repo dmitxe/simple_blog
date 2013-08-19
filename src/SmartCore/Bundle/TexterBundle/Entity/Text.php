@@ -5,8 +5,8 @@ namespace SmartCore\Bundle\TexterBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="text_items")
+ * @ORM\Entity(repositoryClass="SmartCore\Bundle\TexterBundle\Repository\TextRepository")
+ * @ORM\Table(name="texter_items")
  */
 class Text
 {
@@ -23,11 +23,16 @@ class Text
     protected $text;
 
     /**
+     * @ORM\Column(type="datetime", name="created_at")
+     */
+    protected $createdAt;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
-        //$this->datetime = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -36,6 +41,14 @@ class Text
     public function __toString()
     {
         return $this->getText();
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     /**

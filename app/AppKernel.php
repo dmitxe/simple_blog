@@ -44,7 +44,6 @@ class AppKernel extends Kernel
             new Dmitxe\DemoBundle\DmitxeDemoBundle(),
             new Dmitxe\NewsBundle\DmitxeNewsBundle(),
             new Dmitxe\GalleryBundle\DmitxeGalleryBundle(),
-            new Dmitxe\PagesBundle\DmitxePagesBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev'])) {

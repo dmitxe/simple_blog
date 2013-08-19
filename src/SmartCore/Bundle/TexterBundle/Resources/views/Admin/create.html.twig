@@ -1,7 +1,7 @@
-{% extends 'SmartBlogBundle:Admin:layout.html.twig' %}
+{% extends 'SmartTexterBundle::layout.html.twig' %}
 
-{% block smart_blog_content %}
+{% block smart_texter_content %}
 
-    {% include 'SmartBlogBundle:Article:form.html.twig' %}
+    {{ form(form) }}
 
-{% endblock smart_blog_content %}
+{% endblock smart_texter_content %}

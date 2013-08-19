@@ -1,0 +1,9 @@
+{% extends '@DmitxeSite/Admin/index.html.twig' %}
+
+{% block html_head_title %} {{ 'Texts'|trans }} &raquo; {{ 'Admin'|trans }} &raquo; {{ parent() }} {% endblock html_head_title %}
+
+{% block content %}
+    {{ parent() }}
+
+    {% block smart_texter_content %}{% endblock %}
+{% endblock %}
