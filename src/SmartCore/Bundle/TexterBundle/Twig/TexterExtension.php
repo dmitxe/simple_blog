@@ -7,7 +7,7 @@ class TexterExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new Twig_SimpleFunction('texter', 'generate_texter'),
+            new \Twig_SimpleFunction('texter', 'generate_texter'),
         );
 
     }
@@ -15,13 +15,6 @@ class TexterExtension extends \Twig_Extension
     public function generate_texter()
     {
         return "Пробный текст";
-    }
-
-    public function getFilters()
-    {
-        return array(
-            new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
-        );
     }
 
     public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
