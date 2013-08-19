@@ -1,30 +1,47 @@
 <?php
-// src/SmartCore/Bundle/TexterBundle/Twig/TexterExtension.php
+
 namespace SmartCore\Bundle\TexterBundle\Twig;
+
+use Doctrine\ORM\EntityManager;
 
 class TexterExtension extends \Twig_Extension
 {
+    /**
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * Constructor.
+     *
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em) {
+        $this->em = $em;
+    }
+
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('texter', 'generate_texter'),
-        );
-
+        return [
+            'texter' => new \Twig_Function_Method($this, 'texterFunction'),
+        ];
     }
 
-    public function generate_texter()
+    /**
+     * @param integer $id
+     * @return string
+     */
+    public function texterFunction($id)
     {
-        return "Пробный текст";
+        return $this->em->find('SmartTexterBundle:Text', $id)->getText();
     }
 
-    public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
-    {
-        $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-        $price = '$'.$price;
-
-        return $price;
-    }
-
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'texter_extension';

@@ -23,9 +23,9 @@ smart_blog_admin_tag:
     resource: "@SmartBlogBundle/Resources/config/routing_admin_tag.yml"
     prefix:   /admin/blog/tag/
 
-smart_texter:
-    resource: "@SmartTexterBundle/Resources/config/routing.yml"
-    prefix:   /texter/
+#smart_texter:
+#    resource: "@SmartTexterBundle/Resources/config/routing.yml"
+#    prefix:   /texter/
 
 dmitxe_blog:
     resource: "@DmitxeBlogBundle/Resources/config/routing.yml"

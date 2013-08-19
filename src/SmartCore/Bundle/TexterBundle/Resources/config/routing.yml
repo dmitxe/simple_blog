@@ -1,3 +1,0 @@
-smart_texter_index:
-    pattern:  /hello/{name}
-    defaults: { _controller: DmitxePagesBundle:Default:index }
