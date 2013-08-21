@@ -22,6 +22,7 @@ class CategoryFormType extends AbstractType
         $builder
             ->add('title')
             ->add('slug')
+            ->add('parent')
         ;
     }
 

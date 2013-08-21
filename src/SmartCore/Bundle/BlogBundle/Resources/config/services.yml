@@ -21,10 +21,6 @@ services:
         class: SmartCore\Bundle\BlogBundle\Service\CategoryService
         arguments:
             - @doctrine.orm.default_entity_manager
-#            - @smart_blog.category.repository
-#            - @event_dispatcher
-            - @router
-            - %smart_blog.items_per_page%
 
     smart_blog.article.form:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleFormType

@@ -4,64 +4,10 @@
 
     <div class="span3">
         {{ form(form, {'attr': {'class': 'well'} }) }}
-
-        {#
-        <form method="POST" {{ form_enctype(form) }} class="well form-inline">
-            {% if form.vars.errors or form.slug.vars.errors %}
-                <div class="alert alert-error">
-                    {{ form_errors(form) }}
-                    {{ form_errors(form.title) }}
-                    {{ form_errors(form.slug) }}
-                </div>
-            {% endif %}
-
-            <label class="checkbox">Добавить тег:&nbsp;</label>
-
-            {{ form_widget(form.title, {"attr": {"placeholder":"Введите заголовок"} }) }}
-            &nbsp;
-            {{ form_widget(form.slug, {"attr": {"placeholder":"Введите slug"} }) }}
-            &nbsp;
-            {{ form_widget(form.create) }}
-            {{ form_rest(form) }}
-        </form>
-        #}
     </div>
 
     <div class="span8">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Заголовок</th>
-                <th>Slug</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for category in pagerfanta.currentPageResults %}
-                <tr>
-                    <td>{{ category.id }}</td>
-                    <td>
-                        <a href="{{ path('smart_blog_admin_category_edit', {'id': category.id}) }}" title="Редактировать">
-                            {{ category.title }}
-                        </a>
-                    </td>
-                    <td>{{ category.slug }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <p>Всего тэгов: {{ pagerfanta.count }}</p>
-
-        {% block smart_blog_categores_paginator %}
-            {% if pagerfanta.haveToPaginate %}
-                {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                        'routeName': 'smart_blog_admin_category',
-                        'css_container_class': 'pagination pagination-centered',
-                    })
-                }}
-            {% endif %}
-        {% endblock smart_blog_categores_paginator %}
+        {{ knp_menu_render('SmartBlogBundle:Category:adminTree') }}
     </div>
 
 {% endblock smart_blog_content %}

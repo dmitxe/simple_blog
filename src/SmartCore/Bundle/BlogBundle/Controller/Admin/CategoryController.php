@@ -46,11 +46,11 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-        $this->categoryServiceName   = 'smart_blog.category';
-        $this->routeIndex       = 'smart_blog_category_index';
-        $this->routeAdminCategory    = 'smart_blog_admin_category';
-        $this->routeAdminCategoryEdit= 'smart_blog_admin_category_edit';
-        $this->bundleName       = 'SmartBlogBundle';
+        $this->categoryServiceName    = 'smart_blog.category';
+        $this->routeIndex             = 'smart_blog_category_index';
+        $this->routeAdminCategory     = 'smart_blog_admin_category';
+        $this->routeAdminCategoryEdit = 'smart_blog_admin_category_edit';
+        $this->bundleName             = 'SmartBlogBundle';
     }
 
     /**
@@ -74,18 +74,8 @@ class CategoryController extends Controller
             }
         }
 
-        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($categoryService->getFindAllQuery()));
-        $pagerfanta->setMaxPerPage($categoryService->getItemsCountPerPage());
-
-        try {
-            $pagerfanta->setCurrentPage($request->query->get('page', 1));
-        } catch (NotValidCurrentPageException $e) {
-            return $this->redirect($this->generateUrl($this->routeAdminCategory));
-        }
-
         return $this->render($this->bundleName . ':Admin/Category:list.html.twig', [
-            'form'       => $form->createView(),
-            'pagerfanta' => $pagerfanta,
+            'form' => $form->createView(),
         ]);
     }
 

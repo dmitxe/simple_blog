@@ -7,8 +7,6 @@ use Doctrine\ORM\EntityRepository;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
-use SmartCore\Bundle\BlogBundle\SmartBlogBundle;
-use SmartCore\Bundle\BlogBundle\SmartBlogEvents;
 
 class CategoryService extends AbstractBlogService
 {
@@ -18,12 +16,7 @@ class CategoryService extends AbstractBlogService
     protected $em;
 
     /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
-     * @var \SmartCore\Bundle\BlogBundle\Repository\CategoryRepository
+     * @var EntityRepository
      */
     protected $categoriesRepo;
 
@@ -32,14 +25,10 @@ class CategoryService extends AbstractBlogService
      * @param RouterInterface $router
      * @param int $itemsPerPage
      */
-    public function __construct(
-        EntityManager $em,
-        RouterInterface $router,
-        $itemsPerPage = 10)
+    public function __construct(EntityManager $em, $itemsPerPage = 10)
     {
-        $this->em               = $em;
-        $this->router           = $router;
-        $this->categoriesRepo     = $em->getRepository('SmartBlogBundle:Category');
+        $this->em                 = $em;
+        $this->categoriesRepo     = $em->getRepository('DmitxeBlogBundle:Category'); // @todo внедрение имени класса категории
         $this->setItemsCountPerPage($itemsPerPage);
     }
 
@@ -74,10 +63,10 @@ class CategoryService extends AbstractBlogService
     }
 
     /**
-     * @return \Doctrine\ORM\Query
+     * @return CategoryInterface[]|null
      */
-    public function getFindAllQuery()
+    public function all()
     {
-        return $this->categoriesRepo->getFindAllQuery();
+        return $this->categoriesRepo->findAll();
     }
 }
