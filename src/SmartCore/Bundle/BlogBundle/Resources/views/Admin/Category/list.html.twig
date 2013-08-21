@@ -37,15 +37,15 @@
             </tr>
             </thead>
             <tbody>
-            {% for tag in pagerfanta.currentPageResults %}
+            {% for category in pagerfanta.currentPageResults %}
                 <tr>
-                    <td>{{ tag.id }}</td>
+                    <td>{{ category.id }}</td>
                     <td>
-                        <a href="{{ path('smart_blog_admin_tag_edit', {'id': tag.id}) }}" title="Редактировать">
-                            {{ tag.title }}
+                        <a href="{{ path('smart_blog_admin_category_edit', {'id': category.id}) }}" title="Редактировать">
+                            {{ category.title }}
                         </a>
                     </td>
-                    <td>{{ tag.slug }}</td>
+                    <td>{{ category.slug }}</td>
                 </tr>
             {% endfor %}
             </tbody>
