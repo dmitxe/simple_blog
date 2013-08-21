@@ -61,7 +61,7 @@
                         {% else %}
                             <li><a href="{{ path('fos_user_registration_register') }}">Зарегистрироваться</a></li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle" href="#" data-toggle="dropdown">Войти <strong class="caret"></strong></a>
+                                <a id="login-dropdown" class="dropdown-toggle" href="#" data-toggle="dropdown">Войти <strong class="caret"></strong></a>
                                 <div class="dropdown-menu" style="padding: 16px; padding-bottom: 0px;">
 
                                     {{ render(controller('DmitxeUserBundle:Security:headerLogin')) }}
@@ -89,4 +89,14 @@
 {% endblock body %}
 
 {% block body_js %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#login-dropdown').click(function(e) {
+                setTimeout(function() {
+                    $("#username").focus();
+                }, 1);
+            });
+        });
+    </script>
 {% endblock body_js %}
