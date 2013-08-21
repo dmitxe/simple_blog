@@ -28,6 +28,7 @@
         "mopa/bootstrap-bundle": "dev-master",
         "knplabs/knp-gaufrette-bundle" : "v0.1.4",
         "knplabs/knp-menu-bundle": "v2.0.0-alpha1",
+        "liip/doctrine-cache-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "dev-master",
         "ornicar/gravatar-bundle" : "dev-master",
         "avalanche123/imagine-bundle": "dev-master",
