@@ -24,6 +24,7 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
+        "friendsofsymfony/comment-bundle": "dev-master",
         "mopa/bootstrap-bundle": "dev-master",
         "knplabs/knp-gaufrette-bundle" : "v0.1.4",
         "knplabs/knp-menu-bundle": "v2.0.0-alpha1",

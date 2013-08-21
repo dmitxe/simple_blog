@@ -1,5 +1,9 @@
 {% extends 'SmartBlogBundle::layout.html.twig' %}
 
+{% block html_head_styles %}{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/comments.css') }}" type="text/css" />
+{% endblock html_head_styles %}
+
 {% block smart_blog_content %}
 
     <h2>{{ article.title }}</h2>
@@ -31,5 +35,7 @@
         <a href="{{ path('smart_blog_article_edit', {'id': article.id}) }}" class="btn">Редактирование</a>
         </p>
     {% endif %}
+
+    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}
 
 {% endblock smart_blog_content %}

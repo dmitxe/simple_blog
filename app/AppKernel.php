@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = [
+        $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -37,6 +37,10 @@ class AppKernel extends Kernel
             new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
             new SmartCore\Bundle\GalleryBundle\SmartGalleryBundle(),
             new SmartCore\Bundle\TexterBundle\SmartTexterBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+            new FOS\RestBundle\FOSRestBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+
             new Dmitxe\SiteBundle\DmitxeSiteBundle(),
             new Dmitxe\UserBundle\DmitxeUserBundle(),
             new Dmitxe\BlogBundle\DmitxeBlogBundle(),
@@ -44,7 +48,8 @@ class AppKernel extends Kernel
             new Dmitxe\DemoBundle\DmitxeDemoBundle(),
             new Dmitxe\NewsBundle\DmitxeNewsBundle(),
             new Dmitxe\GalleryBundle\DmitxeGalleryBundle(),
-        ];
+            new Dmitxe\CommentBundle\DmitxeCommentBundle(),
+        );
 
         if (in_array($this->getEnvironment(), ['dev'])) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
