@@ -194,6 +194,7 @@ vich_uploader:
 smart_blog:
     article_class: Dmitxe\BlogBundle\Entity\Article
     tag_class: Dmitxe\BlogBundle\Entity\Tag
+    category_class: Dmitxe\BlogBundle\Entity\Category
     items_per_page: 5
 
 services:

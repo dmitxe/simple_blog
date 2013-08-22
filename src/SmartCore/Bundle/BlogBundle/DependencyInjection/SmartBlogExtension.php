@@ -27,6 +27,7 @@ class SmartBlogExtension extends Extension
 
         $container->setParameter('smart_blog.model.article.class', $config['article_class']);
         $container->setParameter('smart_blog.model.tag.class',     $config['tag_class']);
+        $container->setParameter('smart_blog.model.category.class',     $config['category_class']);
         $container->setParameter('smart_blog.items_per_page',      $config['items_per_page']);
     }
 }

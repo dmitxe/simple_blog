@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('article_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('tag_class')->defaultNull()->end()
+                ->scalarNode('category_class')->defaultNull()->end()
                 ->integerNode('items_per_page')->defaultValue(10)->end()
             ->end();
 

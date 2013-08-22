@@ -15,7 +15,7 @@ class CategoryRepository extends EntityRepository
     {
         return $this->_em->createQuery("
           SELECT categories
-          FROM {$this->_entityName} AS tags
+          FROM {$this->_entityName} AS categories
           ORDER BY categories.id DESC
         ");
     }

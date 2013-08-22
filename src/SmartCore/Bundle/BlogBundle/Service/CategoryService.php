@@ -25,10 +25,13 @@ class CategoryService extends AbstractBlogService
      * @param RouterInterface $router
      * @param int $itemsPerPage
      */
-    public function __construct(EntityManager $em, $itemsPerPage = 10)
+    public function __construct(
+        EntityManager $em,
+        EntityRepository $categoriesRepo,
+        $itemsPerPage = 10)
     {
         $this->em                 = $em;
-        $this->categoriesRepo     = $em->getRepository('DmitxeBlogBundle:Category'); // @todo внедрение имени класса категории
+        $this->categoriesRepo     = $categoriesRepo;
         $this->setItemsCountPerPage($itemsPerPage);
     }
 
