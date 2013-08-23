@@ -1,0 +1,15 @@
+{#{{ form(form) }}#}
+
+<fieldset>
+    <legend>{{ form_label(form) }}</legend>
+    {{ form_widget(form.text, {
+            'attr': {
+                'class': 'input-block-level wysiwyg',
+                'data-theme': 'advanced',
+            }
+        })
+    }}
+</fieldset>
+
+{{ tinymce_init() }}
+{{ elfinder_tinymce_init() }}
