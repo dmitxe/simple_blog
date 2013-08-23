@@ -19,6 +19,10 @@ class LoadTexterData extends ContainerAware implements FixtureInterface, Ordered
         $text->setText('Мой первый текстер.');
         $manager->persist($text);
 
+        $text = new Text();
+        $text->setText('На этом сайте собраны различная полезная информация по тематике сайтостроения. Информация больше собрана для себя, впрочем, надеюсь, что она будет также полезна и другим программистам. Если Вам нужно создать сайт под ключ - свяжитесь со мной через форму обратной связи. Данный блог написан на фреймворке Symfony 2.');
+        $manager->persist($text);
+
         $manager->flush();
     }
 

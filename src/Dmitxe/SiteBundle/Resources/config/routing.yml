@@ -5,3 +5,8 @@ dmitxe_site_index:
 dmitxe_site_admin:
     path: /admin/
     defaults: { _controller: DmitxeSiteBundle:Admin:index }
+
+dmitxe_site_about:
+    path: /about/
+    defaults: { _controller: DmitxeSiteBundle:Page:about }
+
