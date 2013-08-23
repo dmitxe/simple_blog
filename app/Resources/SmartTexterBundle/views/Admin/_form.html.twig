@@ -1,7 +1,9 @@
 {#{{ form(form) }}#}
 
+{{ form_start(form) }}
 <fieldset>
     <legend>{{ form_label(form) }}</legend>
+    {{ form_errors(form) }}
     {{ form_widget(form.text, {
             'attr': {
                 'class': 'input-block-level wysiwyg',
@@ -9,7 +11,10 @@
             }
         })
     }}
+    <br />
+    {{ form_rest(form) }}
 </fieldset>
+{{ form_end(form) }}
 
 {{ tinymce_init() }}
 {{ elfinder_tinymce_init() }}
