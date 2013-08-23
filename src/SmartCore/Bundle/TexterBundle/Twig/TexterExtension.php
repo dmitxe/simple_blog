@@ -18,6 +18,7 @@ class TexterExtension extends \Twig_Extension
      */
     public function __construct(EntityManager $em) {
         $this->em = $em;
+        $this->getTokenParsers();
     }
 
     /**
@@ -26,7 +27,11 @@ class TexterExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'texter' => new \Twig_Function_Method($this, 'texterFunction'),
+            'texter' => new \Twig_Function_Method(
+                $this,
+                'texterFunction',
+                ['is_safe' => ['html']
+            ]),
         ];
     }
 
