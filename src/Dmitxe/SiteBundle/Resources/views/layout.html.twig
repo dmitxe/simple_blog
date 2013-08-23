@@ -30,62 +30,73 @@
 
 {% block body %}
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a class="brand" href="{{ path('dmitxe_site_index') }}">Dmitry Xe</a>
-                <div class="nav-collapse">
+    <div id="page" class="container">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="{{ path('dmitxe_site_index') }}">Dmitry Xe</a>
+                    <div class="nav-collapse">
 
-                    {{ knp_menu_render('DmitxeSiteBundle:SiteMenu:main', {
-                        'currentClass': 'active',
-                        'clear_matcher': false,
-                    }) }}
+                        {{ knp_menu_render('DmitxeSiteBundle:SiteMenu:main', {
+                            'currentClass': 'active',
+                            'clear_matcher': false,
+                        }) }}
 
-                    <ul class="nav pull-right">
-                        {% if is_granted('ROLE_USER') %}
-                            <li class="divider-vertical"></li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>
-                                    &nbsp;{{ app.user.username }} <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('fos_user_profile_show') }}"><i class="icon-cog"></i> Мой профиль</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-off"></i> Выход</a></li>
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li><a href="{{ path('fos_user_registration_register') }}">Зарегистрироваться</a></li>
-                            <li class="dropdown">
-                                <a id="login-dropdown" class="dropdown-toggle" href="#" data-toggle="dropdown">Войти <strong class="caret"></strong></a>
-                                <div class="dropdown-menu" style="padding: 16px; padding-bottom: 0px;">
+                        <ul class="nav pull-right">
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="divider-vertical"></li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i>
+                                        &nbsp;{{ app.user.username }} <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('fos_user_profile_show') }}"><i class="icon-cog"></i> Мой профиль</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-off"></i> Выход</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li><a href="{{ path('fos_user_registration_register') }}">Зарегистрироваться</a></li>
+                                <li class="dropdown">
+                                    <a id="login-dropdown" class="dropdown-toggle" href="#" data-toggle="dropdown">Войти <strong class="caret"></strong></a>
+                                    <div class="dropdown-menu" style="padding: 16px; padding-bottom: 0px;">
 
-                                    {{ render(controller('DmitxeUserBundle:Security:headerLogin')) }}
+                                        {{ render(controller('DmitxeUserBundle:Security:headerLogin')) }}
 
-                                </div>
-                            </li>
-                        {% endif %}
-                    </ul>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        {% block content %}
-        {% endblock content %}
-    </div>
+        <div class="row">
+            <div id="sidebar" class="span3">
+                {{ render(controller('SmartBlogBundle:Widget:showCategoryList', { 'id_action': null })) }}
+                <p>Тут будет сайдбар</p>
+            </div>
 
-    <div class="navbar navbar-fixed-bottom navbar">
-        <div class="navbar-inner text-center">
-            <span class="navbar-text">Dmitxe &copy; 2013</span>
+            <div id="content" class="span9">
+                <div class="content">
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="navbar navbar-fixed-bottom navbar">
+            <div class="navbar-inner text-center">
+                <span class="navbar-text">Dmitxe &copy; 2013</span>
+            </div>
         </div>
     </div>
-
 {% endblock body %}
 
 {% block body_js %}

@@ -1,0 +1,12 @@
+<div class="portlet">
+    <div class="portlet-decoration">
+        <div class="portlet-title">Рубрики блога</div>
+    </div>
+    <div class="portlet-content">
+        <ul class="nav nav-tabs nav-stacked">
+            {% for category in categories %}
+                <li><a href="{{ path('smart_blog_category', {'slug': category.slug}) }}">{{ category.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

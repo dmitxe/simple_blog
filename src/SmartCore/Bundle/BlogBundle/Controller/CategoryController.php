@@ -12,11 +12,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class CategoryController extends Controller
 {
     /**
+     * Имя бандла. Для перегрузки шаблонов.
+     *
+     * @var string
+     */
+    protected $bundleName;
+
+    /**
+     * Маршрут на список категорий.
+     *
+     * @var string
+     */
+    protected $routeIndex;
+
+    /**
+     * Имя сервиса по работе с категориями.
+     *
+     * @var string
+     */
+    protected $categoryServiceName;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
-        
+        $this->categoryServiceName   = 'smart_blog.category';
+        $this->routeIndex       = 'smart_blog_category_index';
+        $this->bundleName       = 'SmartBlogBundle';
     }
 
     /**
@@ -91,5 +114,20 @@ class CategoryController extends Controller
             $categories->add($category);
             $this->addChild($categories, $category);
         }
+    }
+
+    /**
+     * @param integer $id_action
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showSimpleListAction($id_action = null)
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
+        $categoryService = $this->get($this->categoryServiceName);
+
+        return $this->render($this->bundleName . ':Category:simple_list.html.twig', [
+            'categories' => $categoryService->all(),
+        ]);
+   //     $categori
     }
 }
