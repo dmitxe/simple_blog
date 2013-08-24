@@ -1,12 +1,4 @@
-{% extends '@DmitxeSite/layout.html.twig' %}
-
-{% block sidebar %}
-    {{ parent() }}
-    <div id="sidebar" class="span3">
-        {{ render(controller('SmartBlogBundle:Widget:showCategoryList', { 'id_action': null })) }}
-        <p>Тут будет сайдбар</p>
-    </div>
-{% endblock sidebar %}
+{% extends '@DmitxeSite/layout_sidebar.html.twig' %}
 
 {% block content %}
     {{ parent() }}
