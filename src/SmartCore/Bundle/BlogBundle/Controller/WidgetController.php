@@ -40,11 +40,49 @@ class WidgetController extends Controller
      */
     public function showCategoryListAction($id_action = null)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
-        $categoryService = $this->get($this->categoryServiceName);
+        $menuCategory = array();
+        $level = 1;
+        $this->addChildCategory($menuCategory, $level);
 
         return $this->render($this->bundleName . ':Widget:category_list.html.twig', [
-            'categories' => $categoryService->all(),
+            'categories' => $menuCategory,
         ]);
      }
+
+    /**
+     * Рекурсивное построение дерева.
+     *
+     * @param Array $menu
+     * @param integer $level
+     * @param CategoryInterface $parent
+     */
+    protected function addChildCategory(Array &$menu, &$level, CategoryInterface $parent = null)
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
+        $categoryService = $this->get($this->categoryServiceName);
+        $categories = $parent
+            ? $parent->getChildren()
+            : $categoryService->getRoots();
+
+        $router = $this->container->get('router');
+
+        /** @var CategoryInterface $category */
+        foreach ($categories as $category) {
+            $uri = $router->generate('smart_blog_category', ['slug' => $category->getSlugFull()]);
+            $item = array();
+            $item['id'] = $category->getId();
+            $item['title'] = $category->getTitle();
+            $item['slug'] = $category->getSlug();
+            $item['level'] = $level;
+            $item['uri'] = $uri;
+            $menu[] = $item;
+
+            /** @var ItemInterface $sub_menu */
+            $level++;
+            $this->addChildCategory($menu, $level, $category);
+            $level--;
+        }
+    }
+
+
 }

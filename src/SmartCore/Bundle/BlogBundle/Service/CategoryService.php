@@ -72,4 +72,12 @@ class CategoryService extends AbstractBlogService
     {
         return $this->categoriesRepo->findAll();
     }
+
+    /**
+     * @return CategoryInterface[]|null
+     */
+    public function getRoots()
+    {
+        return $this->categoriesRepo->findBy(['parent' => null]);
+    }
 }

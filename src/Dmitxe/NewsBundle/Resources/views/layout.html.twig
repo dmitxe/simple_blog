@@ -2,7 +2,21 @@
 
 {% block html_head_title %} Новости &raquo; {{ parent() }} {% endblock html_head_title %}
 
+{% block sidebar %}
+    {{ parent() }}
+    <div id="sidebar" class="span3">
+        {{ render(controller('SmartBlogBundle:Widget:showCategoryList', { 'id_action': null })) }}
+{# Альтернатива:        {{ knp_menu_render('SmartBlogBundle:Category:tree', {'currentClass': 'active'}) }} #}
+
+        <p>Тут будет сайдбар</p>
+    </div>
+{% endblock sidebar %}
+
 {% block content %}
     {{ parent() }}
-    {% block smart_blog_content %}{% endblock %}
+    <div id="content" class="span9">
+        <div class="content">
+            {% block smart_blog_content %}{% endblock %}
+        </div>
+    </div>
 {% endblock %}

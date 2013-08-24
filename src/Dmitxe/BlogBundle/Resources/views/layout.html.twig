@@ -2,7 +2,19 @@
 
 {% block html_head_title %} Блог &raquo; {{ parent() }} {% endblock html_head_title %}
 
-{% block content %}
+{% block sidebar %}
     {{ parent() }}
-    {% block smart_blog_content %}{% endblock %}
+    <div id="sidebar" class="span3">
+        {{ render(controller('SmartBlogBundle:Widget:showCategoryList', { 'id_action': null })) }}
+        <p>Тут будет сайдбар</p>
+    </div>
+{% endblock sidebar %}
+
+{% block content %}
+    <div id="content" class="span9">
+        <div class="content">
+        {{ parent() }}
+        {% block smart_blog_content %}{% endblock %}
+        </div>
+    </div>
 {% endblock %}

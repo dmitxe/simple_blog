@@ -5,8 +5,30 @@
     <div class="portlet-content">
         <ul class="nav nav-tabs nav-stacked">
             {% for category in categories %}
-                <li><a href="{{ path('smart_blog_category', {'slug': category.slug}) }}">{{ category.title }}</a></li>
+                <li><a href="{{  category.uri }}" style="padding-left: {{ category.level*15 }}px" >{{ category.title }}</a></li>
             {% endfor %}
         </ul>
     </div>
+
+    <div class="portlet-decoration">
+        <div class="portlet-title">Ближайшие задачи в разработке:</div>
+    </div>
+    <div class="portlet-content">
+        <ul class="nav nav-tabs nav-stacked">
+            <li>Разработка &laquo;Бандла&raquo; для распределённого хранения файлов.</li>
+            <li>Форма обратной связи.</li>
+            <li>Возможность управлять тэгами и категориями блога админу сайта.</li>
+            <li>Фабрики для форм блога.</li>
+        </ul>
+    </div>
+
+    <div class="portlet-decoration">
+        <div class="portlet-title">Тэги блога:</div>
+    </div>
+
+    <div class="portlet-content">
+        {{ render(controller('SmartBlogBundle:Tag:cloud')) }}
+
+    </div>
+
 </div>

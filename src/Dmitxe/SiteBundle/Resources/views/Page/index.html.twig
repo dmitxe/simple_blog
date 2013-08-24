@@ -1,10 +1,17 @@
 {% extends '@DmitxeSite/layout.html.twig' %}
 
+{% block sidebar %}
+    {{ parent() }}
+    <div id="sidebar" class="span3">
+        {{ render(controller('SmartBlogBundle:Widget:showCategoryList', { 'id_action': null })) }}
+        <p>Тут будет сайдбар</p>
+    </div>
+{% endblock sidebar %}
+
 {% block content %}
-
-    <div class="row">
-
-        <div class="span8">
+    {{ parent() }}
+    <div id="content" class="span9">
+        <div class="content">
 
             <h1>Персональный блог</h1>
             <h2>Тренировочный проект на Symfony2</h2>
@@ -18,29 +25,6 @@
             {{ texter(1) }}
 
         </div>
-
-        <div class="span4">
-            <div>
-                <h2>Ближайшие задачи в разработке:</h2>
-
-                <ul>
-                    <li>Разработка &laquo;Бандла&raquo; для распределённого хранения файлов.</li>
-                    <li>Форма обратной связи.</li>
-                    <li>Возможность управлять тэгами и категориями блога админу сайта.</li>
-                    <li>Фабрики для форм блога.</li>
-                </ul>
-
-                <h2>Категории блога:</h2>
-
-                {{ knp_menu_render('SmartBlogBundle:Category:tree', {'currentClass': 'active'}) }}
-
-                <h2>Тэги блога:</h2>
-
-                {{ render(controller('SmartBlogBundle:Tag:cloud')) }}
-
-            </div>
-        </div>
-
     </div>
 
 {% endblock content %}
