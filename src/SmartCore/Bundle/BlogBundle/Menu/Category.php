@@ -22,9 +22,7 @@ class Category extends ContainerAware
     public function tree(FactoryInterface $factory, array $options)
     {
         $menu = $factory->createItem('categories');
-
         $this->addChild($menu);
-
         return $menu;
     }
 
