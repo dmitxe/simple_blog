@@ -3,10 +3,6 @@
 {% block html_head_title %} Блог &raquo; {{ parent() }} {% endblock html_head_title %}
 
 {% block content %}
-    <div id="content" class="span9">
-        <div class="content">
-        {{ parent() }}
-        {% block smart_blog_content %}{% endblock %}
-        </div>
-    </div>
+     {{ parent() }}
+     {% block smart_blog_content %}{% endblock %}
 {% endblock %}

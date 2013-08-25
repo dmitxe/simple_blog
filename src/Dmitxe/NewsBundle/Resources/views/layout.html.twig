@@ -4,9 +4,5 @@
 
 {% block content %}
     {{ parent() }}
-    <div id="content" class="span9">
-        <div class="content">
-            {% block smart_blog_content %}{% endblock %}
-        </div>
-    </div>
+    {% block smart_blog_content %}{% endblock %}
 {% endblock %}

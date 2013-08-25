@@ -10,3 +10,6 @@ dmitxe_site_about:
     path: /about/
     defaults: { _controller: DmitxeSiteBundle:Page:about }
 
+dmitxe_site_contacts:
+    path: /contacts/
+    defaults: { _controller: DmitxeSiteBundle:Page:contacts }
