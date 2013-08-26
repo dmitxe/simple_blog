@@ -2,12 +2,12 @@
 
 {% block html_head_title %} Новости &raquo; {{ parent() }} {% endblock html_head_title %}
 
-{%  if breadcrumbs != '' %}
-      {%  set current_breadcrumb =  '<a href="' ~ path('dmitxe_news_index') ~ '">Новости</a> »  '  %}
-{%   else  %}
-      {%  set current_breadcrumb =  '<span>Новости</span>'  %}
-{%  endif  %}
-{%    set breadcrumbs =  current_breadcrumb ~ breadcrumbs %}
+{% if breadcrumbs != '' %}
+      {% set current_breadcrumb = '<a href="' ~ path('dmitxe_news_index') ~ '">Новости</a> »  ' %}
+{% else %}
+      {% set current_breadcrumb = '<span>Новости</span>' %}
+{% endif %}
+{% set breadcrumbs = current_breadcrumb ~ breadcrumbs %}
 
 {% block content %}
     {{ parent() }}
