@@ -56,7 +56,15 @@
 
         <div class="row">
             <div class="span12">
-                 {{ wo_render_breadcrumbs() }}
+                <div class="breadcrumb">
+                    {%  if breadcrumbs != '' %}
+                        {%  set breadcrumbs =  '<a href="' ~ path('dmitxe_site_index') ~ '">Главная</a> » ' ~ breadcrumbs  %}
+                    {%  endif  %}
+                    {% block breadcrumb %}
+                        {{ breadcrumbs|raw }}
+                    {% endblock breadcrumb %}
+                </div>
+{#                 {{ wo_render_breadcrumbs() }}  #}
  {#                   <a href="{{ path("dmitxe_site_index") }}">Главная</a> #}
             </div>
         </div>

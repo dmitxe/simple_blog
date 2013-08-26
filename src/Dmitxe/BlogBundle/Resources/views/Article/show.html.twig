@@ -1,8 +1,10 @@
-{% extends 'SmartBlogBundle::layout.html.twig' %}
+{% extends 'DmitxeBlogBundle::layout.html.twig' %}
 
 {% block html_head_styles %}{{ parent() }}
     <link rel="stylesheet" href="{{ asset('/css/comments.css') }}" type="text/css" />
 {% endblock html_head_styles %}
+
+{%  set breadcrumbs = '<span>' ~ article.title ~ '</apan> ' %}
 
 {% block smart_blog_content %}
 

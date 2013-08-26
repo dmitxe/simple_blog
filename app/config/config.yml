@@ -27,6 +27,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         html: @html
+        breadcrumbs: ''
         pagerfanta_opts:
             previous_message: '&laquo;'
             next_message: '&raquo;'
