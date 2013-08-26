@@ -18,7 +18,7 @@ class SiteMenu extends ContainerAware
         $menu->setChildrenAttribute('class', isset($options['class']) ? $options['class'] : 'nav');
         $menu->addChild('Главная',     ['route' => 'dmitxe_site_index']);
         $menu->addChild('О сайте',     ['route' => 'dmitxe_site_about']);
-        $menu->addChild('Контакты',     ['route' => 'dmitxe_site_contacts']);
+        $menu->addChild('Контакты',     ['route' => 'mremi_contact_form']);
         $menu->addChild('Blog',     ['route' => 'smart_blog_index']);
         $menu->addChild('News',     ['route' => 'dmitxe_news_index']);
         $menu->addChild('Gallery',  ['route' => 'smart_gallery_index']);

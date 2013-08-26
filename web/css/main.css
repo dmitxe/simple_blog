@@ -51,6 +51,9 @@ body {
 	text-align: center;
 	border-top: 1px solid #C9E0ED;
 }
+.breadcrumb .separator {
+    padding: 0 4px;
+}
 .navbar-inverse .navbar-inner {
     background-color: #025f92;
     background-image: -moz-linear-gradient(top,#045987,#0069A3);

@@ -120,6 +120,15 @@ fos_comment:
             edit: ROLE_ADMIN
             delete: ROLE_ADMIN
 
+white_october_breadcrumbs:
+    separator:          »
+    separatorClass:     separator
+    listId:             wo-breadcrumbs
+    listClass:          breadcrumb
+    itemClass:          ''
+    linkRel:            ''
+    locale:             ~
+    translation_domain: ~
 genemu_form:
     captcha: ~
 
