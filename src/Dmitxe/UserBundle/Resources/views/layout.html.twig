@@ -1,4 +1,8 @@
-{% extends '@DmitxeSite/layout.html.twig' %}
+{% extends '@DmitxeSite/layout_sidebar.html.twig' %}
+
+{% if breadcrumbs == '' %}
+    {% set breadcrumbs = 'Регистрация' %}
+{% endif %}
 
 {% block content %}
     {% block fos_user_content %}{% endblock %}

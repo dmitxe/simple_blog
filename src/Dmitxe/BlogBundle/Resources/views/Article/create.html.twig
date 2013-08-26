@@ -1,0 +1,9 @@
+{% extends '@DmitxeBlog/layout.html.twig' %}
+
+{% set breadcrumbs = '<span>Новая статья</span> ' %}
+
+{% block smart_blog_content %}
+
+    {% include 'DmitxeBlogBundle:Article:form.html.twig' %}
+
+{% endblock smart_blog_content %}

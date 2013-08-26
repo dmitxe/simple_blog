@@ -13,10 +13,6 @@ class PageController extends Controller
 
     public function aboutAction()
     {
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Главная", $this->get("router")->generate("dmitxe_site_index"));
-        $breadcrumbs->addItem("О сайте");
-
         return $this->render('DmitxeSiteBundle:Page:about.html.twig');
     }
 
