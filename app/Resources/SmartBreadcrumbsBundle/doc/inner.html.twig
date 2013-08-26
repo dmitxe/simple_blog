@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% block breadcrumbs %}
+    {# Сначала управление передаётся вышестоящим элементам. #}
+    {{ parent() }}
+    {# Ссылка на список новостей  #}
+    {{ smart_breadcrumb('News', {'path': 'dmitxe_news_index'}) }}
+    {# Элемент только с заголовоком и без ссылки #}
+    {{ smart_breadcrumb(article.title) }}
+{% endblock breadcrumbs %}
+
+{% block content %}
+
+    {# Еще один пример формирования крошки с параметрами для маршрута. #}
+    {{ smart_breadcrumb(article.title, {'path': {'dmitxe_news_show', {slug: article.slug} } }) }}
+
+    {#  @todo Продумать следующие вещи: #}
+    1) как можно подставлять вместо элемента картинку.
+    2) как можно использовать картинку в качестве разделителя.
+    3) как можно переопределить шаблон.
+
+
+    <h1> Примеры сгенерированного кода </h1>
+    <ul class="breadcrumb" id="smart-breadcrumbs">
+        <li><a href="/">Homepage</a> <span class="divider">/</span></li>
+        <li><a href="/news/">News</a> <span class="divider">/</span></li>
+        <li class="active">My new site based on Symfony2 Framework.</li>
+    </ul>
+
+    <ul class="breadcrumb" id="smart-breadcrumbs">
+        <li><a href="/">Homepage</a> <span class="divider">/</span></li>
+        <li><a href="/news/">News</a> <span class="divider">/</span></li>
+        <li><a href="/news/new-site-on-symfony2.html">My new site based on Symfony2 Framework.</a></li>
+    </ul>
+
+    <h1>Алгоритм работы</h1>
+
+    Как только первый раз запускаетя функция smart_breadcrumb(), в этом месте шаблона генерируется некий хэш-код, например:
+    <!-- sadfasdfasdf-9us0a9dfubg-93g9frgwf9234fosabf37t5s9drf2-9rhsdufb -->
+    В таком виде, она не испортит вёрстку, даже если что-то несработает.
+
+    Последующие вызовы функции smart_breadcrumb() ничего отрисовывать небудут, а будут только наполнять коллекцию элементов,
+    который будет храниться в сервисе.
+
+    После того как отрисуется весь шаблон, сработает событие на http://symfony-gu.ru/documentation/ru/html/book/internals.html#kernel-response
+    и подменит ранее сгенерированный хэш на сверстанный блок хлебных крошек.
+
+    Вот как-то так :)
+
+{% endblock content %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% block javascripts %}
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  type="text/javascript"></script> -->
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+
+        {% block breadcrumbs %}
+            {# Первый элемент: первый параметр - имя элемента, path - имя маршрута, title - заголовок для ссылки #}
+            {{ smart_breadcrumb('Homepage', {
+                'path': 'dmitxe_site_index',
+                'title': 'This is my personal site.'
+            }) }}
+        {% endblock breadcrumbs %}
+
+        {% block content %}
+        {% endblock content %}
+
+    {% endblock body %}
+</body>
+</html>

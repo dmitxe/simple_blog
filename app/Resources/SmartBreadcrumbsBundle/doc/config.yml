@@ -1,0 +1,12 @@
+smart_breadcrumbs:
+    hideSingle:         false # скрыть если только один элемент.
+    lastAsLink:         false # отображать последний элемент, как ссылку.
+    separator:          '/'
+    separatorClass:     'divider'
+    listId:             'smart-breadcrumbs'
+    listClass:          'breadcrumb'
+    itemClass:          ''
+    linkRel:            ''
+    locale:             null # so the default locale is used
+    translation_domain: null # so the default domain is used
+    template:           smart_breadcrumbs.html.twig # шаблон по умолчанию.
