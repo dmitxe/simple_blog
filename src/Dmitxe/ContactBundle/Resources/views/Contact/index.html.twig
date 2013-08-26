@@ -1,0 +1,38 @@
+{% extends '@DmitxeSite/layout_sidebar.html.twig' %}
+
+{% trans_default_domain 'MremiContactBundle' %}
+
+{% form_theme form 'MremiContactBundle:Contact:bootstrap_form_theme.html.twig' %}
+
+{# {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/mremicontact/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"  />
+    <link rel="stylesheet" href="{{ asset('bundles/mremicontact/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" media="all" />
+{% endblock %}
+#}
+
+{% block html_head_title %} Форма обрвтной связи }} {% endblock html_head_title %}
+
+
+{% block content %}
+    {{ parent() }}
+
+    {% set novalidate = app.debug and app.request.get('novalidate') %}
+
+    {% if novalidate %}
+        {% set form_action = path('mremi_contact_form', {'novalidate': 1}) %}
+    {% else %}
+        {% set form_action = path('mremi_contact_form') %}
+    {% endif %}
+
+    <form class="form-horizontal" action="{{ form_action }}" {{ form_enctype(form) }} method="POST"{{ novalidate ? ' novalidate="novalidate"' : '' }}>
+        <fieldset>
+            <legend>{{ 'mremi_contact.form_title'|trans }}</legend>
+
+            {{ form_widget(form) }}
+        </fieldset>
+
+        <div class="form-actions">
+            <button type="submit" class="btn" id="contact_form_submit_button">{{ 'mremi_contact.form_submit'|trans }}</button>
+        </div>
+    </form>
+{% endblock %}

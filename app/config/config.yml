@@ -120,6 +120,27 @@ fos_comment:
             edit: ROLE_ADMIN
             delete: ROLE_ADMIN
 
+genemu_form:
+    captcha: ~
+
+mremi_contact:
+    store_data:            false
+    contact_class:         Mremi\ContactBundle\Model\Contact
+
+    form:
+        type:              mremi_contact
+        name:              contact_form
+        validation_groups: [Default]
+        subject_provider:  mremi_contact.subject_provider.noop
+# Warning! При включенной какпче нет поля для ввода!        captcha_disabled:  false
+        captcha_disabled:  true
+        captcha_type:      genemu_captcha
+
+    email:
+        mailer:            mremi_contact.mailer.twig_swift
+        recipient_address: xedmitry@yandex.ru
+        template:          MremiContactBundle:Contact:email.txt.twig
+
 fos_user:
     db_driver: orm
     firewall_name: main

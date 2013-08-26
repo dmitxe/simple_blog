@@ -50,3 +50,6 @@ dmitxe_user:
 
 elfinder:
     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+mremi_contact_form:
+    resource: "@DmitxeContactBundle/Resources/config/routing.yml"

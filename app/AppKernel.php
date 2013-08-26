@@ -41,6 +41,8 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\CommentBundle\FOSCommentBundle(),
+            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Mremi\ContactBundle\MremiContactBundle(),
 
             new Dmitxe\SiteBundle\DmitxeSiteBundle(),
             new Dmitxe\UserBundle\DmitxeUserBundle(),
@@ -50,6 +52,7 @@ class AppKernel extends Kernel
             new Dmitxe\NewsBundle\DmitxeNewsBundle(),
             new Dmitxe\GalleryBundle\DmitxeGalleryBundle(),
             new Dmitxe\CommentBundle\DmitxeCommentBundle(),
+            new Dmitxe\ContactBundle\DmitxeContactBundle(),
         );
 
         if (in_array($this->getEnvironment(), ['dev'])) {
