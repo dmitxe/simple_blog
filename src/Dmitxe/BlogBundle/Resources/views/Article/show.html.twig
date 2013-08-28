@@ -38,6 +38,12 @@
         </p>
     {% endif %}
 
-    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}
+    {# ToDO: убрать, если разрешим оставлять комментарии незарегистрированным пользователям#}
+    {% if is_granted('ROLE_USER') %}
+       {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}
+    {% else %}
+       <br />
+       <p style="margin-top:20px">Войдите, чтобы оставить комментрарий</p>
+    {% endif %}
 
 {% endblock smart_blog_content %}
