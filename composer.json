@@ -41,7 +41,7 @@
         "helios-ag/fm-elfinder-bundle": "1.2",
         "zendframework/zend-servicemanager": "2.2.*",
         "zendframework/zend-tag": "2.2.*",
-        "genemu/form-bundle": "2.1.*",
+        "genemu/form-bundle": "2.2.*",
         "mremi/contact-bundle": "dev-master"
     },
     "scripts": {
