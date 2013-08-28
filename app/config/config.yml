@@ -133,8 +133,7 @@ mremi_contact:
         name:              contact_form
         validation_groups: [Default]
         subject_provider:  mremi_contact.subject_provider.noop
-# Warning! При включенной какпче нет поля для ввода!        captcha_disabled:  false
-        captcha_disabled:  true
+        captcha_disabled:  false
         captcha_type:      genemu_captcha
 
     email:
