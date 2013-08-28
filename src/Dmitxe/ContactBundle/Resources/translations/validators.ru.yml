@@ -1,0 +1,18 @@
+mremi_contact.title.blank: Пожалуйста заполните заголовок
+mremi_contact.first_name.blank: Пожалуйста введите Ваше имя
+mremi_contact.first_name.short: Имя слишком короткое
+mremi_contact.first_name.long: Имя слишком длинное
+mremi_contact.last_name.blank: Пожалуйста введите Вашу фамилию
+mremi_contact.last_name.short: Фамилия слишком короткая
+mremi_contact.last_name.long: Фамилия слишком длинная
+mremi_contact.email.blank: Пожалуйста введите e-mail
+mremi_contact.email.short: E-mail слишком короткий
+mremi_contact.email.long: E-mail слишком длинный
+mremi_contact.email.invalid: Неверный e-mail
+mremi_contact.subject.blank: Пожалуйста введите тему
+mremi_contact.subject.short: Тема слишком короткая
+mremi_contact.subject.long: Тема слишком длинная
+mremi_contact.message.blank: Пожалуйста заполните сообщение
+mremi_contact.message.short: Сообщение слишком короткое
+mremi_contact.message.long: Сообщение слишком длинное
+mremi_contact.created_at.invalid: Дата создания некорректна

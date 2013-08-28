@@ -5,3 +5,50 @@ mremi_contact.form.first_name: Имя
 mremi_contact.form.last_name: Фамилия
 mremi_contact.form.email: E-mail
 mremi_contact.form.subject: Тема
+mremi_contact.form.message: Сообщение
+mremi_contact.form.captcha: Капча
+mremi_contact.form_submit: Отправить
+mremi_contact.email_message_txt: |
+    Здравствуйте,
+
+    Пользователь заполнил форму контакта:
+
+    Заголовок: %title%
+
+    Имя: %firstName%
+
+    Фамилия: %lastName%
+
+    Email: %email%
+
+    Сообщение:
+    %message%
+
+    Regards
+mremi_contact.email_message_txt: |
+    Здравствуйте,
+    <br/>
+    <br/>
+    Пользователь заполнил форму контакта:
+    <br/>
+    <br/>
+    <strong><em>Заголовок:</em></strong> %title%
+    <br/>
+    <br/>
+    <strong><em>Имя:</em></strong> %firstName%
+    <br/>
+    <br/>
+    <strong><em>Фамилия:</em></strong> %lastName%
+    <br/>
+    <br/>
+    <strong><em>Email:</em></strong> %email%
+    <br/>
+    <br/>
+    <strong><em>Сообщение:</em></strong>
+    <br/>
+    %message%
+    <br/>
+    <br/>
+    Regards
+mremi_contact.confirm_title: Благодарим Вас, %fullName%
+mremi_contact.confirm_message: Ваш сообщение было успешно отправлено, в ближайшее время мы постараемся ответить на него.

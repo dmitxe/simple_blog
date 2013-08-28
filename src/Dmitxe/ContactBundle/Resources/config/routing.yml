@@ -1,2 +1,7 @@
 mremi_contact_form:
-    resource: "@MremiContactBundle/Resources/config/routing.xml"
+    path: /contact/
+    defaults: { _controller: MremiContactBundle:Contact:index }
+
+mremi_contact_confirmation:
+    path: /contact/confirmation/
+    defaults: { _controller: MremiContactBundle:Contact:confirm }

@@ -1,19 +1,19 @@
-{% extends "::base.html.twig" %}
+{% extends '@DmitxeSite/layout_sidebar.html.twig' %}
 
 {% trans_default_domain 'MremiContactBundle' %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('bundles/mremicontact/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"  />
-    <link rel="stylesheet" href="{{ asset('bundles/mremicontact/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" media="all" />
-{% endblock %}
+{% block html_head_title %} Ваше сообщение успешно отправлено }} {% endblock html_head_title %}
 
-{% block body %}
+{% set breadcrumbs = '<a href="' ~ path('mremi_contact_form') ~ '">Контакты</a> » ' ~ '<span>Сообщение успешно отправлено</span>' %}
+
+{% block content %}
+    {{ parent() }}
+
     <section>
         <h3>{{ 'mremi_contact.confirm_title'|trans({
-            '%title%':    contact.titleValue|trans,
             '%fullName%': contact.fullName
         }) }}</h3>
     </section>
 
     <p>{{ 'mremi_contact.confirm_message'|trans }}</p>
-{% endblock body %}
+{% endblock content %}
