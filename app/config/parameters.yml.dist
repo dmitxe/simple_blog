@@ -2,8 +2,8 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     dmitxe_symfony_blog
-    database_user:     dmitxe_symfony_blog
+    database_name:     dmitxe_sf2_blog
+    database_user:     dmitxe_sf2_blog
     database_password: 123
 
     mailer_transport:  smtp
