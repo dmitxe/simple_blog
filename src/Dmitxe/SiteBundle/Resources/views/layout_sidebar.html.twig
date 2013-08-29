@@ -94,12 +94,20 @@
                         </div>
 
                         <div class="portlet-decoration">
+                            <div class="portlet-title">Архив статей:</div>
+                        </div>
+
+                        <div class="portlet-content">
+                            {{ render(controller('SmartBlogBundle:Widget:showArchiveArticles', { 'limit': 10 })) }}
+                        </div>
+
+
+                        <div class="portlet-decoration">
                             <div class="portlet-title">Тэги блога:</div>
                         </div>
 
                         <div class="portlet-content">
                             {{ render(controller('SmartBlogBundle:Tag:cloud')) }}
-
                         </div>
 
                     </div>

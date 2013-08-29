@@ -4,6 +4,7 @@ namespace SmartCore\Bundle\BlogBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
+use SmartCore\Bundle\BlogBundle\Model\ArticleInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -26,12 +27,46 @@ class WidgetController extends Controller
     protected $categoryServiceName;
 
     /**
+     * Имя сервиса по работе со статьями.
+     *
+     * @var string
+     */
+    protected $articleServiceName;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->categoryServiceName   = 'smart_blog.category';
+        $this->articleServiceName   = 'smart_blog.article';
         $this->bundleName            = 'SmartBlogBundle';
+    }
+
+    /**
+     * @param integer $limit
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showArchiveArticlesAction($limit = 10)
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
+        $articles = $articleService->getFindLastByDate($limit);
+        $yearmonth = array();
+        $count = 0;
+        foreach ($articles as $article) {
+            $ym = $article->getCreatedAt()->format('F Y'); // December 2011
+            if (!isset($yearmonth[$ym])) {
+                if (++$count > $limit) break;
+                $yearmonth[$ym] = 1;
+            } else {
+                $yearmonth[$ym]++;  // 2, 3, 4
+            }
+        }
+
+        return $this->render($this->bundleName . ':Widget:archive_articles.html.twig', [
+            'articles' => $yearmonth,
+       ]);
     }
 
     /**
@@ -47,7 +82,7 @@ class WidgetController extends Controller
         return $this->render($this->bundleName . ':Widget:category_list.html.twig', [
             'categories' => $menuCategory,
         ]);
-     }
+    }
 
     /**
      * Рекурсивное построение дерева.
