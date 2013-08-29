@@ -2,6 +2,10 @@ smart_blog_index:
     path: /
     defaults: { _controller: SmartBlogBundle:Article:page }
 
+smart_blog_archive:
+    path: /archive/{date}/{page}
+    defaults: { _controller: SmartBlogBundle:Article:archive }
+
 smart_blog_article:
     path: /{slug}.html
     defaults: { _controller: SmartBlogBundle:Article:show }

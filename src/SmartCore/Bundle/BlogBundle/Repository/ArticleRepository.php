@@ -99,6 +99,28 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
     }
 
     /**
+     * @param String|null $firstDay
+     * @param String|null $lastDay
+     * @return \Doctrine\ORM\Query
+     */
+    public function getFindByDateQuery($firstDay = null, $lastDay = null)
+    {
+        $query =  $this->_em->createQuery("
+            SELECT a
+            FROM {$this->_entityName} AS a
+            WHERE a.enabled = true
+            AND a.created_at > :firstDay
+            AND a.created_at < :lastDay
+            ORDER BY a.id DESC
+        ");
+        $query->setParameters([
+            'firstDay' => New \DateTime($firstDay),
+            'lastDay' => New \DateTime($lastDay)
+        ]);
+        return $query;
+    }
+
+    /**
      * @param TagInterface $tag
      * @return \Doctrine\ORM\Query
      *
