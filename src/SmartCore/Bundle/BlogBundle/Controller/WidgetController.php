@@ -67,7 +67,7 @@ class WidgetController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-        $articles = $articleService->getFindLastByDate($limit);
+        $articles = $articleService->getFindLastByDate(1000);
         $yearmonth = [];
         $count = 0;
         foreach ($articles as $article) {
