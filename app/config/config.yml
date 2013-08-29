@@ -79,12 +79,12 @@ liip_doctrine_cache:
     namespaces:
         smart_texter:
             namespace: "smart_texter_%secret%"
-#            type: memcache
+            #type: memcache
             type: file_system
             directory: "%kernel.cache_dir%/smart_texter"
         smart_blog:
-            type: memcache
-#            namespace: "smart_blog_%secret%"
+            namespace: "smart_blog_%secret%"
+            #type: memcache
             type: file_system
             directory: "%kernel.cache_dir%/smart_blog"
 
