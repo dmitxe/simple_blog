@@ -22,6 +22,10 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
             - @smart_blog.category.repository
+            - @smart_blog.cache
+
+    smart_blog.cache: # @todo настройку через конфиг.
+        alias: liip_doctrine_cache.ns.smart_blog
 
     smart_blog.article.form:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleFormType

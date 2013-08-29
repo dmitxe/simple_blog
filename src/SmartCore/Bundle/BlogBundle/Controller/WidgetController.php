@@ -4,6 +4,9 @@ namespace SmartCore\Bundle\BlogBundle\Controller;
 
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * @todo наследуемость как контроллеры статей и тэгов.
@@ -32,13 +35,30 @@ class WidgetController extends Controller
     protected $articleServiceName;
 
     /**
+     * Маршрут просмотра списка статей по тэгу.
+     *
+     * @var string
+     */
+    protected $routeTag;
+
+    /**
+     * Имя сервиса по работе с тэгами.
+     *
+     * @var string
+     */
+    protected $tagServiceName;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->categoryServiceName  = 'smart_blog.category';
-        $this->articleServiceName   = 'smart_blog.article';
         $this->bundleName           = 'SmartBlogBundle';
+
+        $this->articleServiceName   = 'smart_blog.article';
+        $this->categoryServiceName  = 'smart_blog.category';
+        $this->tagServiceName       = 'smart_blog.tag';
+        $this->routeTag             = 'smart_blog_tag';
     }
 
     /**
@@ -56,7 +76,9 @@ class WidgetController extends Controller
             $date_article = $article->getCreatedAt();
             $ym = $date_article->format('F Y'); // December 2011
             if (!isset($yearmonth[$ym])) {
-                if (++$count > $limit) break;
+                if (++$count > $limit) {
+                    break;
+                }
                 $yearmonth[$ym]['count'] = 1;
                 $yearmonth[$ym]['date'] = strtotime($ym);
             } else {
@@ -70,10 +92,9 @@ class WidgetController extends Controller
     }
 
     /**
-     * @param integer $id_action
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoryListAction()
+    public function categoryListAction(Request $request)
     {
         $menuCategory = [];
         $level = 1;
@@ -85,9 +106,27 @@ class WidgetController extends Controller
     }
 
     /**
+     * @return Response
+     */
+    public function tagCloudAction()
+    {
+        $cloud = $this->get('smart_blog.cache')->fetch($this->bundleName . 'tag_cloud_zend');
+
+        if (false === $cloud) {
+            /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
+            $tagService = $this->get($this->tagServiceName);
+
+            $cloud = $tagService->getCloudZend($this->routeTag)->render();
+            $this->get('smart_blog.cache')->save($this->bundleName . 'tag_cloud_zend', $cloud);
+        }
+
+        return new Response($cloud);
+    }
+
+    /**
      * Рекурсивное построение дерева.
      *
-     * @param Array $menu
+     * @param array $menu
      * @param integer $level
      * @param CategoryInterface $parent
      */

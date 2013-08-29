@@ -96,13 +96,12 @@ class CategoryController extends Controller
 
         $form = $this->createForm(new CategoryFormType(get_class($category)), $category);
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
-                /** @var \Doctrine\ORM\EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($category);
-                $em->flush();
+                /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
+                $categoryService = $this->get($this->categoryServiceName);
+                $categoryService->update($category);
 
                 return $this->redirect($this->generateUrl($this->routeAdminCategory));
             }

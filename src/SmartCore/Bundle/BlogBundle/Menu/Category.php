@@ -12,7 +12,7 @@ class Category extends ContainerAware
     /**
      * @var string
      */
-    protected $categoryCalass = 'DmitxeBlogBundle:Category'; // @todo внедрение имени класса категорий.
+    protected $categoryCalass = 'Dmitxe\BlogBundle\Entity\Category'; // @todo внедрение имени класса категорий.
 
     /**
      * @param FactoryInterface $factory
@@ -21,9 +21,34 @@ class Category extends ContainerAware
      */
     public function tree(FactoryInterface $factory, array $options)
     {
-        $menu = $factory->createItem('categories');
-        $this->addChild($menu);
+        $cacheKey = md5('knp_menu_category_tree' . $this->categoryCalass);
+
+        $menu = $this->container->get('smart_blog.cache')->fetch($cacheKey);
+
+        if (false === $menu) {
+            $menu = $factory->createItem('categories');
+            $this->addChild($menu);
+            $this->removeFactory($menu);
+
+            // @todo настройка времени хранения кеша и инвалидация.
+            $this->container->get('smart_blog.cache')->save($cacheKey, $menu, 3000);
+        }
+
         return $menu;
+    }
+
+    /**
+     * Рекурсивный метод для удаления фабрики, что позволяет кешировать объект меню.
+     *
+     * @param ItemInterface $menu
+     */
+    protected function removeFactory(ItemInterface $menu)
+    {
+        $menu->setFactory(new DummyFactory());
+
+        foreach ($menu->getChildren() as $subMenu) {
+            $this->removeFactory($subMenu);
+        }
     }
 
     /**

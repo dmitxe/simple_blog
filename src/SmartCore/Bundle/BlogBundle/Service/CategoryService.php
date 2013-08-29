@@ -2,10 +2,10 @@
 
 namespace SmartCore\Bundle\BlogBundle\Service;
 
+use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class CategoryService extends AbstractBlogService
@@ -14,6 +14,11 @@ class CategoryService extends AbstractBlogService
      * @var EntityManager
      */
     protected $em;
+
+    /**
+     * @var Cache
+     */
+    protected $cache;
 
     /**
      * @var EntityRepository
@@ -25,13 +30,12 @@ class CategoryService extends AbstractBlogService
      * @param RouterInterface $router
      * @param int $itemsPerPage
      */
-    public function __construct(
-        EntityManager $em,
-        EntityRepository $categoriesRepo,
-        $itemsPerPage = 10)
+    public function __construct(EntityManager $em, EntityRepository $categoriesRepo, Cache $cache, $itemsPerPage = 10)
     {
-        $this->em                 = $em;
+        $this->cache              = $cache;
         $this->categoriesRepo     = $categoriesRepo;
+        $this->em                 = $em;
+
         $this->setItemsCountPerPage($itemsPerPage);
     }
 
@@ -63,6 +67,9 @@ class CategoryService extends AbstractBlogService
     {
         $this->em->persist($category);
         $this->em->flush($category);
+
+        $cacheKey = md5('knp_menu_category_tree' . get_class($category));
+        $this->cache->delete($cacheKey);
     }
 
     /**

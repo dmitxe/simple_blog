@@ -21,8 +21,8 @@
                 <div class="navbar navbar-static-top navbar-inverse">
                     <div id="mainmenu" class="navbar-inner top-menu">
                         {{ knp_menu_render('DmitxeSiteBundle:SiteMenu:main', {
-                        'currentClass': 'active',
-                        'clear_matcher': false,
+                            'currentClass': 'active',
+                            'clear_matcher': false,
                         }) }}
 
                         <ul class="nav pull-right">
@@ -75,10 +75,7 @@
                             <div class="portlet-title">Рубрики блога</div>
                         </div>
                         <div class="portlet-content">
-                           {{ knp_menu_render('SmartBlogBundle:Category:tree', {
-                            'currentClass': 'active',
-                            'template': 'DmitxeSiteBundle:Menu:category.html.twig',
-                            }) }}
+                            {{ render(controller('SmartBlogBundle:Widget:categoryList')) }}
                         </div>
 
                         <div class="portlet-decoration">
@@ -87,8 +84,6 @@
                         <div class="portlet-content">
                             <ul class="nav nav-tabs nav-stacked">
                                 <li><a href="#">Разработка &laquo;Бандла&raquo; для распределённого хранения файлов.</a></li>
-                                <li><a href="{{ path("mremi_contact_form") }}">Форма обратной связи.</a></li>
-                                <li><a href="#">Возможность управлять тэгами и категориями блога админу сайта.</a></li>
                                 <li><a href="#">Фабрики для форм блога.</a></li>
                             </ul>
                         </div>
@@ -106,11 +101,10 @@
                         </div>
 
                         <div class="portlet-content">
-                            {{ render(controller('SmartBlogBundle:Tag:cloud')) }}
+                            {{ render(controller('SmartBlogBundle:Widget:tagCloud')) }}
                         </div>
 
                     </div>
-                    {# {{ render(controller('SmartBlogBundle:Widget:showCategoryList')) }} #}
                 </div>
             {% endblock sidebar %}
 

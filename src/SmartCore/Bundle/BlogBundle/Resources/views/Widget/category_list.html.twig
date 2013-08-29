@@ -1,34 +1,4 @@
-<div class="portlet">
-    <div class="portlet-decoration">
-        <div class="portlet-title">Рубрики блога</div>
-    </div>
-    <div class="portlet-content">
-        <ul class="nav nav-tabs nav-stacked">
-            {% for category in categories %}
-                <li><a href="{{  category.uri }}" style="padding-left: {{ category.level*15 }}px" >{{ category.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div class="portlet-decoration">
-        <div class="portlet-title">Ближайшие задачи в разработке:</div>
-    </div>
-    <div class="portlet-content">
-        <ul class="nav nav-tabs nav-stacked">
-            <li><a href="#">Разработка &laquo;Бандла&raquo; для распределённого хранения файлов.</a></li>
-            <li><a href="{{ path("dmitxe_site_contacts") }}">Форма обратной связи.</a></li>
-            <li><a href="#">Возможность управлять тэгами и категориями блога админу сайта.</a></li>
-            <li><a href="#">Фабрики для форм блога.</a></li>
-        </ul>
-    </div>
-
-    <div class="portlet-decoration">
-        <div class="portlet-title">Тэги блога:</div>
-    </div>
-
-    <div class="portlet-content">
-        {{ render(controller('SmartBlogBundle:Tag:cloud')) }}
-
-    </div>
-
-</div>
+{{ knp_menu_render('SmartBlogBundle:Category:tree', {
+    'currentClass': 'active',
+    'clear_matcher': false,
+}) }}
