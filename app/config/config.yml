@@ -78,9 +78,13 @@ knp_menu:
 liip_doctrine_cache:
     namespaces:
         smart_texter:
+            namespace: "smart_texter_%secret%"
+#            type: memcache
             type: file_system
             directory: "%kernel.cache_dir%/smart_texter"
         smart_blog:
+            type: memcache
+#            namespace: "smart_blog_%secret%"
             type: file_system
             directory: "%kernel.cache_dir%/smart_blog"
 
@@ -216,7 +220,7 @@ smart_blog:
     article_class: Dmitxe\BlogBundle\Entity\Article
     tag_class: Dmitxe\BlogBundle\Entity\Tag
     category_class: Dmitxe\BlogBundle\Entity\Category
-    items_per_page: 5
+    items_per_page: 10
 
 services:
     twig_extension.intl:
