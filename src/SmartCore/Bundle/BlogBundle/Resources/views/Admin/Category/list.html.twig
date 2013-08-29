@@ -7,7 +7,7 @@
     </div>
 
     <div class="span8">
-        {% set menuItem = knp_menu_get('SmartBlogBundle:Category:adminTree', [], {'categoryCalass': categoryCalass}) %}
+        {% set menuItem = knp_menu_get('SmartBlogBundle:Category:adminTree', [], {'categoryClass': categoryClass}) %}
         {{ knp_menu_render(menuItem, {
             'currentClass': 'active',
             'clear_matcher': false,

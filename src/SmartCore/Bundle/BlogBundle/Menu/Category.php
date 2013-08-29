@@ -16,19 +16,19 @@ class Category extends ContainerAware
      */
     public function tree(FactoryInterface $factory, array $options)
     {
-        if (!isset($options['categoryCalass'])) {
-            throw new \Exception('Надо указать categoryCalass в опциях');
+        if (!isset($options['categoryClass'])) {
+            throw new \Exception('Надо указать categoryClass в опциях');
         }
 
-        $categoryCalass = $options['categoryCalass'];
+        $categoryClass = $options['categoryClass'];
 
-        $cacheKey = md5('knp_menu_category_tree' . $categoryCalass);
+        $cacheKey = md5('knp_menu_category_tree' . $categoryClass);
 
         $menu = $this->container->get('smart_blog.cache')->fetch($cacheKey);
 
         if (false === $menu) {
             $menu = $factory->createItem('categories');
-            $this->addChild($menu, null, $categoryCalass);
+            $this->addChild($menu, null, $categoryClass);
             $this->removeFactory($menu);
 
             // @todo настройка времени хранения кеша и инвалидация.
@@ -58,17 +58,17 @@ class Category extends ContainerAware
      *
      * @param ItemInterface $menu
      * @param CategoryInterface|null $parent
-     * @param string $categoryCalass
+     * @param string $categoryClass
      * @return void
      */
-    protected function addChild(ItemInterface $menu, CategoryInterface $parent = null, $categoryCalass)
+    protected function addChild(ItemInterface $menu, CategoryInterface $parent = null, $categoryClass)
     {
         /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
 
         $categories = $parent
             ? $parent->getChildren()
-            : $em->getRepository($categoryCalass)->findBy(['parent' => null]);
+            : $em->getRepository($categoryClass)->findBy(['parent' => null]);
 
         $router = $this->container->get('router');
 
@@ -84,7 +84,7 @@ class Category extends ContainerAware
             /** @var ItemInterface $sub_menu */
             $sub_menu = $menu[$category->getTitle()];
 
-            $this->addChild($sub_menu, $category, $categoryCalass);
+            $this->addChild($sub_menu, $category, $categoryClass);
         }
     }
 
@@ -95,14 +95,14 @@ class Category extends ContainerAware
      */
     public function adminTree(FactoryInterface $factory, array $options)
     {
-        if (!isset($options['categoryCalass'])) {
-            throw new \Exception('Надо указать categoryCalass в опциях');
+        if (!isset($options['categoryClass'])) {
+            throw new \Exception('Надо указать categoryClass в опциях');
         }
 
-        $categoryCalass = $options['categoryCalass'];
+        $categoryClass = $options['categoryClass'];
 
         $menu = $factory->createItem('categories');
-        $this->addChildToAdminTree($menu, null, $categoryCalass);
+        $this->addChildToAdminTree($menu, null, $categoryClass);
 
         return $menu;
     }
@@ -112,17 +112,17 @@ class Category extends ContainerAware
      *
      * @param ItemInterface $menu
      * @param CategoryInterface|null $parent
-     * @param string $categoryCalass
+     * @param string $categoryClass
      * @return void
      */
-    protected function addChildToAdminTree(ItemInterface $menu, CategoryInterface $parent = null, $categoryCalass)
+    protected function addChildToAdminTree(ItemInterface $menu, CategoryInterface $parent = null, $categoryClass)
     {
         /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
 
         $categories = $parent
             ? $parent->getChildren()
-            : $em->getRepository($categoryCalass)->findBy(['parent' => null]);
+            : $em->getRepository($categoryClass)->findBy(['parent' => null]);
 
         $router = $this->container->get('router');
 
@@ -138,7 +138,7 @@ class Category extends ContainerAware
             /** @var ItemInterface $sub_menu */
             $sub_menu = $menu[$category->getTitle()];
 
-            $this->addChildToAdminTree($sub_menu, $category, $categoryCalass);
+            $this->addChildToAdminTree($sub_menu, $category, $categoryClass);
         }
     }
 }

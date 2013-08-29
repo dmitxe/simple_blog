@@ -99,7 +99,7 @@ class WidgetController extends Controller
         $category = $categoryService->create();
 
         return $this->render($this->bundleName . ':Widget:category_tree.html.twig', [
-            'categoryCalass' => get_class($category),
+            'categoryClass' => get_class($category),
         ]);
     }
 
