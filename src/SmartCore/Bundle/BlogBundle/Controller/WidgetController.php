@@ -2,11 +2,9 @@
 
 namespace SmartCore\Bundle\BlogBundle\Controller;
 
-use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 
 /**
  * @todo наследуемость как контроллеры статей и тэгов.
@@ -94,14 +92,14 @@ class WidgetController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoryListAction(Request $request)
+    public function categoryTreeAction()
     {
-        $menuCategory = [];
-        $level = 1;
-        $this->addChildCategory($menuCategory, $level);
+        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
+        $categoryService = $this->get($this->categoryServiceName);
+        $category = $categoryService->create();
 
-        return $this->render($this->bundleName . ':Widget:category_list.html.twig', [
-            'categories' => $menuCategory,
+        return $this->render($this->bundleName . ':Widget:category_tree.html.twig', [
+            'categoryCalass' => get_class($category),
         ]);
     }
 
@@ -121,36 +119,5 @@ class WidgetController extends Controller
         }
 
         return new Response($cloud);
-    }
-
-    /**
-     * Рекурсивное построение дерева.
-     *
-     * @param array $menu
-     * @param integer $level
-     * @param CategoryInterface $parent
-     */
-    protected function addChildCategory(array &$menu, &$level, CategoryInterface $parent = null)
-    {
-        $categories = $parent
-            ? $parent->getChildren()
-            : $this->get($this->categoryServiceName);
-
-        $router = $this->container->get('router');
-
-        /** @var CategoryInterface $category */
-        foreach ($categories as $category) {
-            $menu[] = [
-                'id'    => $category->getId(),
-                'title' => $category->getTitle(),
-                'slug'  => $category->getSlug(),
-                'level' => $level,
-                'uri'   => $router->generate('smart_blog_category', ['slug' => $category->getSlugFull()]),
-            ];
-
-            $level++;
-            $this->addChildCategory($menu, $level, $category);
-            $level--;
-        }
     }
 }

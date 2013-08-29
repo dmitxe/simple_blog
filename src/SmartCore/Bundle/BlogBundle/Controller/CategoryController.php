@@ -37,9 +37,9 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-        $this->categoryServiceName   = 'smart_blog.category';
-        $this->routeIndex       = 'smart_blog_category_index';
-        $this->bundleName       = 'SmartBlogBundle';
+        $this->categoryServiceName  = 'smart_blog.category';
+        $this->routeIndex           = 'smart_blog_category_index';
+        $this->bundleName           = 'SmartBlogBundle';
     }
 
     /**
@@ -117,10 +117,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param integer $id_action
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showSimpleListAction($id_action = null)
+    public function showSimpleListAction()
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
         $categoryService = $this->get($this->categoryServiceName);
@@ -128,6 +127,5 @@ class CategoryController extends Controller
         return $this->render($this->bundleName . ':Category:simple_list.html.twig', [
             'categories' => $categoryService->all(),
         ]);
-   //     $categori
     }
 }
