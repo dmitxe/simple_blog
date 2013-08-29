@@ -99,6 +99,8 @@ class AdminController extends Controller
                     $em->flush();
                 }
 
+                $this->get('liip_doctrine_cache.ns.smart_texter')->delete($text->getName());
+
                 return $this->redirect($this->generateUrl('smart_texter_admin_index'));
             }
         }

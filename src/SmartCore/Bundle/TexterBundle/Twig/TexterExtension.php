@@ -2,10 +2,16 @@
 
 namespace SmartCore\Bundle\TexterBundle\Twig;
 
+use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
 
 class TexterExtension extends \Twig_Extension
 {
+    /**
+     * @var Cache
+     */
+    protected $cache;
+
     /**
      * @var EntityManager
      */
@@ -16,8 +22,10 @@ class TexterExtension extends \Twig_Extension
      *
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em) {
-        $this->em = $em;
+    public function __construct(EntityManager $em, Cache $cache)
+    {
+        $this->cache = $cache;
+        $this->em    = $em;
     }
 
     /**
@@ -40,9 +48,16 @@ class TexterExtension extends \Twig_Extension
      */
     public function texterFunction($name)
     {
+        $textFromCache = $this->cache->fetch($name);
+
+        if (false != $textFromCache) {
+            return $textFromCache;
+        }
+
         $text = $this->em->getRepository('SmartTexterBundle:Text')->findOneBy(['name' => $name]);
 
         if ($text) {
+            $this->cache->save($name, $text->getText(), 300);
             return $text->getText();
         } else {
             return "Текст с id '$name' не найден.";

@@ -3,6 +3,7 @@ services:
         class: SmartCore\Bundle\TexterBundle\Twig\TexterExtension
         arguments:
             - @doctrine.orm.default_entity_manager
+            - @liip_doctrine_cache.ns.smart_texter
         tags:
             - { name: twig.extension }
 
