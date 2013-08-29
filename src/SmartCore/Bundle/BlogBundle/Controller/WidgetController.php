@@ -61,26 +61,26 @@ class WidgetController extends Controller
 
     /**
      * @param integer $limit
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function archiveArticlesAction($limit = 10)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-        $articles = $articleService->getFindLastByDate(1000);
+        $articles = $articleService->getLast(1000);
+
         $yearmonth = [];
         $count = 0;
         foreach ($articles as $article) {
-            $date_article = $article->getCreatedAt();
-            $ym = $date_article->format('F Y'); // December 2011
+            $ym = $article->getCreatedAt()->format('F Y'); // December 2011
             if (!isset($yearmonth[$ym])) {
                 if (++$count > $limit) {
                     break;
                 }
                 $yearmonth[$ym]['count'] = 1;
-                $yearmonth[$ym]['date'] = strtotime($ym);
+                $yearmonth[$ym]['date']  = strtotime($ym);
             } else {
-                $yearmonth[$ym]['count']++;  // 2, 3, 4
+                $yearmonth[$ym]['count']++;
             }
         }
 
@@ -90,7 +90,7 @@ class WidgetController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function categoryTreeAction()
     {

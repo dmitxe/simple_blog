@@ -183,14 +183,4 @@ class ArticleService extends AbstractBlogService
         $event = new FilterArticleEvent($article);
         $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_UPDATE, $event);
     }
-
-    /**
-     * @param int|null $limit
-     * @return ArticleInterface[]|null
-     */
-    public function getFindLastByDate($limit = 10)
-    {
-        return $this->articlesRepo->getFindLastByDate($limit);
-    }
-
 }

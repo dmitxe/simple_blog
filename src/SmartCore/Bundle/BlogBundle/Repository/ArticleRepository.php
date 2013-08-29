@@ -10,18 +10,17 @@ use SmartCore\Bundle\BlogBundle\Model\TagInterface;
 class ArticleRepository extends EntityRepository implements ArticleRepositoryInterface
 {
     /**
-     * @param integer|null $limit
+     * @param integer $limit
      * @return ArticleInterface[]|null
      */
-    public function findLast($limit = null)
+    public function findLast($limit = 10)
     {
         return $this->findBy([
-            'enabled'    => true,
+            'enabled' => true,
         ], [
-            'id'         => 'DESC',
+            'created_at' => 'DESC',
         ], $limit);
     }
-
     /**
      * @param TagInterface $tag
      * @return ArticleInterface[]|null
@@ -39,8 +38,8 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
      */
     public function findByCategory(CategoryInterface $category = null, $limit = null, $offset = null)
     {
-        $query = $this->getFindByCategoryQuery($category);
-        $query
+        $query = $this
+            ->getFindByCategoryQuery($category)
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 
@@ -55,10 +54,9 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
      */
     public function findByCategories(array $categories = [], $limit = null, $offset = null)
     {
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select('a')
-           ->from($this->_entityName, 'a')
-           ->orderBy('a.id', 'DESC');
+        $qb = $this
+            ->createQueryBuilder('a')
+            ->orderBy('a.created_at', 'DESC');
 
         foreach ($categories as $key => $category) {
             $id = $category->getId();
@@ -99,25 +97,23 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
     }
 
     /**
-     * @param String|null $firstDay
-     * @param String|null $lastDay
+     * @param \DateTime|null $firstDate
+     * @param \DateTime|null $lastDate
      * @return \Doctrine\ORM\Query
      */
-    public function getFindByDateQuery($firstDay = null, $lastDay = null)
+    public function getFindByDateQuery($firstDate = null, $lastDate = null)
     {
-        $query =  $this->_em->createQuery("
+        return $this->_em->createQuery("
             SELECT a
             FROM {$this->_entityName} AS a
             WHERE a.enabled = true
-            AND a.created_at > :firstDay
-            AND a.created_at < :lastDay
+            AND a.created_at > :firstDate
+            AND a.created_at < :lastDate
             ORDER BY a.created_at DESC
-        ");
-        $query->setParameters([
-            'firstDay' => New \DateTime($firstDay),
-            'lastDay' => New \DateTime($lastDay)
+        ")->setParameters([
+            'firstDate' => new \DateTime($firstDate),
+            'lastDate'  => new \DateTime($lastDate),
         ]);
-        return $query;
     }
 
     /**
@@ -153,21 +149,5 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
         ");
 
         return $query->getSingleScalarResult();
-    }
-
-    /**
-     * @param int|null $limit
-     * @return \Doctrine\ORM\Query
-     *
-     * @todo $category
-     * @todo enabled
-     */
-    public function getFindLastByDate($limit = 10)
-    {
-        return $this->findBy([
-            'enabled'    => true,
-        ], [
-            'created_at'         => 'DESC',
-        ], $limit);
     }
 }
