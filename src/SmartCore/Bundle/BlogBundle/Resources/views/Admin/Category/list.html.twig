@@ -7,7 +7,12 @@
     </div>
 
     <div class="span8">
-        {{ knp_menu_render('SmartBlogBundle:Category:adminTree') }}
+        {% set menuItem = knp_menu_get('SmartBlogBundle:Category:adminTree', [], {'categoryCalass': categoryCalass}) %}
+        {{ knp_menu_render(menuItem, {
+            'currentClass': 'active',
+            'clear_matcher': false,
+        }) }}
+
     </div>
 
 {% endblock smart_blog_content %}
