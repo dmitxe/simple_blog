@@ -95,6 +95,9 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+
+                // @todo запаковать обновление статьи в менеджер.
+
                 $article = $form->getData();
                 $article->setUpdated();
 
@@ -102,6 +105,8 @@ class ArticleController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
+
+                $this->get('liip_doctrine_cache.ns.smart_blog')->delete('tag_cloud_zend');
 
                 return $this->redirect($this->generateUrl($this->routeAdminArticle));
             }
@@ -126,12 +131,17 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+
+                // @todo запаковать создание статьи в менеджер.
+
                 $article = $form->getData();
 
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
+
+                $this->get('liip_doctrine_cache.ns.smart_blog')->delete('tag_cloud_zend');
 
                 return $this->redirect($this->generateUrl($this->routeAdminArticle));
             }
