@@ -95,6 +95,36 @@ class ArticleController extends Controller
     }
 
     /**
+     * @param string date
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function archiveAction($date = null, $page = 1)
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
+
+        $month = date('n', $date); // 1 through 12
+        $year = date('Y', $date); // 2011
+        $firstDay = date("Y-m-d", mktime(0,0,0,$month,1,$year));
+        $lastDay = date("Y-m-d", mktime(0,0,0,$month+1,1,$year));
+
+        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByDateQuery($firstDay, $lastDay)));
+        $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
+
+        try {
+            $pagerfanta->setCurrentPage($page);
+        } catch (NotValidCurrentPageException $e) {
+            return $this->redirect($this->generateUrl($this->routeIndex));
+        }
+
+        return $this->render($this->bundleName . ':Article:archive_list.html.twig', [
+            'pagerfanta' => $pagerfanta,
+            'date' => $date,
+        ]);
+    }
+
+    /**
      * @param Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response

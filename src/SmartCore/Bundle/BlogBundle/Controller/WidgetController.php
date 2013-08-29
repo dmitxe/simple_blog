@@ -73,20 +73,22 @@ class WidgetController extends Controller
         $yearmonth = [];
         $count = 0;
         foreach ($articles as $article) {
-            $ym = $article->getCreatedAt()->format('F Y'); // December 2011
+            $date_article = $article->getCreatedAt();
+            $ym = $date_article->format('F Y'); // December 2011
             if (!isset($yearmonth[$ym])) {
                 if (++$count > $limit) {
                     break;
                 }
-                $yearmonth[$ym] = 1;
+                $yearmonth[$ym]['count'] = 1;
+                $yearmonth[$ym]['date'] = strtotime($ym);
             } else {
-                $yearmonth[$ym]++;  // 2, 3, 4
+                $yearmonth[$ym]['count']++;  // 2, 3, 4
             }
         }
 
         return $this->render($this->bundleName . ':Widget:archive_articles.html.twig', [
             'articles' => $yearmonth,
-       ]);
+        ]);
     }
 
     /**

@@ -2,7 +2,9 @@
     <ul class="nav nav-list">
         {% for month, val in articles  %}
         <li>
-            <a href="#">{{ month | localizeddate('none', 'none', null, null, 'LLLL YYYY') }} ({{ val }})</a>
+            <a href="{{ path('smart_blog_archive', {'date': val.date, 'page': 1}) }}">
+                {{ month | localizeddate('none', 'none', null, null, 'LLLL YYYY') }} ({{ val.count }})
+            </a>
         </li>
         {% endfor %}
     </ul>

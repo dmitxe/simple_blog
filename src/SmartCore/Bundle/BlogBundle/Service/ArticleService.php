@@ -102,6 +102,16 @@ class ArticleService extends AbstractBlogService
     }
 
     /**
+     * @param String|null $firstDay
+     * @param String|null $lastDay
+     * @return \Doctrine\ORM\Query
+     */
+    public function getFindByDateQuery($firstDay = null, $lastDay = null)
+    {
+        return $this->articlesRepo->getFindByDateQuery($firstDay, $lastDay);
+    }
+
+    /**
      * @param TagInterface $tag
      * @param int|null $limit
      * @param int|null $offset
