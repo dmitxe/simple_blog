@@ -102,6 +102,13 @@ class LoadBlogData extends ContainerAware implements FixtureInterface, OrderedFi
             ->setSlug('os')
         ;
 
+        $category_debian = new Category();
+        $category_debian
+            ->setTitle('Debian')
+            ->setSlug('debian')
+            ->setParent($category_os)
+        ;
+
         $category_soft = new Category();
         $category_soft
             ->setTitle('Программы (софт)')
@@ -127,16 +134,39 @@ class LoadBlogData extends ContainerAware implements FixtureInterface, OrderedFi
         $tag9 = new Tag('CMS');
         $tag10 = new Tag('Выбор');
         $tag10->setSlug('select');
+        $tag11 = new Tag('Ckeditor');
+        $tag12 = new Tag('Подключение');
+        $tag12->setSlug('connect');
+        $tag13 = new Tag('Форматирование');
+        $tag13->setSlug('formatting');
+        $tag14 = new Tag('Дата и время');
+        $tag14->setSlug('date_and_time');
+        $tag15 = new Tag('Редактор');
+        $tag15->setSlug('editor');
+        $tag16 = new Tag('Кодировка');
+        $tag16->setSlug('encoding');
+        $tag17 = new Tag('CSS');
+        $tag18 = new Tag('Линейный градиент');
+        $tag18->setSlug('linear_gradient');
+        $tag19 = new Tag('Подсветка кода');
+        $tag19->setSlug('сode_illumination');
+        $tag20 = new Tag('Twitter Bootstrap');
+        $tag20->setSlug('twitter_bootstrap');
+        $tag21 = new Tag('Формы');
+        $tag21->setSlug('forms');
+        $tag22 = new Tag('Visual Studio 2012 C++');
+        $tag22->setSlug('visual_sStudio_2012_cpp');
+        $tag23 = new Tag('phpStorm');
+        $tag24 = new Tag('Memcached');
+        $tag25 = new Tag('Debian');
 
         $article = new Article();
         $article->setTitle('Хлебные крошки в Yii')
             //->setEnabled(false)
             ->setSlug('breadcrumbs_yii')
-            ->setAnnotation('Хлебные крошки (Breadcrumbs) - это строка навигации до текущей страницы, сделанная из ссылок на родительские элементы. В Yii есть удобное средство для работы с хлебными крошками &ndash; виджет zii&nbsp; CBreadcrumbs http://www.yiiframework.com/doc/api/1.1/CBreadcrumbs<br />
+            ->setAnnotation('Хлебные крошки (Breadcrumbs) - это строка навигации до текущей страницы, сделанная из ссылок на родительские элементы. В Yii есть удобное средство для работы с хлебными крошками - виджет zii CBreadcrumbs http://www.yiiframework.com/doc/api/1.1/CBreadcrumbs<br />
 	Хочу описать, как подключить CBreadcrumbs.')
-            ->setText('<p>
-	Хлебные крошки (Breadcrumbs) &ndash; это строка навигации до текущей страницы, сделанная из ссылок на родительские элементы. В Yii есть удобное средство для работы с хлебными крошками &ndash; виджет zii&nbsp; CBreadcrumbs http://www.yiiframework.com/doc/api/1.1/CBreadcrumbs<br />
-	Хочу описать, как подключить CBreadcrumbs.</p>
+            ->setText('<p></p>
 <hr id="readmore" />
 <p>
 	В контроллере определяем общедоступную переменную-массив хлебных крошек. public $breadcrumbs=array();<br />
@@ -166,11 +196,94 @@ $this-&gt;breadcrumbs=array(
 ')
             ->setAuthor($user)
             ->setCategory($category_yii)
+            ->setCreatedAt(new \DateTime('2011-11-26 10:06:15'))
             ->addTag($tag5)
             ->addTag($tag6)
         ;
         $manager->persist($article);
 
+        $article = new Article();
+        $article->setTitle('Как подключить Ckeditor к фреймворку Yii')
+            //->setEnabled(false)
+            ->setSlug('how_to_connect_ckeditor_to_framework_yii')
+            ->setAnnotation('Часто возникает необходимость использовать визуальный редактор на сайте. Есть несколько весьма популярных WYSIWYNG-редакторов. Один из них - Ckeditor. Сегодня я расскажу, как подключить Ckeditor к Yii.')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	Шаг первый: скачиваем сам редактор с официального сайта: <a href="http://ckeditor.com/download" target="_blank">http://ckeditor.com/download</a><br />
+	Распаковываем архив в корень сайта.<br />
+	Шаг второй: скачиваем расширение Yii ckeditor-integration <a href="http://www.yiiframework.com/extension/ckeditor-integration/">отсюда</a>.<br />
+	Распаковываем в папку protected/extensions.<br />
+	Шаг третий: подключаем к форме наш редактор:</p>
+<div class="highlight">
+	<pre class="brush: php">
+&lt;?php
+$this-&gt;widget(&#39;ext.ckeditor.CKEditorWidget&#39;,array(
+  &quot;model&quot;=&gt;$model,                 # Модель данных
+  &quot;attribute&quot;=&gt;&#39;content&#39;,          # Аттрибут в модели
+  &quot;defaultValue&quot;=&gt;$model-&gt;content, #Значение по умолчанию
+
+  &quot;config&quot; =&gt; array(
+      &quot;height&quot;=&gt;&quot;400px&quot;,
+      &quot;width&quot;=&gt;&quot;100%&quot;,
+      &quot;toolbar&quot;=&gt;&quot;Full&quot;, #панель инструментов
+      &quot;defaultLanguage&quot;=&gt;&quot;ru&quot;, # Язык по умолчанию
+      ),
+   &quot;ckEditor&quot;=&gt;Yii::app()-&gt;basePath.&quot;/../ckeditor/ckeditor.php&quot;,
+                                  # Путь к ckeditor.php
+  &quot;ckBasePath&quot;=&gt;Yii::app()-&gt;baseUrl.&quot;/ckeditor/&quot;,
+                                  # адрес к редактору
+  ) ); ?&gt;</pre>
+</div>
+<div class="code">
+	Все параметры конфига редактора смотрим <a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html">здесь</a></div>
+')
+            ->setAuthor($user)
+            ->setCategory($category_yii)
+            ->setCreatedAt(new \DateTime('2011-11-23 13:20:50'))
+            ->addTag($tag6)
+            ->addTag($tag11)
+            ->addTag($tag12)
+        ;
+        $manager->persist($article);
+
+        $article = new Article();
+        $article->setTitle('Форматирование даты и времени в Yii')
+            //->setEnabled(false)
+            ->setSlug('formatting_of_date_and_time_in_yii')
+            ->setAnnotation('Передо мной встала такая задача: как в Yii вывести дату, отформатированную в родном, русском формате. Оказывается, очень просто. Во-первых, надо установить русский язык в конфигурационном файле приложения, и, во-вторых, воспользоваться методом компонента&nbsp; приложения CDateFormatter-&gt;format().')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	Итак, приступим. В конфигурационном файле пропишем две строчки, которые установят русификацию для сайта:</p>
+<div class="highlight">
+	<pre class="brush: php">
+   &#39;sourceLanguage&#39; =&gt; &#39;en&#39;,
+    &#39;language&#39; =&gt; &#39;ru&#39;,</pre>
+</div>
+<p>
+	Здесь sourceLanguage &ndash; язык, на котором написан сам сайт. У меня он, естественно, английский. Ну а текущий язык &ndash; language &ndash; русский.<br />
+	Теперь в том месте, где хотим вывести отформатированную дату, добавим такой код:</p>
+<div class="highlight">
+	<pre class="brush: php">
+	echo Yii::app()-&gt;dateFormatter-&gt;format(&quot;dd MMMM y, HH:mm&quot;, $vardatetime);</pre>
+</div>
+<p>
+	Выведет дату и время в таком формате:&nbsp; 29 ноября 2011, 16:41<br />
+	Метод format принимает два параметра: первый &ndash; шаблон времени в стандарте Юникода, второй &ndash; время в unix timestamp или Mysql DATETIME. Вот и всё.<br />
+	Более подробно о CDateFormatter смотрите <a href="http://www.yiiframework.com/doc/api/1.1/CDateFormatter" target="_blank">здесь</a><br />
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+')
+            ->setAuthor($user)
+            ->setCategory($category_yii)
+            ->setCreatedAt(new \DateTime('2012-02-25 15:28:38'))
+            ->addTag($tag6)
+            ->addTag($tag13)
+            ->addTag($tag14)
+        ;
+        $manager->persist($article);
 
 
         $article = new Article();
@@ -178,8 +291,7 @@ $this-&gt;breadcrumbs=array(
             ->setSlug('symfony_2_spravochnik_komand')
             ->setSlug('s2_sik_knd')
             ->setAnnotation('В этой статье буду писать самые часто используемые команды Симфони. Как ни странно, но на Симфони без командной строки ну никак. Полгода-год назад помнил многие команды наизусть, а сейчас, особенно после работы с Магенто, в голове чистый лист.')
-            ->setText('<p>
-	В этой статье буду писать самые часто используемые команды Симфони. Как ни странно, но на Симфони без командной строки ну никак. Полгода-год назад помнил многие команды наизусть, а сейчас, особенно после работы с Магенто, в голове чистый лист.</p>
+            ->setText('<p></p>
 <hr id="readmore" />
 <p>
 	Инсталляция проекта:</p>
@@ -240,105 +352,284 @@ php app/console container:debug my_mailer</pre>
 ')
             ->setAuthor($user)
             ->setCategory($category_symfony2)
+            ->setCreatedAt(new \DateTime('2013-08-07 17:19:21'))
             ->addTag($tag2)
             ->addTag($tag7)
         ;
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Первая статья')
-            ->setSlug('art1')
-            ->setAnnotation('Аннотация для первой статьи.')
-            ->setText('Опросная анкета упорядочивает из ряда вон выходящий портрет потребителя, учитывая результат предыдущих медиа-кампаний. Спонсорство, в рамках сегодняшних воззрений, однородно стабилизирует принцип восприятия, используя опыт предыдущих кампаний. Узнавание бренда осмысленно переворачивает повторный контакт, признавая определенные рыночные тенденции. Стимулирование сбыта амбивалентно.')
-            ->setCategory($category_cpp)
-            ->addTag($tag1)
-            ->addTag($tag3)
-            ->setAuthor($user)
-        ;
-        $manager->persist($article);
-
-        $article = new Article();
         $article->setTitle('Вторая статья')
             ->setSlug('art2')
-            ->setAnnotation('Аннотация для второй статьи.')
-            ->setText('Опросная анкета упорядочивает из ряда вон выходящий портрет потребителя, учитывая результат предыдущих медиа-кампаний. Спонсорство, в рамках сегодняшних воззрений, однородно стабилизирует принцип восприятия, используя опыт предыдущих кампаний. Узнавание бренда осмысленно переворачивает повторный контакт, признавая определенные рыночные тенденции. Стимулирование сбыта амбивалентно.')
+            ->setAnnotation('Давно мечтал о нормальной подсветке кода php, html и css. Наконец-то у меня выдалось время и я посветил этому вопросу несколько часов. Итак, небольшой обзор существующих способов подсветки показал, что её (подсветку) можно делать или не стороне клиента, или на стороне сервера. Для себя я сразу решил, что свой сервер грузить лишней работой не стоит. В общем, решил искать реализацию на JavaScript. Конечно, при отключённом js мои посетители не увидят подсветки, но таких, надеюсь, будет мало))')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	После гугления наткнулся на симпатичную статью. В ней описывался компактный скрипт highlight: <a href="http://softwaremaniacs.org/soft/highlight/">http://softwaremaniacs.org/soft/highlight/</a></p>
+<p>
+	Увы, после подключения подсветки кода я не увидел. Зато мой &laquo;любимый&raquo; IE подсветил ошибку на JavaScript. Мол, объект не поддерживает какое-то там свойство. Как Вы наверное понимаете, копаться в чужом коде и искать ошибку я не стал. Не подключается &ndash; и ладно, ищем другой скрипт.</p>
+<p>
+	Кандидатом номер два стал SyntaxHighlighter от Alex Gorbatchev. Особенность скрипта &ndash; что он не требует jQuery (хотя я не считаю это преимуществом) и можно указать только те языки, которые нужны. &nbsp;После скачивания и настройки подсветка кода тут же заработала, что очень и очень меня порадовало!</p>
+<p>
+	Архив качаем отсюда: <a href="http://alexgorbatchev.com/SyntaxHighlighter/download/">http://alexgorbatchev.com/SyntaxHighlighter/download/</a></p>
+<p>
+	Расскажу о некоторых особенностях настройки. Извлеките из скаченного архива и подключите следующие файлы:</p>
+<ol>
+	<li>
+		shCore.js</li>
+	<li>
+		shCore.css</li>
+	<li>
+		shThemeDefault.css</li>
+</ol>
+<p>
+	Далее определитесь с языками, подсветка коих Вам нужна. Так, я выбрал себе css, html и php. Чтобы они заработали, надо подключить следующие файлы:&nbsp; shBrushCss.js,&nbsp; shBrushXml.js, shBrushPhp.js.</p>
+<p>
+	И последний шаг &ndash; инициализация скрипта. Добавьте скрипт со строчкой</p>
+<pre class="brush: js; toolbar: true;">
+SyntaxHighlighter.all();</pre>
+<p>
+	- и подсветка заработает.</p>
+<p>
+	&nbsp;</p>
+<p>
+	На этом собственно все. Заключительный штрих &ndash; у себя я отключил боковую панельку (полоса прокрутки+ссылка на сайт автора) командой SyntaxHighlighter.defaults[&#39;toolbar&#39;] = false;</p>
+<p>
+	Как пользоваться подсветкой? Используйте тег &lt;pre&gt;с классом brush:[язык подсветки]. Т.е. для php это будет выглядеть так:</p>
+<p>
+	&nbsp;</p>
+<pre class="brush: js; toolbar: true;">
+	&lt;pre class=&quot;brush: php; toolbar: true;&quot;&gt;echo &quot;Привет, мир!&quot;; &lt;/pre&gt;</pre>
+<p>
+	&nbsp;</p>
+<p>
+	Скриптом я доволен.</p>
+')
             ->setCategory($category_js)
-            ->addTag($tag1)
-            ->addTag($tag3)
+            ->setCreatedAt(new \DateTime('2013-01-29 17:28:47'))
+            ->addTag($tag19)
             ->setAuthor($user)
         ;
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Третья статья')
-            ->setSlug('third')
-            ->setAnnotation('Аннотация для третьей статьи.')
-            ->setText('Опросная анкета упорядочивает из ряда вон выходящий портрет потребителя, учитывая результат предыдущих медиа-кампаний. Спонсорство, в рамках сегодняшних воззрений, однородно стабилизирует принцип восприятия, используя опыт предыдущих кампаний. Узнавание бренда осмысленно переворачивает повторный контакт, признавая определенные рыночные тенденции. Стимулирование сбыта амбивалентно.')
-            ->setCategory($category_jquery)
-            ->setAuthor($user)
-        ;
-        $manager->persist($article);
-
-        $article = new Article();
-        $article->setTitle('Четвертая статья')
-            ->setSlug('fourth')
-            ->setAnnotation('Аннотация для четвертой статьи.')
-            ->setText('Взаимодействие корпорации и клиента амбивалентно. Агентская комиссия специфицирует мониторинг активности, используя опыт предыдущих кампаний. Ассортиментная политика предприятия развивает стратегический маркетинг, используя опыт предыдущих кампаний. Более того, взаимодействие корпорации и клиента искажает бренд, расширяя долю рынка.')
-            ->setAuthor($user)
-            ->setCategory($category_os)
+        $article->setTitle('Настройка Symfony 2 в PhpStorm')
+            ->setSlug('adjustment_symfony2_in_phpstorm')
+            ->setAnnotation('По горячим следам, пока помню, напишу об интеграции поддержки Symfony 2 в phpStorm.')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	Нам потребуется плагин: <a href="http://plugins.jetbrains.com/plugin/7219?pr=phpStorm">http://plugins.jetbrains.com/plugin/7219?pr=phpStorm</a></p>
+<p>
+	Устанавливаем его (File-&gt;Settings-&gt;Plugins, кнопка Install From Disk)</p>
+<p>
+	Перезапуcкаем PhpStorm. Идем в File-&gt;Settings-&gt;Symfony 2 Plugin, ставим галку на Enable Plugin, проверяем пути (у меня var/cache/dev/appDevUrlGenerator.php и var/cache/dev/translations), в Container добавляем путь.</p>
+<p>
+	Ввводим команду php bin/warmup_cache</p>')
+            ->setCategory($category_symfony2)
+            ->setCreatedAt(new \DateTime('2013-08-10 10:14:05'))
             ->addTag($tag2)
-            ->addTag($tag4)
+            ->addTag($tag23)
+            ->setAuthor($user)
         ;
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Пятая статья')
-            ->setSlug('fifth')
-            ->setAnnotation('Аннотация для пятой статьи.')
-            ->setText('Взаимодействие корпорации и клиента амбивалентно. Агентская комиссия специфицирует мониторинг активности, используя опыт предыдущих кампаний. Ассортиментная политика предприятия развивает стратегический маркетинг, используя опыт предыдущих кампаний. Более того, взаимодействие корпорации и клиента искажает бренд, расширяя долю рынка.')
+        $article->setTitle('Ссылки на Symfony 2')
+            ->setSlug('fourth')
+            ->setAnnotation('Ссылки на полезную литературу по Symfony 2')
+            ->setText('Работа с контейнером сервисов: <a href="http://symfony.com/doc/current/book/service_container.html">http://symfony.com/doc/current/book/service_container.html</a>')
+            ->setAuthor($user)
+            ->setCategory($category_symfony2)
+            ->setCreatedAt(new \DateTime('2013-08-10 10:14:05'))
+            ->addTag($tag2)
+        ;
+        $manager->persist($article);
+
+        $article = new Article();
+        $article->setTitle('Установка Memcached на Windows 7 x64 (php 5.4.17)')
+            ->setSlug('installation_memcached_on_windows7_x64_php_5_4_17)')
+            ->setAnnotation('Встала задача поставить себе memcached. В интернете есть много мануалов, но они в основном под 32-разрядные версии. Т.к. у меня 64-разрядный php, то возникли определенные трудности…')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	Начать с того, что 64-раздяную версию самого &nbsp;memcache найти не так-то просто. На официальном сайт лежат сырые исходники: <a href="http://code.google.com/p/memcached/downloads/list">http://code.google.com/p/memcached/downloads/list</a></p>
+<p>
+	Компилировать их показалось задачей сложной и страшной. После интенсивного поиска в гугле нашел вот <a href="http://s3.amazonaws.com/downloads.northscale.com/memcached-win64-1.4.4-14.zip">тут</a> файлы версии 1.4.4-14 под Windows x64. Версия устаревшая, но выхода у меня не было (гугл показывал еще более старые версия), скачал себе эту.</p>
+<p>
+	Создал на диске себе папку <strong>memcached</strong> &nbsp;и распаковал туда архив. Далее запустил командную строку (от имени Администратора!) и выполнил</p>
+<pre class="brush: php; toolbar: true;">
+	C:\memcached\memcached.exe -d install</pre>
+<p>
+	Пошел смотреть в Службы, как встал memcached (Панель управления-&gt;Администрирование-&gt;Службы) &ndash; служба с таким именем появилась. Запустил её, в свойствах прописал автоматический запуск.</p>
+<p>
+	Осталось только подключиться к php. После поисков нашел тут: <a href="http://www.mediafire.com/download/8d3vd26z3fg6bf1/php_memcache-svn20120301-5.4-VC9-x64.zip">http://www.mediafire.com/download/8d3vd26z3fg6bf1/php_memcache-svn20120301-5.4-VC9-x64.zip</a> - похожее на нужную версию.</p>
+<p>
+	Однако при копировании вдруг обнаружил, что расширение (у меня php 5.4.17) php_memcache.dll уже есть&hellip; Решил, что &laquo;из коробки&raquo; будет надежнее.</p>
+<p>
+	Прописал в php.ini в разделе с расширениями</p>
+<pre class="brush: php; toolbar: true;">
+	[PHP_MEMCACHED]
+	extension = php_memcache.dll</pre>
+<p>
+	Перезапустил апач, убедился, что php_info() вывел memcache</p>
+<p>
+	Запустил тестовый файлик, ничего не сломалось.&nbsp; Ну посмотрим, как дальше себя поведет php&hellip;</p>
+<p>
+	P.S. Так файлы на просторах интернета имеет тенденцию теряться (сколько я нерабочих ссылок сегодня нашел!), то прикладываю свой архивчик: <a href="/media/memcached.zip">скачать</a></p>
+')
             ->setAuthor($user)
             ->setCategory($category_php)
-            ->addTag($tag2)
-            ->addTag($tag4)
+            ->setCreatedAt(new \DateTime('2013-08-27 19:38:21'))
+            ->addTag($tag1)
+            ->addTag($tag24)
         ;
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Шестая статья')
-            ->setSlug('sixth')
-            ->setAnnotation('Аннотация для шестой статьи.')
-            ->setText('Взаимодействие корпорации и клиента амбивалентно. Агентская комиссия специфицирует мониторинг активности, используя опыт предыдущих кампаний. Ассортиментная политика предприятия развивает стратегический маркетинг, используя опыт предыдущих кампаний. Более того, взаимодействие корпорации и клиента искажает бренд, расширяя долю рынка.')
-            ->setCategory($category_html)
+        $article->setTitle('Debain 7 – горячие команды сервера')
+            ->setSlug('debain7_hot_commands_of_the_server')
+            ->setAnnotation('Тут собрал команды, которые все время приходится использовать на сервере (ОС – Debain 7)')
+            ->setText('<hr id="readmore" />
+<p>Запуск apache:</p>
+<div class="highlight">	<pre class="brush: cpp">/etc/init.d/apache2 start</pre></div>
+<p>Остановка apache:</p>
+<div class="highlight">	<pre class="brush: cpp">/etc/init.d/apache2 stop</pre></div>
+<p>Перезапуск apache:</p>
+<div class="highlight">	<pre class="brush: cpp"> /etc/init.d/apache2 restart</pre></div>
+')
+            ->setCategory($category_debian)
+            ->setCreatedAt(new \DateTime('2013-08-29 22:09:51'))
+            ->addTag($tag7)
+            ->addTag($tag25)
             ->setAuthor($user)
         ;
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Седьмая статья')
-            ->setSlug('art7')
-            ->setAnnotation('Аннотация для шестой статьи.')
-            ->setText('Взаимодействие корпорации и клиента амбивалентно. Агентская комиссия специфицирует мониторинг активности, используя опыт предыдущих кампаний. Ассортиментная политика предприятия развивает стратегический маркетинг, используя опыт предыдущих кампаний. Более того, взаимодействие корпорации и клиента искажает бренд, расширяя долю рынка.')
+        $article->setTitle('CSS – линейный градиент фона')
+            ->setSlug('css_linear_gradient_of_background')
+            ->setAnnotation('Как сделать градиент фону, не прибегая к помощи фоновых рисунков? Современные браузеры поддерживают градиентную заливку с помощью CSS.')
+            ->setText('<p></p>
+<hr id="readmore" />
+<div class="highlight">
+	<pre class="brush: css">
+background:#EFEFEF; /*цвет фона кнопки для браузеров без поддержки CSS3*/
+background: -webkit-gradient(linear, left top, left bottom, from(#3437CD), to(#538BFF)); /* для Webkit браузеров */
+background: -moz-linear-gradient(top,  #3437CD, #538BFF); /* для Firefox */
+background-image: -o-linear-gradient(top,  #3437CD,  #538BFF); /* для Opera 11 */
+filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#39;, endColorstr=&#39;#538BFF&#39;); /* фильтр для IE */
+
+</pre>
+</div>
+<p>
+	Чтобы сохранить&nbsp; кроссбраузерность, приходиться писать под каждый интернет-браузер отдельное правило CSS. Особо обрабатывается IE.&nbsp; В каждом правиле участвует два цвета &ndash; начальный и конечный.</p>
+')
             ->setCategory($category_css)
+            ->setCreatedAt(new \DateTime('2012-02-25 17:03:11'))
+            ->addTag($tag17)
+            ->addTag($tag18)
             ->setAuthor($user)
         ;
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Twitter')
-            ->setSlug('art8')
-            ->setAnnotation('Аннотация для шестой статьи.')
-            ->setText('Взаимодействие корпорации и клиента амбивалентно. Агентская комиссия специфицирует мониторинг активности, используя опыт предыдущих кампаний. Ассортиментная политика предприятия развивает стратегический маркетинг, используя опыт предыдущих кампаний. Более того, взаимодействие корпорации и клиента искажает бренд, расширяя долю рынка.')
+        $article->setTitle('Подключаем Twitter Bootstrap к Yii')
+            ->setSlug('connect_twitter_bootstrap_to_yii')
+            ->setAnnotation('Совсем недавно мне рассказали о такой классной вещи, как фреймворк css от Твиттера - Twitter Bootstrap. Раньше, максимум, что я использовал - это "reset css". Все остальное писал ручками. Каждый раз - одно и то же. Что, понятно, отрицательно сказывалось на производительности. Немного поработав с этим фреймворком (оформление админки на Симфони 2) - пришел к выводу, что вещь это безусловно полезная. Реально ускоряет работу в разы. И вот я решил перевести и свой блог на Yii к этому же виду.')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	Перво-наперво скачал сам Twitter Bootstrap с гитхаба: <a href="https://github.com/twitter/bootstrap%20Т.е">https://github.com/twitter/bootstrap Т.е</a>. я качал вместе с исходниками на языку less, т.к. планировал самостоятельно компилировать из них css. Вы же может скачать уже скомпилированные файлы, например, отсюда: <a href="http://bootstrap.veliovgroup.com/">http://bootstrap.veliovgroup.com/</a> Но в этом случае уже нельзя будет изменять расцветку ну и вообще вносить изменения&hellip; В общем, я остановился на сырых исходниках.</p>
+<p>
+	Компилировать исходники less я решил с помощью расширения Yii-less: <a href="http://www.yiiframework.com/extension/yii-less/">http://www.yiiframework.com/extension/yii-less/</a></p>
+<p>
+	Скачиваем данное расширение, ложем его в папку protected/extensions. В конфиге регистрируем новый&nbsp; behaviors:</p>
+<pre class="brush: php; toolbar: true;">
+	&#39;behaviors&#39;=&gt;array(
+	    &#39;ext.yii-less.components.LessCompilationBehavior&#39;,
+	)
+</pre>
+<p>
+	Регистрируем расширение как компонент:</p>
+<pre class="brush: php; toolbar: true;">
+&#39;components&#39;=&gt;array(
+  &#39;lessCompiler&#39;=&gt;array(
+    &#39;class&#39;=&gt;&#39;ext.yii-less.components.LessCompiler&#39;,
+    &#39;paths&#39;=&gt;array(
+      // you can access to the compiled file on this path
+      &#39;/css/bootstrap.css&#39; =&gt; array(
+        &#39;precompile&#39; =&gt; true, // whether you want to cache the generation
+        &#39;paths&#39; =&gt; array(&#39;/less/bootstrap.less&#39;) //paths of less files. you can specify multiple files.
+      ),
+    ),
+  ),
+),
+</pre>
+<p>
+	&nbsp;</p>
+<p>
+	И в лайоте пишем Yii::app()-&gt;clientScript-&gt;registerCssFile(&#39;/css/bootstrap.css&#39;)</p>
+<p>
+	Все, теперь при первом запуске в нашем ассете будет новый файл. Как альтернатива &ndash; можно компилировать файлы на стороне клиента (<a href="https://github.com/cloudhead/less.js">https://github.com/cloudhead/less.js</a>)&nbsp; &ndash; но, на мой взгляд, это сильно скажется на производительности&hellip;.</p>
+<p>
+	Одной проблемой меньше. Остался вопрос с подсветкой кода на less. Мой редактор (NetBeans) по умолчанию не распознает less. Исправляем это с помощь плагина scss-editor <a href="http://code.google.com/p/scss-editor/">http://code.google.com/p/scss-editor/</a></p>
+<ol>
+	<li>
+		Качаем плагин, ставим его в NetBeans</li>
+	<li>
+		Ассоциируем с ним файлы Less &ndash; Сервис -&gt;Параметры -&gt;Файлы,&nbsp; создаем новое расширение less и в списке &laquo;Связанный тип файлов&raquo; задаем ему &laquo;text/x-scss&raquo;</li>
+</ol>
+<p style="margin-left:18.0pt;">
+	Перезапускаем NetBeans &ndash; и подсветка появилась!</p>
+<p style="margin-left:18.0pt;">
+	Напоследок замечу, что для Yii есть готовое решение в виде расширения yii-bootstrap: <a href="http://www.cniska.net/yii-bootstrap/">http://www.cniska.net/yii-bootstrap/</a> - но я его не пробовал. Лень разбираться&hellip;</p>
+	<p><b>UPD</b> На Symfony 2 этот же дизайн встал без проблем</p>
+')
             ->setCategory($category_twitter_bootstrap)
+            ->setCreatedAt(new \DateTime('2013-01-29 17:42:26'))
+            ->addTag($tag6)
+            ->addTag($tag12)
+            ->addTag($tag20)
             ->setAuthor($user)
         ;
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Soft')
-            ->setSlug('art9')
-            ->setAnnotation('Аннотация для шестой статьи.')
-            ->setText('Взаимодействие корпорации и клиента амбивалентно. Агентская комиссия специфицирует мониторинг активности, используя опыт предыдущих кампаний. Ассортиментная политика предприятия развивает стратегический маркетинг, используя опыт предыдущих кампаний. Более того, взаимодействие корпорации и клиента искажает бренд, расширяя долю рынка.')
+        $article->setTitle('Создаем формы в Visual Studio 2012')
+            ->setSlug('create_forms_in_visual_sStudio_2012')
+            ->setAnnotation('Сегодня решил повозиться с Microsoft Visual Studio 2012 C++ - попробовать создать свою форму. Начал искать компоненты (как в Delphi) - но нигде их не нашел!')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	Погуглил и понял, что именно в 2012 версии, именно для языка C++ разработчики решили убрать поддержку Windows Forms Application. На просторах буржуйского интернета нашел замечательное решение. Нужно скачать шаблон <a href="http://dmitxe.ru/media/VS2012CPPWinForms.zip">http://dmitxe.ru/media/VS2012CPPWinForms.zip</a> и скопировать его в C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcprojects\vcNET\ - при этом лучше на всякий случай сделать бэкап файла &quot;vcNET.vsdir&quot;. Использование: Файл-&gt;Проект-&gt;Шаблоны-&gt;Visual C++ -&gt; CLR-&gt;MC++ WinApp</p>
+<p>
+	Источник:&nbsp; <a href="http://www.t-hart.org/vs2012/">http://www.t-hart.org/vs2012/</a></p>
+')
+            ->setCategory($category_cpp)
+            ->setCreatedAt(new \DateTime('2013-06-06 20:31:23'))
+            ->addTag($tag21)
+            ->addTag($tag22)
+            ->setAuthor($user)
+        ;
+        $manager->persist($article);
+
+
+        $article = new Article();
+        $article->setTitle('NotePad++')
+            ->setSlug('notepad_plus_plus')
+            ->setAnnotation('Часто возникает необходимость быстрой перекодировки файла (например, из ansi в utf8, или наоборот). Есть замечательный (и притом бесплатный) редактор - NotePad++. С помощью него можно легко перекодировать файл из одной кодировки в другую. В этом редакторе есть даже подсветка кода. Конечно, я предпочитаю работать где-нибудь в Adobe Dreamweaver, NuSphere PHPED или в NetBeans. Но эти монстры подолгу грузятся, а иногда хочется быстро подправить код и тут же закрыть файл. Для этого как раз подойдёт NotePad++')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>
+	Есть одна особенность перекодирования в utf8. Для преобразования кодировки&nbsp; файла выбираем в меню &laquo;Кодировки&raquo;-&gt; &laquo;Преобразовать в utf8&nbsp; без BOM&raquo;. Если выбрать просто &laquo;Преобразовать в utf8&raquo;, тогда случиться трагедия &ndash; страница перестанет правильно отображаться в браузере. Преобразование в ANSI таких проблем не имеет &ndash; есть только одно действие.<br />
+	Программа качается <a href="http://notepad-plus-plus.org/download/" target="_blank">отсюда</a>.<br />
+	&nbsp;</p>
+')
             ->setCategory($category_soft)
+            ->setCreatedAt(new \DateTime('2012-02-25 15:34:43'))
+            ->addTag($tag15)
+            ->addTag($tag16)
             ->setAuthor($user)
         ;
         $manager->persist($article);
@@ -359,8 +650,10 @@ php app/console container:debug my_mailer</pre>
 	Теперь написать собственную, уникальную CMS стало гораздо проще. Конечно, стандартные проекты быстрее реализовать на готовой CMS, но многие проекты имею тенденцию превращаться из стандартных в нестандартные.</p>
 <p>
 	Этот блог я написал на Yii. А вот другой мой блог &ndash; netopus.ru написан CMS WordPress. Использовалась одна из бесплатных тем для WordPress.</p>
+<p>UPD В сентябре 2013 года блог перешел на Symfony 2 (движок SmartCore)</p>
 ')
             ->setCategory($category_other)
+            ->setCreatedAt(new \DateTime('2011-11-23 13:15:19'))
             ->addTag($tag8)
             ->addTag($tag9)
             ->addTag($tag10)
