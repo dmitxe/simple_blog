@@ -100,7 +100,7 @@ class Article extends SmartArticle implements SignedArticleInterface
     }
 
     /**
-     * @param DateTime $date_created
+     * @param \DateTime $createdAt
      * @return $this
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -109,6 +109,4 @@ class Article extends SmartArticle implements SignedArticleInterface
 
         return $this;
     }
-
-
 }
