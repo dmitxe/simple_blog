@@ -1,4 +1,4 @@
-{% extends 'SmartTexterBundle::layout.html.twig' %}
+{% extends '@SmartTexter/layout.html.twig' %}
 
 {% block smart_texter_content %}
 
@@ -17,7 +17,11 @@
         <tbody>
         {% for text in pagerfanta.currentPageResults %}
             <tr>
-                <td>{{ text.id }}</td>
+                <td>
+                    <a href="{{ path('smart_texter_admin_edit', {'id': text.id}) }}" title="Редактировать">
+                        {{ text.name }}
+                    </a>
+                </td>
                 <td>
                     <a href="{{ path('smart_texter_admin_edit', {'id': text.id}) }}" title="Редактировать">
                         {{ text.announce }}

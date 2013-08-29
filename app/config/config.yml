@@ -78,9 +78,11 @@ knp_menu:
 liip_doctrine_cache:
     namespaces:
         smart_texter:
-            namespace: smart_texter
             type: file_system
             directory: "%kernel.cache_dir%/smart_texter"
+        smart_blog:
+            type: file_system
+            directory: "%kernel.cache_dir%/smart_blog"
 
 mopa_bootstrap:
     form:

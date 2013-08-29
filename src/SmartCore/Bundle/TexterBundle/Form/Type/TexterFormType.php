@@ -11,6 +11,7 @@ class TexterFormType extends AbstractType
     {
         $builder
             ->add('text')
+            ->add('name')
         ;
     }
 

@@ -2,9 +2,7 @@
 
 namespace SmartCore\Bundle\BlogBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
-use SmartCore\Bundle\BlogBundle\Model\ArticleInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -38,16 +36,16 @@ class WidgetController extends Controller
      */
     public function __construct()
     {
-        $this->categoryServiceName   = 'smart_blog.category';
+        $this->categoryServiceName  = 'smart_blog.category';
         $this->articleServiceName   = 'smart_blog.article';
-        $this->bundleName            = 'SmartBlogBundle';
+        $this->bundleName           = 'SmartBlogBundle';
     }
 
     /**
      * @param integer $limit
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showArchiveArticlesAction($limit = 10)
+    public function archiveArticlesAction($limit = 10)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
@@ -75,9 +73,9 @@ class WidgetController extends Controller
      * @param integer $id_action
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showCategoryListAction($id_action = null)
+    public function categoryListAction()
     {
-        $menuCategory = array();
+        $menuCategory = [];
         $level = 1;
         $this->addChildCategory($menuCategory, $level);
 
@@ -93,33 +91,27 @@ class WidgetController extends Controller
      * @param integer $level
      * @param CategoryInterface $parent
      */
-    protected function addChildCategory(Array &$menu, &$level, CategoryInterface $parent = null)
+    protected function addChildCategory(array &$menu, &$level, CategoryInterface $parent = null)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
-        $categoryService = $this->get($this->categoryServiceName);
         $categories = $parent
             ? $parent->getChildren()
-            : $categoryService->getRoots();
+            : $this->get($this->categoryServiceName);
 
         $router = $this->container->get('router');
 
         /** @var CategoryInterface $category */
         foreach ($categories as $category) {
-            $uri = $router->generate('smart_blog_category', ['slug' => $category->getSlugFull()]);
-            $item = array();
-            $item['id'] = $category->getId();
-            $item['title'] = $category->getTitle();
-            $item['slug'] = $category->getSlug();
-            $item['level'] = $level;
-            $item['uri'] = $uri;
-            $menu[] = $item;
+            $menu[] = [
+                'id'    => $category->getId(),
+                'title' => $category->getTitle(),
+                'slug'  => $category->getSlug(),
+                'level' => $level,
+                'uri'   => $router->generate('smart_blog_category', ['slug' => $category->getSlugFull()]),
+            ];
 
-            /** @var ItemInterface $sub_menu */
             $level++;
             $this->addChildCategory($menu, $level, $category);
             $level--;
         }
     }
-
-
 }

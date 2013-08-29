@@ -31,7 +31,7 @@ class AdminController extends Controller
             return $this->redirect($this->generateUrl('smart_texter_admin_index'));
         }
 
-        return $this->render('SmartTexterBundle:Admin:list.html.twig', [
+        return $this->render('@SmartTexter/Admin/list.html.twig', [
             'pagerfanta' => $pagerfanta,
         ]);
     }
@@ -49,16 +49,25 @@ class AdminController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+
+                // @todo убрать логику создания в менеджер.
+
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($text);
                 $em->flush();
 
+                $textName = $text->getName();
+                if (null === $textName or is_numeric($textName)) {
+                    $text->setName($text->getId());
+                    $em->flush();
+                }
+
                 return $this->redirect($this->generateUrl('smart_texter_admin_index'));
             }
         }
 
-        return $this->render('SmartTexterBundle:Admin:create.html.twig', [
+        return $this->render('@SmartTexter/Admin/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -79,19 +88,30 @@ class AdminController extends Controller
 
         $form = $this->createForm(new TexterEditFormType(), $text);
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
+
+                // @todo убрать логику сохранения в менеджер.
+
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($text);
                 $em->flush();
 
+                $textName = $text->getName();
+                if (null === $textName or is_numeric($textName)) {
+                    $text->setName($text->getId());
+                    $em->flush();
+                }
+
+                $this->get('liip_doctrine_cache.ns.smart_texter')->delete($text->getName());
+
                 return $this->redirect($this->generateUrl('smart_texter_admin_index'));
             }
         }
 
-        return $this->render('SmartTexterBundle:Admin:edit.html.twig', [
+        return $this->render('@SmartTexter/Admin/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

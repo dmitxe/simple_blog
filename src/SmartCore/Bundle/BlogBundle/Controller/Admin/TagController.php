@@ -71,6 +71,8 @@ class TagController extends Controller
             if ($form->isValid()) {
                 $tagService->update($tag);
 
+                $this->get('liip_doctrine_cache.ns.smart_blog')->delete('tag_cloud_zend');
+
                 return $this->redirect($this->generateUrl($this->routeAdminTag));
             }
         }
@@ -114,6 +116,8 @@ class TagController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($tag);
                 $em->flush();
+
+                $this->get('liip_doctrine_cache.ns.smart_blog')->delete('tag_cloud_zend');
 
                 return $this->redirect($this->generateUrl($this->routeAdminTag));
             }
