@@ -130,6 +130,7 @@
 
             <div class="span9">
                 <div id="mst_content">
+
                     {% block content %}
                     {% endblock content %}
                 </div>
@@ -138,7 +139,12 @@
 
         <div class="row">
             <div class="span12">
-                <div id="footer"> © 2011-2013 Дмитрий Хе. Все права защищены. </div>
+                <div id="footer"> © 2011-2013 Дмитрий Хе. Все права защищены.
+                    <br />
+                    <small>
+                    {{ simple_profiler() }}
+                    </small>
+                </div>
             </div>
         </div>
     </div>

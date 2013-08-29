@@ -3,6 +3,9 @@
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
+// @todo убрать отсюда.
+require_once __DIR__.'/../src/SmartCore/Bundle/SimpleProfilerBundle/Profiler.php';
+
 class AppKernel extends Kernel
 {
     public function registerBundles()
@@ -37,6 +40,7 @@ class AppKernel extends Kernel
             new SmartCore\Bundle\BlogBundle\SmartBlogBundle(),
             new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
             new SmartCore\Bundle\GalleryBundle\SmartGalleryBundle(),
+            new SmartCore\Bundle\SimpleProfilerBundle\SmartSimpleProfilerBundle(),
             new SmartCore\Bundle\TexterBundle\SmartTexterBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),
             new FOS\RestBundle\FOSRestBundle(),
