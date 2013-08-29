@@ -51,18 +51,14 @@ class WidgetController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-        //       $articles = $articleService->getFindLastByDate($limit);
-        $materials = $articleService->getFindLastByDate($limit);
- //       $materials = $this->articlesRepo->getFindLastByDate($limit);
+        $articles = $articleService->getFindLastByDate($limit);
         $yearmonth = array();
         $count = 0;
-        foreach ($materials as $material) {
-            ld($material);
-            //       $month=$material->create_time;
-//       $ym = Yii::app()->dateFormatter->format("MMMM y",$material->create_time);
-            $ym = date('F Y', strtotime($material->created_at)); // December 2011
+        foreach ($articles as $article) {
+//            ld($material);
+            $ym = $article->getCreatedAt()->format('F Y'); // December 2011
             if (!isset($yearmonth[$ym])) {
-                if (++$count > $this->maxItems) break;
+                if (++$count > $limit) break;
                 $yearmonth[$ym] = 1;
             } else {
                 $yearmonth[$ym]++;  // 2, 3, 4

@@ -2,7 +2,7 @@
     <ul class="nav nav-list">
         {% for month, val in articles  %}
         <li>
-            <a href="#">{{ month | date('M') }} {{ val }}</a>
+            <a href="#">{{ month | localizeddate('none', 'none', null, null, 'LLLL YYYY') }} ({{ val }})</a>
         </li>
         {% endfor %}
     </ul>

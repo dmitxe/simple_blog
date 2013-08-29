@@ -142,15 +142,22 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
      */
     public function getFindLastByDate($limit = 10)
     {
-        return $this->_em->createQuery("
+ /*       return $this->_em->createQuery("
             SELECT a
             FROM {$this->_entityName} AS a
             WHERE a.enabled = true
             ORDER BY a.created_at DESC
-        ");
+        ");*/
 
-        $query->setMaxResults($limit);
+ //        $query->setMaxResults($limit);
 
-        return $query->getResult();
+//        return $query->getResult();
+
+        return $this->findBy([
+            'enabled'    => true,
+        ], [
+            'created_at'         => 'DESC',
+        ], $limit);
+
     }
 }
