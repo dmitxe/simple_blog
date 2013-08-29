@@ -76,6 +76,10 @@ class TagController extends Controller
 
         $tag = $tagService->getBySlug($slug);
 
+        if (null === $tag) {
+            throw $this->createNotFoundException('По запрошеному тегу, статей нет.');
+        }
+
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($tagService->getFindByTagQuery($tag)));
         $pagerfanta->setMaxPerPage($tagService->getItemsCountPerPage());
 
