@@ -132,4 +132,25 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
 
         return $query->getSingleScalarResult();
     }
+
+    /**
+     * @param int|null $limit
+     * @return \Doctrine\ORM\Query
+     *
+     * @todo $category
+     * @todo enabled
+     */
+    public function getFindLastByDate($limit = 10)
+    {
+        return $this->_em->createQuery("
+            SELECT a
+            FROM {$this->_entityName} AS a
+            WHERE a.enabled = true
+            ORDER BY a.created_at DESC
+        ");
+
+        $query->setMaxResults($limit);
+
+        return $query->getResult();
+    }
 }

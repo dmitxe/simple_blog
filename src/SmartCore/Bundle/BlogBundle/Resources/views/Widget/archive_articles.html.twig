@@ -1,0 +1,9 @@
+<div id="materialsHeader">
+    <ul class="nav nav-list">
+        {% for month, val in articles  %}
+        <li>
+            <a href="#">{{ month | date('M') }} {{ val }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
