@@ -120,7 +120,8 @@ class LoadBlogData extends ContainerAware implements FixtureInterface, OrderedFi
         $tag4 = new Tag('Linux');
         $tag5 = new Tag('Breadcrumbs');
         $tag6 = new Tag('Yii');
-        $tag7 = new Tag('Команды');
+        $tag7 = new Tag('Консольные команды');
+        $tag7->setSlug('commands');
 
         $article = new Article();
         $article->setTitle('Хлебные крошки в Yii')
@@ -165,9 +166,12 @@ $this-&gt;breadcrumbs=array(
         ;
         $manager->persist($article);
 
+
+
         $article = new Article();
         $article->setTitle('Symfony 2: справочник команд')
             ->setSlug('symfony_2_spravochnik_komand')
+            ->setSlug('s2_sik_knd')
             ->setAnnotation('В этой статье буду писать самые часто используемые команды Симфони. Как ни странно, но на Симфони без командной строки ну никак. Полгода-год назад помнил многие команды наизусть, а сейчас, особенно после работы с Магенто, в голове чистый лист.')
             ->setText('<p>
 	В этой статье буду писать самые часто используемые команды Симфони. Как ни странно, но на Симфони без командной строки ну никак. Полгода-год назад помнил многие команды наизусть, а сейчас, особенно после работы с Магенто, в голове чистый лист.</p>
