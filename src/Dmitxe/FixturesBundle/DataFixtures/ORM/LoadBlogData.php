@@ -43,7 +43,7 @@ class LoadBlogData extends ContainerAware implements FixtureInterface, OrderedFi
 
         $category_symfony2 = new Category();
         $category_symfony2
-            ->setTitle('Symfony 2')
+            ->setTitle('Symfony2')
             ->setSlug('symfony2')
             ->setParent($category_php)
         ;
@@ -287,8 +287,8 @@ $this-&gt;widget(&#39;ext.ckeditor.CKEditorWidget&#39;,array(
 
 
         $article = new Article();
-        $article->setTitle('Symfony 2: справочник команд')
-            ->setSlug('symfony_2_spravochnik_komand')
+        $article->setTitle('Symfony2: справочник команд')
+            ->setSlug('symfony2_spravochnik_komand')
             ->setSlug('s2_sik_knd')
             ->setAnnotation('В этой статье буду писать самые часто используемые команды Симфони. Как ни странно, но на Симфони без командной строки ну никак. Полгода-год назад помнил многие команды наизусть, а сейчас, особенно после работы с Магенто, в голове чистый лист.')
             ->setText('<p></p>
@@ -413,9 +413,9 @@ SyntaxHighlighter.all();</pre>
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Настройка Symfony 2 в PhpStorm')
+        $article->setTitle('Настройка Symfony2 в PhpStorm')
             ->setSlug('adjustment_symfony2_in_phpstorm')
-            ->setAnnotation('По горячим следам, пока помню, напишу об интеграции поддержки Symfony 2 в phpStorm.')
+            ->setAnnotation('По горячим следам, пока помню, напишу об интеграции поддержки Symfony2 в phpStorm.')
             ->setText('<p></p>
 <hr id="readmore" />
 <p>
@@ -423,7 +423,7 @@ SyntaxHighlighter.all();</pre>
 <p>
 	Устанавливаем его (File-&gt;Settings-&gt;Plugins, кнопка Install From Disk)</p>
 <p>
-	Перезапуcкаем PhpStorm. Идем в File-&gt;Settings-&gt;Symfony 2 Plugin, ставим галку на Enable Plugin, проверяем пути (у меня var/cache/dev/appDevUrlGenerator.php и var/cache/dev/translations), в Container добавляем путь.</p>
+	Перезапуcкаем PhpStorm. Идем в File-&gt;Settings-&gt;Symfony2 Plugin, ставим галку на Enable Plugin, проверяем пути (у меня var/cache/dev/appDevUrlGenerator.php и var/cache/dev/translations), в Container добавляем путь.</p>
 <p>
 	Ввводим команду php bin/warmup_cache</p>')
             ->setCategory($category_symfony2)
@@ -435,10 +435,10 @@ SyntaxHighlighter.all();</pre>
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Ссылки на Symfony 2')
+        $article->setTitle('Ссылки на Symfony2')
             ->setSlug('fourth')
-            ->setAnnotation('Ссылки на полезную литературу по Symfony 2')
-            ->setText('Работа с контейнером сервисов: <a href="http://symfony.com/doc/current/book/service_container.html">http://symfony.com/doc/current/book/service_container.html</a>')
+            ->setAnnotation('Ссылки на полезную литературу по Symfony2')
+            ->setText('Работа с контейнером сервисов: <a href="http://symfony.com/doc/current/book/service_container.html" target="_blank">http://symfony.com/doc/current/book/service_container.html</a>')
             ->setAuthor($user)
             ->setCategory($category_symfony2)
             ->setCreatedAt(new \DateTime('2013-08-10 10:14:05'))
@@ -583,8 +583,8 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
 <p style="margin-left:18.0pt;">
 	Перезапускаем NetBeans &ndash; и подсветка появилась!</p>
 <p style="margin-left:18.0pt;">
-	Напоследок замечу, что для Yii есть готовое решение в виде расширения yii-bootstrap: <a href="http://www.cniska.net/yii-bootstrap/">http://www.cniska.net/yii-bootstrap/</a> - но я его не пробовал. Лень разбираться&hellip;</p>
-	<p><b>UPD</b> На Symfony 2 этот же дизайн встал без проблем</p>
+	Напоследок замечу, что для Yii есть готовое решение в виде расширения yii-bootstrap: <a href="http://www.cniska.net/yii-bootstrap/" target="_blank">http://www.cniska.net/yii-bootstrap/</a> - но я его не пробовал. Лень разбираться&hellip;</p>
+	<p><b>UPD</b> На Symfony2 этот же дизайн встал без проблем</p>
 ')
             ->setCategory($category_twitter_bootstrap)
             ->setCreatedAt(new \DateTime('2013-01-29 17:42:26'))
@@ -650,7 +650,7 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
 	Теперь написать собственную, уникальную CMS стало гораздо проще. Конечно, стандартные проекты быстрее реализовать на готовой CMS, но многие проекты имею тенденцию превращаться из стандартных в нестандартные.</p>
 <p>
 	Этот блог я написал на Yii. А вот другой мой блог &ndash; netopus.ru написан CMS WordPress. Использовалась одна из бесплатных тем для WordPress.</p>
-<p>UPD В сентябре 2013 года блог перешел на Symfony 2 (движок SmartCore)</p>
+<p>UPD В сентябре 2013 года блог перешел на Symfony2 (движок SmartCore)</p>
 ')
             ->setCategory($category_other)
             ->setCreatedAt(new \DateTime('2011-11-23 13:15:19'))
