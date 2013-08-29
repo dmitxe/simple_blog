@@ -4,16 +4,12 @@
 
 {% block content %}
     {{ parent() }}
-    <div id="content" class="span12">
-        <div class="content">
 
-            {{ knp_menu_render('SmartBlogBundle:AdminMenu:main', {
-                    'currentClass': 'active',
-                    'clear_matcher': false,
-                })
-            }}
+    {{ knp_menu_render('SmartBlogBundle:AdminMenu:main', {
+            'currentClass': 'active',
+            'clear_matcher': false,
+        })
+    }}
 
-            {% block smart_blog_content %}{% endblock %}
-        </div>
-    </div>
+    {% block smart_blog_content %}{% endblock %}
 {% endblock %}
