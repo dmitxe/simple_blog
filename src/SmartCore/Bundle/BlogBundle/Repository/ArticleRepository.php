@@ -94,7 +94,7 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
             SELECT a
             FROM {$this->_entityName} AS a
             WHERE a.enabled = true
-            ORDER BY a.id DESC
+            ORDER BY a.created_at DESC
         ");
     }
 
@@ -111,7 +111,7 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
             WHERE a.enabled = true
             AND a.created_at > :firstDay
             AND a.created_at < :lastDay
-            ORDER BY a.id DESC
+            ORDER BY a.created_at DESC
         ");
         $query->setParameters([
             'firstDay' => New \DateTime($firstDay),
@@ -134,7 +134,7 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
             JOIN a.tags AS t
             WHERE t = :tag
             AND a.enabled = true
-            ORDER BY a.id DESC
+            ORDER BY a.created_at DESC
         ")->setParameter('tag', $tag);
     }
 
