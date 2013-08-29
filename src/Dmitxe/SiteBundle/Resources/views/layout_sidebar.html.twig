@@ -5,7 +5,27 @@
     <link href="{{ asset('assets/bootstrap/2.3.2/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/screen.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/syntaxhighlighter/styles/shCore.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/syntaxhighlighter/styles/shThemeDefault.css') }}" rel="stylesheet">
 {% endblock html_head_links %}
+
+{% block html_head_scripts %}{{ parent() }}
+    <script src="{{ asset('js/syntaxhighlighter/scripts/shCore.js') }}"></script>
+    <script src="{{ asset('js/syntaxhighlighter/scripts/shBrushJScript.js') }}"></script>
+    <script src="{{ asset('js/syntaxhighlighter/scripts/shBrushSql.js') }}"></script>
+    <script src="{{ asset('js/syntaxhighlighter/scripts/shBrushXml.js') }}"></script>
+    <script src="{{ asset('js/syntaxhighlighter/scripts/shBrushCss.js') }}"></script>
+    <script src="{{ asset('js/syntaxhighlighter/scripts/shBrushPhp.js') }}"></script>
+    <script src="{{ asset('js/syntaxhighlighter/scripts/shBrushCpp.js') }}"></script>
+
+    <script type="text/javascript">
+        //          SyntaxHighlighter.config.bloggerMode = true;
+        SyntaxHighlighter.defaults['toolbar'] = false;
+        SyntaxHighlighter.all();
+        //           hljs.initHighlightingOnLoad();
+    </script>
+
+{% endblock html_head_scripts %}
 
 {% block body %}
 
