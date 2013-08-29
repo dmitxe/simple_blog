@@ -35,12 +35,18 @@ class TexterExtension extends \Twig_Extension
     }
 
     /**
-     * @param integer $id
+     * @param string $name
      * @return string
      */
-    public function texterFunction($id)
+    public function texterFunction($name)
     {
-        return $this->em->find('SmartTexterBundle:Text', $id)->getText();
+        $text = $this->em->getRepository('SmartTexterBundle:Text')->findOneBy(['name' => $name]);
+
+        if ($text) {
+            return $text->getText();
+        } else {
+            return "Текст с id '$name' не найден.";
+        }
     }
 
     /**
