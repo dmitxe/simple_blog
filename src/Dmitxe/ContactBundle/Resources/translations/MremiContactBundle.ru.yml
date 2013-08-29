@@ -24,8 +24,8 @@ mremi_contact.email_message_txt: |
     Сообщение:
     %message%
 
-    Regards
-mremi_contact.email_message_txt: |
+    С уважением
+mremi_contact.email_message_html: |
     Здравствуйте,
     <br/>
     <br/>
@@ -49,6 +49,6 @@ mremi_contact.email_message_txt: |
     %message%
     <br/>
     <br/>
-    Regards
+    С уважением
 mremi_contact.confirm_title: Благодарим Вас, %fullName%
 mremi_contact.confirm_message: Ваш сообщение было успешно отправлено, в ближайшее время мы постараемся ответить на него.

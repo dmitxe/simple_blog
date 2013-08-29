@@ -3,7 +3,7 @@
 {% block body_text %}
 {% autoescape false %}
 {{ 'mremi_contact.email_message_txt'|trans({
-    '%title%':     contact.titleValue|trans,
+    '%title%':     contact.subject|trans,
     '%firstName%': contact.firstName,
     '%lastName%':  contact.lastName,
     '%email%':     contact.email,
@@ -15,7 +15,7 @@
 {% block body_html %}
 {% autoescape false %}
 {{ 'mremi_contact.email_message_html'|trans({
-    '%title%':     contact.titleValue|trans,
+    '%title%':     contact.subject|trans,
     '%firstName%': contact.firstName,
     '%lastName%':  contact.lastName,
     '%email%':     contact.email,

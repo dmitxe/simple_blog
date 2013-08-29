@@ -55,7 +55,6 @@ class WidgetController extends Controller
         $yearmonth = array();
         $count = 0;
         foreach ($articles as $article) {
-//            ld($material);
             $ym = $article->getCreatedAt()->format('F Y'); // December 2011
             if (!isset($yearmonth[$ym])) {
                 if (++$count > $limit) break;
