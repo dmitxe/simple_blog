@@ -60,3 +60,12 @@
     {% endif %}
 {% endspaceless %}
 {% endblock form_errors %}
+
+{% block submit_widget %}
+    {% spaceless %}
+        {% set type = type|default('submit') %}
+        <div class="form-actions">
+        {{ block('button_widget') }}
+        </div>
+    {% endspaceless %}
+{% endblock submit_widget %}

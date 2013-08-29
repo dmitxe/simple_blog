@@ -4,13 +4,7 @@
 
 {% form_theme form 'MremiContactBundle:Contact:bootstrap_form_theme.html.twig' %}
 
-{# {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('bundles/mremicontact/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"  />
-    <link rel="stylesheet" href="{{ asset('bundles/mremicontact/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" media="all" />
-{% endblock %}
-#}
-
-{% block html_head_title %} Форма обратной связи {% endblock html_head_title %}
+{% block html_head_title %} Форма обратной связи &raquo; {{ parent() }} {% endblock html_head_title %}
 
 {% set breadcrumbs = '<span>Контакты</span>' %}
 
@@ -31,9 +25,5 @@
 
             {{ form_widget(form) }}
         </fieldset>
-
-        <div class="form-actions">
-            <button type="submit" class="btn" id="contact_form_submit_button">{{ 'mremi_contact.form_submit'|trans }}</button>
-        </div>
     </form>
 {% endblock %}

@@ -1,7 +1,7 @@
 mremi_contact_form:
-    path: /contact/
-    defaults: { _controller: MremiContactBundle:Contact:index }
+    path: /contacts/
+    defaults: { _controller: DmitxeContactBundle:Contact:index }
 
 mremi_contact_confirmation:
-    path: /contact/confirmation/
-    defaults: { _controller: MremiContactBundle:Contact:confirm }
+    path: /contacts/confirmation/
+    defaults: { _controller: DmitxeContactBundle:Contact:confirm }
