@@ -18,7 +18,7 @@ class AdminMenu extends ContainerAware
 
         $menu->setChildrenAttribute('class', isset($options['class']) ? $options['class'] : 'nav nav-tabs');
 
-        $menu->addChild('Blog',     ['route' => 'smart_blog_admin_article']);
+        $menu->addChild('Blog',     ['route' => 'smart_blog_admin_index']);
         $menu->addChild('News',     ['route' => 'dmitxe_news_admin_index']);
         $menu->addChild('Texts',    ['route' => 'smart_texter_admin_index']);
 

@@ -9,3 +9,7 @@ dmitxe_site_admin:
 dmitxe_site_about:
     path: /about/
     defaults: { _controller: DmitxeSiteBundle:Page:about }
+
+smart_blog_admin_index:
+    path:   /admin/blog/
+    defaults: { _controller: DmitxeSiteBundle:Admin:adminBlog }
