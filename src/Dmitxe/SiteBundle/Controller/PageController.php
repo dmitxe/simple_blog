@@ -15,9 +15,4 @@ class PageController extends Controller
     {
         return $this->render('DmitxeSiteBundle:Page:about.html.twig');
     }
-
-    public function contactsAction()
-    {
-        return $this->render('DmitxeSiteBundle:Page:contacts.html.twig');
-    }
 }

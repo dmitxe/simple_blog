@@ -125,17 +125,15 @@ genemu_form:
     captcha: ~
 
 mremi_contact:
-    store_data:            false
-    contact_class:         Mremi\ContactBundle\Model\Contact
-
+    store_data:            true
+    contact_class:         Dmitxe\ContactBundle\Entity\Contact
     form:
         type:              mremi_contact
         name:              contact_form
-        validation_groups: [Default]
+        validation_groups: ['Default']
         subject_provider:  mremi_contact.subject_provider.noop
         captcha_disabled:  false
         captcha_type:      genemu_captcha
-
     email:
         mailer:            mremi_contact.mailer.twig_swift
         recipient_address: xedmitry@yandex.ru
