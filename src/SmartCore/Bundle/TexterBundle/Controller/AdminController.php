@@ -49,6 +49,9 @@ class AdminController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+
+                // @todo убрать логику создания в менеджер.
+
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($text);
@@ -85,9 +88,12 @@ class AdminController extends Controller
 
         $form = $this->createForm(new TexterEditFormType(), $text);
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
+
+                // @todo убрать логику сохранения в менеджер.
+
                 /** @var \Doctrine\ORM\EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($text);
