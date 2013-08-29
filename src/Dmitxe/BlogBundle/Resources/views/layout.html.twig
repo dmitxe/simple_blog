@@ -1,7 +1,5 @@
 {% extends '@DmitxeSite/layout_sidebar.html.twig' %}
 
-{% block html_head_title %} Блог &raquo; {{ parent() }} {% endblock html_head_title %}
-
 {% if breadcrumbs != '' %}
     {% set current_breadcrumb = '<a href="' ~ path('smart_blog_index') ~ '">Блог</a> » ' %}
 {% else %}
@@ -9,6 +7,7 @@
 {% endif %}
 {% set breadcrumbs = current_breadcrumb ~ breadcrumbs %}
 
+{% block html_head_title %} Блог &raquo; {{ parent() }} {% endblock html_head_title %}
 
 {% block content %}
      {{ parent() }}

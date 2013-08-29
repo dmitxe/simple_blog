@@ -106,7 +106,7 @@ class ArticleController extends Controller
                 $em->persist($article);
                 $em->flush();
 
-                $this->get('liip_doctrine_cache.ns.smart_blog')->delete('tag_cloud_zend');
+                $this->get('smart_blog.cache')->delete($this->bundleName . 'tag_cloud_zend');
 
                 return $this->redirect($this->generateUrl($this->routeAdminArticle));
             }
@@ -141,7 +141,7 @@ class ArticleController extends Controller
                 $em->persist($article);
                 $em->flush();
 
-                $this->get('liip_doctrine_cache.ns.smart_blog')->delete('tag_cloud_zend');
+                $this->get('smart_blog.cache')->delete($this->bundleName . 'tag_cloud_zend');
 
                 return $this->redirect($this->generateUrl($this->routeAdminArticle));
             }

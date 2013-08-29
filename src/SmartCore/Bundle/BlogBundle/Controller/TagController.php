@@ -65,24 +65,6 @@ class TagController extends Controller
     }
 
     /**
-     * @return Response
-     */
-    public function cloudAction()
-    {
-        $cloud = $this->get('liip_doctrine_cache.ns.smart_blog')->fetch('tag_cloud_zend');
-
-        if (false === $cloud) {
-            /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
-            $tagService = $this->get($this->tagServiceName);
-
-            $cloud = $tagService->getCloudZend($this->routeTag)->render();
-            $this->get('liip_doctrine_cache.ns.smart_blog')->save('tag_cloud_zend', $cloud);
-        }
-
-        return new Response($cloud);
-    }
-
-    /**
      * @param Request $requst
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
