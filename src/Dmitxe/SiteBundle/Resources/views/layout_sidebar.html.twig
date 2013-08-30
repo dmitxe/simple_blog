@@ -80,9 +80,7 @@
                     {% if breadcrumbs != '' %}
                         {% set breadcrumbs = '<a href="' ~ path('dmitxe_site_index') ~ '">Главная</a> » ' ~ breadcrumbs %}
                     {% endif %}
-                    {% block breadcrumb %}
-                        {{ breadcrumbs|raw }}
-                    {% endblock breadcrumb %}
+                    {% block breadcrumb breadcrumbs|raw %}
                 </div>
             </div>
         </div>

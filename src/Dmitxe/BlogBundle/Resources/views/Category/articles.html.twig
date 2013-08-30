@@ -1,9 +1,8 @@
-{#{% extends 'SmartBlogBundle:Article:list.html.twig' %}#}
 {% extends 'DmitxeBlogBundle::layout.html.twig' %}
 
-{% set n = categories|length -1 %}
+{% set n = categories|length - 1 %}
 {% for j, category in categories %}
-    {% if j<n %}
+    {% if j < n %}
         {% set breadcrumbs = breadcrumbs ~ '<a href="' ~ path('smart_blog_category', {'slug': category.slugFull}) ~ '">' ~ category ~ '</a> » ' %}
     {% else %}
         {% set breadcrumbs = breadcrumbs ~ '<span>' ~ category ~ '</span>' %}

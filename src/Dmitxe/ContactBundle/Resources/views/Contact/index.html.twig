@@ -1,9 +1,5 @@
 {% extends '@DmitxeSite/layout_sidebar.html.twig' %}
 
-{% trans_default_domain 'MremiContactBundle' %}
-
-{% form_theme form 'MremiContactBundle:Contact:bootstrap_form_theme.html.twig' %}
-
 {% block html_head_title %} Форма обратной связи &raquo; {{ parent() }} {% endblock html_head_title %}
 
 {% set breadcrumbs = '<span>Контакты</span>' %}
@@ -18,6 +14,10 @@
     {% else %}
         {% set form_action = path('mremi_contact_form') %}
     {% endif %}
+
+    {% trans_default_domain 'MremiContactBundle' %}
+
+    {% form_theme form 'MremiContactBundle:Contact:bootstrap_form_theme.html.twig' %}
 
     <form class="form-horizontal" action="{{ form_action }}" {{ form_enctype(form) }} method="POST"{{ novalidate ? ' novalidate="novalidate"' : '' }}>
         <fieldset>

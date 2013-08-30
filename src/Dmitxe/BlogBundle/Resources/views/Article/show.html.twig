@@ -38,7 +38,6 @@
         </p>
     {% endif %}
 
-    {# ToDO: убрать, если разрешим оставлять комментарии незарегистрированным пользователям#}
     {% if is_granted('ROLE_USER') %}
        {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}
     {% else %}
