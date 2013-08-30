@@ -158,7 +158,7 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
     {
         $conn = $this->_em->getConnection();
         $result = $conn->fetchAll('SELECT date_format(created_at, "%Y-%m-01 00:00:00" ) as date, COUNT(1) as count
-                 FROM blog_articles
+                 FROM '.$this->getClassMetadata()->getTableName().'
                  WHERE created_at IS NOT NULL
                  GROUP BY date_format(created_at, "%Y-%m" ) DESC');
         return $result;

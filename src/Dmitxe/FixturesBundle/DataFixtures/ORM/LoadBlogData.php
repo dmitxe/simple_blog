@@ -438,7 +438,9 @@ SyntaxHighlighter.all();</pre>
         $article->setTitle('Ссылки на Symfony2')
             ->setSlug('fourth')
             ->setAnnotation('Ссылки на полезную литературу по Symfony2')
-            ->setText('Работа с контейнером сервисов: <a href="http://symfony.com/doc/current/book/service_container.html" target="_blank">http://symfony.com/doc/current/book/service_container.html</a>')
+            ->setText('<p></p>
+<hr id="readmore" /><p>Работа с контейнером сервисов: <a href="http://symfony.com/doc/current/book/service_container.html" target="_blank">http://symfony.com/doc/current/book/service_container.html</a></p>
+<p>Поиск бандлов для Symfony2: на сайте <a href="http://knpbundles.com/" target="_blank">KnpBundles</a></p>')
             ->setAuthor($user)
             ->setCategory($category_symfony2)
             ->setCreatedAt(new \DateTime('2013-08-10 10:14:05'))
