@@ -165,6 +165,4 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
                  LIMIT 0, '.$limit.' ');
         return $result;
     }
-
-
 }
