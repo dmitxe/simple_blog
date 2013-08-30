@@ -196,6 +196,8 @@ $this-&gt;breadcrumbs=array(
 ')
             ->setAuthor($user)
             ->setCategory($category_yii)
+            ->setDescription('Как создать хлебные крошки в Yii')
+            ->setKeywords('Yii, хлебные крошки')
             ->setCreatedAt(new \DateTime('2011-11-26 10:06:15'))
             ->addTag($tag5)
             ->addTag($tag6)
@@ -239,6 +241,8 @@ $this-&gt;widget(&#39;ext.ckeditor.CKEditorWidget&#39;,array(
 	Все параметры конфига редактора смотрим <a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html">здесь</a></div>
 ')
             ->setAuthor($user)
+            ->setDescription('В статье рассказывается о том, как быстро и правильно подключить Ckeditor к Yii')
+            ->setKeywords('Yii, Ckeditor, подключение')
             ->setCategory($category_yii)
             ->setCreatedAt(new \DateTime('2011-11-23 13:20:50'))
             ->addTag($tag6)
@@ -277,6 +281,8 @@ $this-&gt;widget(&#39;ext.ckeditor.CKEditorWidget&#39;,array(
 	&nbsp;</p>
 ')
             ->setAuthor($user)
+            ->setDescription('Как правильно и грамотно отформатировать дату и время в Yii')
+            ->setKeywords('Yii, формат, дата')
             ->setCategory($category_yii)
             ->setCreatedAt(new \DateTime('2012-02-25 15:28:38'))
             ->addTag($tag6)
@@ -351,6 +357,8 @@ php app/console container:debug my_mailer</pre>
 	Примечание. Иногда бывает нужно явно указать --env=prod</p>
 ')
             ->setAuthor($user)
+            ->setDescription('Самые часто используемые команды  Symfony2')
+            ->setKeywords('Symfony, команды')
             ->setCategory($category_symfony2)
             ->setCreatedAt(new \DateTime('2013-08-07 17:19:21'))
             ->addTag($tag2)
@@ -406,6 +414,8 @@ SyntaxHighlighter.all();</pre>
 	Скриптом я доволен.</p>
 ')
             ->setCategory($category_js)
+            ->setDescription('Как подсветить код на сайте: используем highlight')
+            ->setKeywords('подсветка кода, highlight')
             ->setCreatedAt(new \DateTime('2013-01-29 17:28:47'))
             ->addTag($tag19)
             ->setAuthor($user)
@@ -427,6 +437,8 @@ SyntaxHighlighter.all();</pre>
 <p>
 	Ввводим команду php bin/warmup_cache</p>')
             ->setCategory($category_symfony2)
+            ->setDescription('Интеграции поддержки Symfony2 в phpStorm')
+            ->setKeywords('phpStorm, Symfony2')
             ->setCreatedAt(new \DateTime('2013-08-10 10:14:05'))
             ->addTag($tag2)
             ->addTag($tag23)
@@ -482,6 +494,8 @@ SyntaxHighlighter.all();</pre>
 ')
             ->setAuthor($user)
             ->setCategory($category_php)
+            ->setDescription('Как установить поддержку Memcached php 5.4 на Windows 7 x64')
+            ->setKeywords('php 5.4, Memcached, Windows 7 x64')
             ->setCreatedAt(new \DateTime('2013-08-27 19:38:21'))
             ->addTag($tag1)
             ->addTag($tag24)
@@ -489,9 +503,9 @@ SyntaxHighlighter.all();</pre>
         $manager->persist($article);
 
         $article = new Article();
-        $article->setTitle('Debain 7 – горячие команды сервера')
+        $article->setTitle('Debain7 – горячие команды сервера')
             ->setSlug('debain7_hot_commands_of_the_server')
-            ->setAnnotation('Тут собрал команды, которые все время приходится использовать на сервере (ОС – Debain 7)')
+            ->setAnnotation('Тут собрал команды, которые все время приходится использовать на сервере (ОС – Debain7)')
             ->setText('<hr id="readmore" />
 <p>Запуск apache:</p>
 <div class="highlight">	<pre class="brush: cpp">/etc/init.d/apache2 start</pre></div>
@@ -501,6 +515,8 @@ SyntaxHighlighter.all();</pre>
 <div class="highlight">	<pre class="brush: cpp"> /etc/init.d/apache2 restart</pre></div>
 ')
             ->setCategory($category_debian)
+            ->setDescription('Часто используемые команды в Debain7')
+            ->setKeywords('Debain7, команды')
             ->setCreatedAt(new \DateTime('2013-08-29 22:09:51'))
             ->addTag($tag7)
             ->addTag($tag25)
@@ -528,6 +544,8 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
 	Чтобы сохранить&nbsp; кроссбраузерность, приходиться писать под каждый интернет-браузер отдельное правило CSS. Особо обрабатывается IE.&nbsp; В каждом правиле участвует два цвета &ndash; начальный и конечный.</p>
 ')
             ->setCategory($category_css)
+            ->setDescription('Создание градиента без помощи фоновых рисунков')
+            ->setKeywords('градиент фона, css')
             ->setCreatedAt(new \DateTime('2012-02-25 17:03:11'))
             ->addTag($tag17)
             ->addTag($tag18)
@@ -589,6 +607,8 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
 	<p><b>UPD</b> На Symfony2 этот же дизайн встал без проблем</p>
 ')
             ->setCategory($category_twitter_bootstrap)
+            ->setDescription('Как подключить Twitter Bootstrap к Yii')
+            ->setKeywords('yii, twitter bootstap, подключение')
             ->setCreatedAt(new \DateTime('2013-01-29 17:42:26'))
             ->addTag($tag6)
             ->addTag($tag12)
@@ -609,6 +629,8 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
 	Источник:&nbsp; <a href="http://www.t-hart.org/vs2012/">http://www.t-hart.org/vs2012/</a></p>
 ')
             ->setCategory($category_cpp)
+            ->setDescription('Как создать приложение Windows Forms Application в Visual Studio 2012 C++')
+            ->setKeywords('форма, Visual Studio 2012 C++')
             ->setCreatedAt(new \DateTime('2013-06-06 20:31:23'))
             ->addTag($tag21)
             ->addTag($tag22)
@@ -629,6 +651,8 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
 	&nbsp;</p>
 ')
             ->setCategory($category_soft)
+            ->setDescription('Как перекодировать файл с помощью NotePad++')
+            ->setKeywords('редактор, кодировка')
             ->setCreatedAt(new \DateTime('2012-02-25 15:34:43'))
             ->addTag($tag15)
             ->addTag($tag16)
@@ -655,6 +679,8 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
 <p><b>UPD</b> В сентябре 2013 года блог перешел на Symfony2 (движок SmartCore)</p>
 ')
             ->setCategory($category_other)
+            ->setDescription('Преимущества и недостатки фреймворка над CMS')
+            ->setKeywords('фреймворк, CMS, выбор')
             ->setCreatedAt(new \DateTime('2011-11-23 13:15:19'))
             ->addTag($tag8)
             ->addTag($tag9)

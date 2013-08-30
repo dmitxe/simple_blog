@@ -63,11 +63,11 @@ class WidgetController extends Controller
      * @param integer $limit
      * @return Response
      */
-    public function archiveArticlesAction($limit = 10)
+    public function archiveArticlesAction($limit = 24)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-        $articles = $articleService->monthlyArchives();
+        $articles = $articleService->monthlyArchives($limit);
         return $this->render($this->bundleName . ':Widget:archive_articles.html.twig', [
             'articles' => $articles,
         ]);

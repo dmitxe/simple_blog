@@ -152,15 +152,17 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
     }
 
     /**
+     * @param int|null $limit
      * @return array
      */
-    public function monthlyArchives()
+    public function monthlyArchives($limit)
     {
         $conn = $this->_em->getConnection();
         $result = $conn->fetchAll('SELECT date_format(created_at, "%Y-%m-01 00:00:00" ) as date, COUNT(1) as count
                  FROM '.$this->getClassMetadata()->getTableName().'
                  WHERE created_at IS NOT NULL
-                 GROUP BY date_format(created_at, "%Y-%m" ) DESC');
+                 GROUP BY date_format(created_at, "%Y-%m" ) DESC
+                 LIMIT 0, '.$limit.' ');
         return $result;
     }
 
