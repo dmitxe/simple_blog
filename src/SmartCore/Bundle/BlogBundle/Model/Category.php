@@ -122,6 +122,31 @@ abstract class Category implements CategoryInterface
     }
 
     /**
+     * @return Category[]|array
+     */
+    public function getParents()
+    {
+        $parents = new ArrayCollection();
+
+        if ($this->getParent()) {
+            $parents->add($this->getParent());
+            $this->buildParents($parents);
+        }
+
+        return $parents->toArray();
+    }
+
+    protected function buildParents(ArrayCollection $parents)
+    {
+        $category = $parents->last();
+
+        if ($category->getParent()) {
+            $parents->add($category->getParent());
+            $this->buildParents($parents);
+        }
+    }
+
+    /**
      * @param string $title
      * @return $this
      */

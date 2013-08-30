@@ -4,7 +4,17 @@
     <link rel="stylesheet" href="{{ asset('/css/comments.css') }}" type="text/css" />
 {% endblock html_head_styles %}
 
+{% block html_head_title %} {{ article.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
+
 {% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
+
+{% if article.category %}
+    {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': article.category.slugFull}) ~ '">' ~ article.category ~ '</a> » ' ~ breadcrumbs %}
+
+    {% for category in article.category.parents %}
+        {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': category.slugFull}) ~ '">' ~ category ~ '</a> » ' ~ breadcrumbs %}
+    {% endfor %}
+{% endif %}
 
 {% block smart_blog_content %}
 
