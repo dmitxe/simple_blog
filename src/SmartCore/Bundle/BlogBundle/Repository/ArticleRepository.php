@@ -21,6 +21,7 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
             'created_at' => 'DESC',
         ], $limit);
     }
+
     /**
      * @param TagInterface $tag
      * @return ArticleInterface[]|null
@@ -101,7 +102,7 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
      * @param \DateTime|null $lastDate
      * @return \Doctrine\ORM\Query
      */
-    public function getFindByDateQuery($firstDate = null, $lastDate = null)
+    public function getFindByDateQuery(\DateTime $firstDate = null, \DateTime $lastDate = null)
     {
         return $this->_em->createQuery("
             SELECT a
@@ -111,8 +112,8 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
             AND a.created_at < :lastDate
             ORDER BY a.created_at DESC
         ")->setParameters([
-            'firstDate' => new \DateTime($firstDate),
-            'lastDate'  => new \DateTime($lastDate),
+            'firstDate' => $firstDate,
+            'lastDate'  => $lastDate,
         ]);
     }
 
@@ -152,17 +153,18 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
     }
 
     /**
-     * @param int|null $limit
+     * @param int $limit
      * @return array
      */
     public function monthlyArchives($limit)
     {
-        $conn = $this->_em->getConnection();
-        $result = $conn->fetchAll('SELECT date_format(created_at, "%Y-%m-01 00:00:00" ) as date, COUNT(1) as count
-                 FROM '.$this->getClassMetadata()->getTableName().'
-                 WHERE created_at IS NOT NULL
-                 GROUP BY date_format(created_at, "%Y-%m" ) DESC
-                 LIMIT 0, '.$limit.' ');
-        return $result;
+        return $this->_em->getConnection()->fetchAll(
+            'SELECT date_format(created_at, "%Y-%m-01 00:00:00" ) AS date,
+                COUNT(1) AS count
+             FROM ' . $this->getClassMetadata()->getTableName() . '
+             WHERE created_at IS NOT NULL
+             GROUP BY date_format(created_at, "%Y-%m" ) DESC
+             LIMIT 0, ' . $limit
+        );
     }
 }

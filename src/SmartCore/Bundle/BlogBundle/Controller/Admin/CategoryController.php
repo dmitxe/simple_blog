@@ -76,7 +76,7 @@ class CategoryController extends Controller
 
         return $this->render($this->bundleName . ':Admin/Category:list.html.twig', [
             'categoryClass' => get_class($category),
-            'form' => $form->createView(),
+            'form'          => $form->createView(),
         ]);
     }
 

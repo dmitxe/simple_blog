@@ -14,6 +14,13 @@ use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 class ArticleController extends Controller
 {
     /**
+     * Имя бандла. Для перегрузки шаблонов.
+     *
+     * @var string
+     */
+    protected $bundleName;
+
+    /**
      * Имя сервиса по работе со статьями.
      *
      * @var string
@@ -35,21 +42,15 @@ class ArticleController extends Controller
     protected $routeArticle;
 
     /**
-     * Имя бандла. Для перегрузки шаблонов.
-     *
-     * @var string
-     */
-    protected $bundleName;
-
-    /**
      * Constructor.
      */
     public function __construct()
     {
+        $this->bundleName           = 'SmartBlogBundle';
+
         $this->articleServiceName   = 'smart_blog.article';
         $this->routeIndex           = 'smart_blog_index';
         $this->routeArticle         = 'smart_blog_article';
-        $this->bundleName           = 'SmartBlogBundle';
     }
 
     /**
@@ -95,33 +96,33 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param string date
-     * @param int $page
+     * @param Request $requst
+     * @param integer $year
+     * @param integer $month
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function archiveAction($year = 1970, $month = 1, $page = 1)
+    public function archiveMonthlyAction(Request $requst, $year = 1970, $month = 1)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
 
-//        $month = date('n', $date); // 1 through 12
-//        $year = date('Y', $date); // 2011
-        $firstDay = date("Y-m-d", mktime(0,0,0,$month,1,$year));
-        $lastDay = date("Y-m-d", mktime(0,0,0,$month+1,1,$year));
+        $firstDate = new \Datetime($year . '-' . $month . '-1');
+        $lastDate  = clone $firstDate;
+        $lastDate->modify('+1 month');
 
-        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByDateQuery($firstDay, $lastDay)));
+        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByDateQuery($firstDate, $lastDate)));
         $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
 
         try {
-            $pagerfanta->setCurrentPage($page);
+            $pagerfanta->setCurrentPage($requst->query->get('page', 1));
         } catch (NotValidCurrentPageException $e) {
             return $this->redirect($this->generateUrl($this->routeIndex));
         }
 
         return $this->render($this->bundleName . ':Article:archive_list.html.twig', [
             'pagerfanta' => $pagerfanta,
-            'year' => $year,
-            'month' => $month,
+            'year'       => $year,
+            'month'      => $month,
         ]);
     }
 

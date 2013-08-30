@@ -67,9 +67,10 @@ class WidgetController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-        $articles = $articleService->monthlyArchives($limit);
+        $archiveMonthly = $articleService->monthlyArchives($limit);
+
         return $this->render($this->bundleName . ':Widget:archive_articles.html.twig', [
-            'articles' => $articles,
+            'archiveMonthly' => $archiveMonthly,
         ]);
     }
 

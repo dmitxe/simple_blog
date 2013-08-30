@@ -2,10 +2,6 @@ smart_blog_index:
     path: /
     defaults: { _controller: SmartBlogBundle:Article:page }
 
-smart_blog_archive:
-    path: /archive/{year}/{month}/{page}
-    defaults: { _controller: SmartBlogBundle:Article:archive }
-
 smart_blog_article:
     path: /{slug}.html
     defaults: { _controller: SmartBlogBundle:Article:show }
@@ -36,10 +32,6 @@ smart_blog_category:
     requirements:
         slug: ".+"
 
-#smart_blog_category_page:
-#    path: /category/{slug}/page/{page_num}/
-#    defaults: { _controller: SmartBlogBundle:Default:index }
-
 smart_blog_tag_index:
     path: /tag/
     defaults: { _controller: SmartBlogBundle:Tag:index }
@@ -48,17 +40,30 @@ smart_blog_tag:
     path: /tag/{slug}/
     defaults: { _controller: SmartBlogBundle:Tag:showArticles }
 
-smart_blog_archive_yearly:
+smart_blog_archive:
+    path: /archive/
+    defaults: { _controller: SmartBlogBundle:Article:archive }
+
+smart_blog_archive_yearly: # @todo
     path: /archive/{year}/
-    defaults: { _controller: SmartBlogBundle:Default:index }
+    defaults: { _controller: SmartBlogBundle:Article:archiveYearly }
+    requirements:
+        year:  \d+
 
 smart_blog_archive_monthly:
     path: /archive/{year}/{month}/
-    defaults: { _controller: SmartBlogBundle:Default:index }
+    defaults: { _controller: SmartBlogBundle:Article:archiveMonthly }
+    requirements:
+        year:  \d+
+        month: \d+
 
-smart_blog_archive_dayly:
+smart_blog_archive_dayly: # @todo
     path: /archive/{year}/{month}/{day}/
-    defaults: { _controller: SmartBlogBundle:Default:index }
+    defaults: { _controller: SmartBlogBundle:Article:archiveDayly }
+    requirements:
+        year:  \d+
+        month: \d+
+        day:   \d+
 
 #smart_blog_admin:
 #    resource: "@SmartBlogBundle/Resources/config/routing_admin.yml"

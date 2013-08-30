@@ -1,9 +1,12 @@
 <div id="materialsHeader">
     <ul class="nav nav-list">
-        {% for article in articles  %}
+        {% for month in archiveMonthly %}
         <li>
-            <a href="{{ path('smart_blog_archive', {'year':article.date|date('Y'), 'month':article.date|date('n'), 'page': 1}) }}">
-                {{ article.date | localizeddate('none', 'none', null, null, 'LLLL YYYY') }} ({{ article.count }})
+            <a href="{{ path('smart_blog_archive_monthly', {
+                    'year':  month.date|date('Y'),
+                    'month': month.date|date('n'),
+                }) }}">
+                {{ month.date | localizeddate('none', 'none', null, null, 'LLLL YYYY') }} ({{ month.count }})
             </a>
         </li>
         {% endfor %}

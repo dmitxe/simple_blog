@@ -102,13 +102,13 @@ class ArticleService extends AbstractBlogService
     }
 
     /**
-     * @param String|null $firstDay
-     * @param String|null $lastDay
+     * @param \DateTime|null $firstDate
+     * @param \DateTime|null $lastDate
      * @return \Doctrine\ORM\Query
      */
-    public function getFindByDateQuery($firstDay = null, $lastDay = null)
+    public function getFindByDateQuery(\DateTime $firstDate = null, \DateTime $lastDate = null)
     {
-        return $this->articlesRepo->getFindByDateQuery($firstDay, $lastDay);
+        return $this->articlesRepo->getFindByDateQuery($firstDate, $lastDate);
     }
 
     /**
@@ -185,7 +185,7 @@ class ArticleService extends AbstractBlogService
     }
 
     /**
-     * @param int|null $limit
+     * @param int $limit
      * @return array
      */
     public function monthlyArchives($limit)
