@@ -448,7 +448,7 @@ SyntaxHighlighter.all();</pre>
 
         $article = new Article();
         $article->setTitle('Установка Memcached на Windows 7 x64 (php 5.4.17)')
-            ->setSlug('installation_memcached_on_windows7_x64_php_5_4_17)')
+            ->setSlug('installation_memcached_on_windows7_x64_php_5_4_17')
             ->setAnnotation('Встала задача поставить себе memcached. В интернете есть много мануалов, но они в основном под 32-разрядные версии. Т.к. у меня 64-разрядный php, то возникли определенные трудности…')
             ->setText('<p></p>
 <hr id="readmore" />

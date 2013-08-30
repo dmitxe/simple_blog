@@ -18,6 +18,8 @@
 
             <p>{{ article.annotation }}</p>
 
+            <p><a href="{{ path('smart_blog_article', {'slug': article.slug}) }}" class="btn btn-info pull-right">Читать дальше</a></p>
+
             {% if article.tags|length %}
                 {{ 'Tags'|trans }}:
                 {% for tag in article.tags %}
