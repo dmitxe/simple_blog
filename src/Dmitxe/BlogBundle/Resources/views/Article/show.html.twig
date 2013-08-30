@@ -9,10 +9,10 @@
 {% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
 
 {% if article.category %}
-    {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': article.category.slugFull}) ~ '">' ~ article.category ~ '</a> » ' ~ breadcrumbs %}
+    {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': article.category.slugFull}) ~ '">' ~ article.category ~ '</a> &raquo; ' ~ breadcrumbs %}
 
     {% for category in article.category.parents %}
-        {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': category.slugFull}) ~ '">' ~ category ~ '</a> » ' ~ breadcrumbs %}
+        {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': category.slugFull}) ~ '">' ~ category ~ '</a> &raquo; ' ~ breadcrumbs %}
     {% endfor %}
 {% endif %}
 
