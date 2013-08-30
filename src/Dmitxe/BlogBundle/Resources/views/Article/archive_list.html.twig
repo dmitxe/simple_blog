@@ -1,5 +1,6 @@
-{% extends 'SmartBlogBundle::layout.html.twig' %}
+{% extends 'DmitxeBlogBundle::layout.html.twig' %}
 
+{% set date = 'now'|date_modify(year ~ '-' ~ month ~ '-01') %}
 {% set breadcrumbs = '<span>' ~ 'Архив статей за ' ~ date | localizeddate('none', 'none', null, null, 'LLLL YYYY года') ~ '</span> ' %}
 
 {% block smart_blog_content %}
@@ -24,7 +25,7 @@
         {% if pagerfanta.haveToPaginate %}
             {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
                     'routeName': 'smart_blog_archive',
-                    'routeParams': {'date': date},
+                    'routeParams': {'year': year, 'month': month},
                     'css_container_class': 'pagination pagination-centered',
                 })
             }}

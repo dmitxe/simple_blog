@@ -150,4 +150,19 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
 
         return $query->getSingleScalarResult();
     }
+
+    /**
+     * @return array
+     */
+    public function monthlyArchives()
+    {
+        $conn = $this->_em->getConnection();
+        $result = $conn->fetchAll('SELECT date_format(created_at, "%Y-%m-01 00:00:00" ) as date, COUNT(1) as count
+                 FROM blog_articles
+                 WHERE created_at IS NOT NULL
+                 GROUP BY date_format(created_at, "%Y-%m" ) DESC');
+        return $result;
+    }
+
+
 }

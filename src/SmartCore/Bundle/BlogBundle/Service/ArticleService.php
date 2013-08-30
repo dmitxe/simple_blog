@@ -183,4 +183,12 @@ class ArticleService extends AbstractBlogService
         $event = new FilterArticleEvent($article);
         $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_UPDATE, $event);
     }
+
+    /**
+     * @return array
+     */
+    public function monthlyArchives()
+    {
+        return $this->articlesRepo->monthlyArchives();
+    }
 }

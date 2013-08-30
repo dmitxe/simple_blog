@@ -22,7 +22,7 @@
         {% if pagerfanta.haveToPaginate %}
             {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
                     'routeName': 'smart_blog_archive',
-                    'routeParams': {'date': date},
+                    'routeParams': {'year': year, 'month': month},
                     'css_container_class': 'pagination pagination-centered',
                 })
             }}

@@ -67,25 +67,9 @@ class WidgetController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-        $articles = $articleService->getLast(1000);
-
-        $yearmonth = [];
-        $count = 0;
-        foreach ($articles as $article) {
-            $ym = $article->getCreatedAt()->format('F Y'); // December 2011
-            if (!isset($yearmonth[$ym])) {
-                if (++$count > $limit) {
-                    break;
-                }
-                $yearmonth[$ym]['count'] = 1;
-                $yearmonth[$ym]['date']  = strtotime($ym);
-            } else {
-                $yearmonth[$ym]['count']++;
-            }
-        }
-
+        $articles = $articleService->monthlyArchives();
         return $this->render($this->bundleName . ':Widget:archive_articles.html.twig', [
-            'articles' => $yearmonth,
+            'articles' => $articles,
         ]);
     }
 

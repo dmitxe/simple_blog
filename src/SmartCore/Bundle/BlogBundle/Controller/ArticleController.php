@@ -99,13 +99,13 @@ class ArticleController extends Controller
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function archiveAction($date = null, $page = 1)
+    public function archiveAction($year = 1970, $month = 1, $page = 1)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
 
-        $month = date('n', $date); // 1 through 12
-        $year = date('Y', $date); // 2011
+//        $month = date('n', $date); // 1 through 12
+//        $year = date('Y', $date); // 2011
         $firstDay = date("Y-m-d", mktime(0,0,0,$month,1,$year));
         $lastDay = date("Y-m-d", mktime(0,0,0,$month+1,1,$year));
 
@@ -120,7 +120,8 @@ class ArticleController extends Controller
 
         return $this->render($this->bundleName . ':Article:archive_list.html.twig', [
             'pagerfanta' => $pagerfanta,
-            'date' => $date,
+            'year' => $year,
+            'month' => $month,
         ]);
     }
 

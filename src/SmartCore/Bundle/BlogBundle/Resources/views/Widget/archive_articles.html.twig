@@ -1,9 +1,9 @@
 <div id="materialsHeader">
     <ul class="nav nav-list">
-        {% for month, val in articles  %}
+        {% for article in articles  %}
         <li>
-            <a href="{{ path('smart_blog_archive', {'date': val.date, 'page': 1}) }}">
-                {{ month | localizeddate('none', 'none', null, null, 'LLLL YYYY') }} ({{ val.count }})
+            <a href="{{ path('smart_blog_archive', {'year':article.date|date('Y'), 'month':article.date|date('n'), 'page': 1}) }}">
+                {{ article.date | localizeddate('none', 'none', null, null, 'LLLL YYYY') }} ({{ article.count }})
             </a>
         </li>
         {% endfor %}
