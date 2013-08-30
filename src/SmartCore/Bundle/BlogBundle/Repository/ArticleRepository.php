@@ -156,15 +156,24 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
      * @param int $limit
      * @return array
      */
-    public function monthlyArchives($limit)
+    public function getArchiveMonthly($limit = 24)
     {
-        return $this->_em->getConnection()->fetchAll(
-            'SELECT date_format(created_at, "%Y-%m-01 00:00:00" ) AS date,
+        if ('mysql' != $this->_em->getConnection()->getDatabasePlatform()->getName()) {
+            throw new \Exception('
+
+                Посчет архива статей, пока работает только с БД MySQL.
+                Call in SmartCore\Bundle\BlogBundle\Repository\ArticleRepository::getArchiveMonthly();
+
+            ');
+        }
+
+        return $this->_em->getConnection()->fetchAll('
+            SELECT date_format(created_at, "%Y-%m-01 00:00:00" ) AS date,
                 COUNT(1) AS count
-             FROM ' . $this->getClassMetadata()->getTableName() . '
-             WHERE created_at IS NOT NULL
-             GROUP BY date_format(created_at, "%Y-%m" ) DESC
-             LIMIT 0, ' . $limit
+            FROM ' . $this->getClassMetadata()->getTableName() . '
+            GROUP BY date_format(created_at, "%Y-%m" ) DESC
+            ORDER BY date DESC
+            LIMIT 0, ' . $limit
         );
     }
 }

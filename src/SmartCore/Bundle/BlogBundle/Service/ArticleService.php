@@ -188,8 +188,8 @@ class ArticleService extends AbstractBlogService
      * @param int $limit
      * @return array
      */
-    public function monthlyArchives($limit)
+    public function getArchiveMonthly($limit = 24)
     {
-        return $this->articlesRepo->monthlyArchives($limit);
+        return $this->articlesRepo->getArchiveMonthly($limit);
     }
 }
