@@ -136,6 +136,12 @@ abstract class Category implements CategoryInterface
         return $parents->toArray();
     }
 
+    /**
+     * Рекурсивный обход для построение списка всех родительских категорий.
+     *
+     * @param ArrayCollection $parents
+     * @return void
+     */
     protected function buildParents(ArrayCollection $parents)
     {
         $category = $parents->last();

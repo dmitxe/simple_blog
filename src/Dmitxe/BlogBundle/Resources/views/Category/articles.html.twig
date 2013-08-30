@@ -19,9 +19,8 @@
             <li><a href="{{ path('smart_blog_category', {'slug': category.slugFull}) }}">{{ category }}</a></li>
         {% endfor %}
         </ul>
+        <hr />
     {% endif %}
-
-    <hr />
 
     {% block smart_blog_content_articles %}
         {% for article in articles %}
