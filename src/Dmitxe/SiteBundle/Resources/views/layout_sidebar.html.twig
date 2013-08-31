@@ -1,5 +1,7 @@
 {% extends '@DmitxeSite/layout.html.twig' %}
 
+{% block html_head_meta %} {{ parent() }} {% endblock html_head_meta %}
+
 {% block html_head_links %}
     <link href="{{ asset('assets/bootstrap/2.3.2/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/bootstrap/2.3.2/css/bootstrap-responsive.min.css') }}" rel="stylesheet">

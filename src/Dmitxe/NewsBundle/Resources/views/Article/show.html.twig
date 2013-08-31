@@ -2,6 +2,12 @@
 
 {% block html_head_title %} {{ article.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
 
+{% block html_head_meta %}{{ parent() }}
+    <meta content="{{ article.title }}" name="title">
+    <meta content="{{ article.description }}" name="description">
+    <meta content="{{ article.keywords }}" name="keywords">
+{% endblock html_head_meta %}
+
 {% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
 
 {% block smart_blog_content %}

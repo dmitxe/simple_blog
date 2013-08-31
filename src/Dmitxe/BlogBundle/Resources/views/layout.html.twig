@@ -1,5 +1,7 @@
 {% extends '@DmitxeSite/layout_sidebar.html.twig' %}
 
+{% block html_head_meta %} {{ parent() }} {% endblock html_head_meta %}
+
 {% if breadcrumbs != '' %}
     {% set breadcrumbs = '<a href="' ~ path('smart_blog_index') ~ '">Блог</a> » ' ~ breadcrumbs %}
 {% else %}

@@ -2,6 +2,8 @@
 
 {% block html_head_title %} Новости &raquo; {{ parent() }} {% endblock html_head_title %}
 
+{% block html_head_meta %} {{ parent() }} {% endblock html_head_meta %}
+
 {% if breadcrumbs != '' %}
       {% set current_breadcrumb = '<a href="' ~ path('dmitxe_news_index') ~ '">Новости</a> »  ' %}
 {% else %}
