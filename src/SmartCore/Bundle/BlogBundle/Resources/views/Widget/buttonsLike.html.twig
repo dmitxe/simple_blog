@@ -1,15 +1,50 @@
+{# ToDO: исследовать на предмет возможности установить счетчики. Криво цепляет на локалке описание, тестить на реальном хостинге
+   Дока: http://api.yandex.ru/share/?ncrnd=8256
+#}
+<div id="buttonsYaRu" style="margin: 20px;">
+    <span>Опубликовать в социальных сетях: </span>
+    <script type="text/javascript" src="//yandex.st/share/share.js"
+            charset="utf-8"></script>
+    <div class="yashare-auto-init" data-yashareL10n="ru"
+         data-yashareType="none" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug,gplus,surfingbird">
+     </div>
+</div>
+
 <div id="buttonsLike" style="margin: 20px;">
-    <script type="text/javascript">
-        document.write(VK.Share.button({
-            url: '{{ url }}',
-            title: '{{ title }}',
-            description: '{{ description }}',
-            image: '{{ image }}',
-            noparse: true
-        },
-       {
-            type: 'round',
-            text: 'Опубликовать'
-        }));
-    </script>
+{#  кнопка ВКонтакте "Поделиться ссылкой". Ссылка на доку: http://vk.com/developers.php?oid=-1&p=Share
+    ToDO: Если есть API_ID то использовать кнопку "Мне нравиться". Ссылка на доку: http://vk.com/developers.php?o=-1&p=Like
+#}
+    <div class="like_button" style="float:left; margin-right: 15px;">
+        <script type="text/javascript">
+            document.write(VK.Share.button({
+                url: '{{ url }}',
+                title: '{{ title }}',
+                description: '{{ description }}',
+                image: '{{ image }}',
+                noparse: true
+            },
+           {
+                type: 'round',
+                text: 'Опубликовать'
+            }));
+        </script>
+    </div>
+
+    {#  кнопка Фейсбука "Мне нравится". Ссылка на доку: https://developers.facebook.com/docs/reference/plugins/like/
+        ToDO: Не понял, где добавлять краткое описание страницы. Возможно, промахнулся с виджетом.
+    #}
+    <div class="like_button" style="float:left; margin-right: 15px;">
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+        <div class="fb-like" data-href="" data-width="450" data-show-faces="true" data-send="true" layout="button_count"></div>
+    </div>
+
+    <div style="clear:both"></div>
 </div>
