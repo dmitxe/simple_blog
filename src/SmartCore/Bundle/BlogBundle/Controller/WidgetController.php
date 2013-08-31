@@ -75,6 +75,24 @@ class WidgetController extends Controller
     }
 
     /**
+     * @param string $url
+     * @param string $title
+     * @param string $description
+     * @param string $image
+     * @return Response
+     */
+    public function buttonsLikeAction($url='', $title = '', $description = '',  $image = '')
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        return $this->render($this->bundleName . ':Widget:buttonsLike.html.twig', [
+            'url' => $url,
+            'title' => $title,
+            'description' => $description,
+            'image' => $image,
+        ]);
+    }
+
+    /**
      * @return Response
      */
     public function categoryTreeAction()

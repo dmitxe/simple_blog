@@ -1,0 +1,15 @@
+<div id="buttonsLike" style="margin: 20px;">
+    <script type="text/javascript">
+        document.write(VK.Share.button({
+            url: '{{ url }}',
+            title: '{{ title }}',
+            description: '{{ description }}',
+            image: '{{ image }}',
+            noparse: true
+        },
+       {
+            type: 'round',
+            text: 'Опубликовать'
+        }));
+    </script>
+</div>

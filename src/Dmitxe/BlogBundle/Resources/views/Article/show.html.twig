@@ -12,6 +12,10 @@
     <meta content="{{ article.keywords }}" name="keywords">
 {% endblock html_head_meta %}
 
+{% block html_head_scripts %}{{ parent() }}
+    <script type="text/javascript" src="http://vk.com/js/api/share.js?86"></script>
+{% endblock html_head_scripts %}
+
 {% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
 
 {% if article.category %}
@@ -34,6 +38,12 @@
     <p>{{ article.annotation }}</p>
 
     <p>{{ article.text|raw }}</p>
+
+    {{ render(controller('SmartBlogBundle:Widget:buttonsLike', {
+        'url': path('smart_blog_article', {'slug': article.slug}),
+        'description': article.description,
+        'title': article.title,
+    })) }}
 
     {% if article.tags|length %}
         {{ 'Tags'|trans }}:
