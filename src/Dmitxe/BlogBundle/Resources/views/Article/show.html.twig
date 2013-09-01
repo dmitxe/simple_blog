@@ -1,7 +1,8 @@
 {% extends 'DmitxeBlogBundle::layout.html.twig' %}
 
 {% block html_head_styles %}{{ parent() }}
-    <link rel="stylesheet" href="{{ asset('/css/comments.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/comments.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('js/jlike/buttons.css') }}" type="text/css" />
 {% endblock html_head_styles %}
 
 {% block html_head_title %} {{ article.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
@@ -13,8 +14,18 @@
 {% endblock html_head_meta %}
 
 {% block html_head_scripts %}{{ parent() }}
-    <script type="text/javascript" src="http://vk.com/js/api/share.js?86"></script>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+ <!--   <script type="text/javascript" src="http://vk.com/js/api/share.js?86"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>-->
+    <script type="text/javascript">
+        var pathbs = "http://simpleblog.mysite/web/";var typeGet="0";
+
+        if(!window.VK) {
+            document.write(unescape('<script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js">%3C/script%3E'));
+        }
+
+    </script>
+
+    <script type="text/javascript" src="{{ asset('js/jlike/buttons.js') }}"></script>
 {% endblock html_head_scripts %}
 
 {% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
