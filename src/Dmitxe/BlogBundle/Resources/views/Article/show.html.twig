@@ -51,11 +51,7 @@
 
     <p>{{ article.text|raw }}</p>
 
-    {{ render(controller('SmartBlogBundle:Widget:buttonsLike', {
-        'url': path('smart_blog_article', {'slug': article.slug}),
-        'description': article.description,
-        'title': article.title,
-    })) }}
+    {{ render(controller('SmartSocialBundle:Share:index', { 'url': path('smart_blog_article', {'slug': article.slug}) })) }}
 
     {% if article.tags|length %}
         {{ 'Tags'|trans }}:

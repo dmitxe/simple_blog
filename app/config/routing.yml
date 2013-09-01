@@ -1,3 +1,7 @@
+smart_social:
+    resource: "@SmartSocialBundle/Resources/config/routing.yml"
+    prefix:   /
+
 fos_comment_api:
     type: rest
     resource: "@FOSCommentBundle/Resources/config/routing.yml"

@@ -97,10 +97,10 @@
 {% block body_js %}
     {{ parent() }}
     <script>
-        $(function() {
-            $('#login-dropdown').click(function(e) {
+        jQuery(document).ready(function () {
+            jQuery('#login-dropdown').click(function(e) {
                 setTimeout(function() {
-                    $("#username").focus();
+                    jQuery("#username").focus();
                 }, 1);
             });
         });

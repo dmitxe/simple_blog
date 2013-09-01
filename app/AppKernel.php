@@ -57,6 +57,7 @@ class AppKernel extends Kernel
             new Dmitxe\GalleryBundle\DmitxeGalleryBundle(),
             new Dmitxe\CommentBundle\DmitxeCommentBundle(),
             new Dmitxe\ContactBundle\DmitxeContactBundle(),
+            new SmartCore\Bundle\SocialBundle\SmartSocialBundle(),
         );
 
         if (in_array($this->getEnvironment(), ['dev'])) {

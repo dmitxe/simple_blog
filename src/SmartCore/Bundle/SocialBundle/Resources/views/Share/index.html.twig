@@ -1,0 +1,33 @@
+<div id="buttonsLike" style="margin: 20px;">
+    <script>
+        var jqlike = jQuery.noConflict();
+        jqlike(document).ready(function($) {
+            jQuery('.like').socialButton();
+        });
+    </script>
+
+    <div class="event-container" >
+        <div class="likes-block">
+            <a title="FaceBook" href="{{ url }}" class="like l-fb">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a title="Вконтакте" href="{{ url }}" class="like l-vk">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a title="Twitter" href="{{ url }}" class="like l-tw">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a title="Одноклассники" href="{{ url }}" class="like l-ok">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a title="Google+" href="{{ url }}" class="like l-gp">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+        </div>
+    </div>
+</div>

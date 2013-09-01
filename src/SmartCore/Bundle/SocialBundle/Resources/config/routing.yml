@@ -1,0 +1,3 @@
+smart_social_share:
+    pattern:  /share/{url}
+    defaults: { _controller: SmartSocialBundle:Share:index }
