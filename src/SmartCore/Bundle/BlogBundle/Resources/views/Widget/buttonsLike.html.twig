@@ -1,4 +1,4 @@
-{# ToDO: исследовать на предмет возможности установить счетчики. Криво цепляет на локалке описание, тестить на реальном хостинге
+{# @todo: исследовать на предмет возможности установить счетчики. Криво цепляет на локалке описание, тестить на реальном хостинге
    Дока: http://api.yandex.ru/share/?ncrnd=8256
 #}
 <div id="buttonsYaRu" style="margin: 20px;">
@@ -12,7 +12,7 @@
 
 <div id="buttonsLike" style="margin: 20px;">
 {#  кнопка ВКонтакте "Поделиться ссылкой". Ссылка на доку: http://vk.com/developers.php?oid=-1&p=Share
-    ToDO: Если есть API_ID то использовать кнопку "Мне нравиться". Ссылка на доку: http://vk.com/developers.php?o=-1&p=Like
+    @todo Если есть API_ID то использовать кнопку "Мне нравиться". Ссылка на доку: http://vk.com/developers.php?o=-1&p=Like
 #}
     <div class="like_button" style="float:left; margin-right: 15px;">
         <script type="text/javascript">
@@ -31,7 +31,7 @@
     </div>
 
     {#  кнопка Фейсбука "Мне нравится". Ссылка на доку: https://developers.facebook.com/docs/reference/plugins/like/
-        ToDO: Не понял, где добавлять краткое описание страницы. Возможно, промахнулся с виджетом.
+        @todo Не понял, где добавлять краткое описание страницы. Возможно, промахнулся с виджетом.
     #}
     <div class="like_button" style="float:left; margin-right: 15px;">
         <div id="fb-root"></div>
@@ -44,6 +44,26 @@
         }(document, 'script', 'facebook-jssdk'));</script>
 
         <div class="fb-like" data-href="" data-width="450" data-show-faces="true" data-send="true" layout="button_count"></div>
+    </div>
+
+    {#  кнопка "Отправить ссылку" (твитнуть от Twitter). Ссылка на доку: https://twitter.com/about/resources/buttons#tweet
+        @todo На локалке нет счетчика. Тестить на реальном сервере
+    #}
+    <div class="like_button" style="float:left; margin-right: 15px; width: 100px;">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ url }}" data-text="{{ description }}" data-lang="ru">Твитнуть</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </div>
+
+    {#  кнопка "Google +1". Ссылка на доку: https://developers.google.com/+/web/+1button/
+        @todo Грузиться очень долго! Пробовать асинхронную загрузку
+    #}
+    <div class="like_button" style="float:left; margin-right: 15px; width: 60px;">
+        <g:plusone></g:plusone>
+    </div>
+
+    <div class="like_button" style="float:left; margin-right: 15px; width: 150px;">
+        <a target="_blank" class="mrc__plugin_uber_like_button" href="http://connect.mail.ru/share" data-mrc-config="{'cm' : '2', 'sz' : '20', 'st' : '1', 'tp' : 'mm'}">Нравится</a>
+        <script src="http://cdn.connect.mail.ru/js/loader.js" type="text/javascript" charset="UTF-8"></script>
     </div>
 
     <div style="clear:both"></div>
