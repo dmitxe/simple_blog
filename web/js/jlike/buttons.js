@@ -1,6 +1,6 @@
 (function(jq, w, d, undefined) {
 
-var url_ajax = '/web/js/jlike/models/ajax.php';
+var url_ajax = '/js/jlike/models/ajax.php';
     
 function getParam(key) {
 	if(key) {
