@@ -13,3 +13,8 @@ dmitxe_site_about:
 smart_blog_admin_index:
     path:   /admin/blog/
     defaults: { _controller: DmitxeSiteBundle:Admin:adminBlog }
+
+dmitxe_sitemap_xml:
+    path: /sitemap.xml
+    defaults: { _controller: DmitxeSiteBundle:Sitemap:xml, _format: xml }
+    requirements: { _format: (xml), _method: GET }
