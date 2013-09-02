@@ -62,7 +62,7 @@ class TagController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
         $tagService = $this->get($this->tagServiceName);
-        $tag = $tagService->create();
+        $tag        = $tagService->create();
 
         $form = $this->createForm(new TagCreateFormType(get_class($tag)), $tag);
         if ($request->isMethod('POST')) {
@@ -70,8 +70,6 @@ class TagController extends Controller
 
             if ($form->isValid()) {
                 $tagService->update($tag);
-
-                $this->get('smart_blog.cache')->delete($this->bundleName . 'tag_cloud_zend');
 
                 return $this->redirect($this->generateUrl($this->routeAdminTag));
             }
@@ -100,8 +98,9 @@ class TagController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Model\TagInterface $tag */
-        $tag = $this->get($this->tagServiceName)->get($id);
+        /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
+        $tagService = $this->get($this->tagServiceName);
+        $tag        = $tagService->get($id);
 
         if (null === $tag) {
             throw $this->createNotFoundException();
@@ -112,12 +111,7 @@ class TagController extends Controller
             $form->submit($request);
 
             if ($form->isValid()) {
-                /** @var \Doctrine\ORM\EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($tag);
-                $em->flush();
-
-                $this->get('smart_blog.cache')->delete($this->bundleName . 'tag_cloud_zend');
+                $tagService->update($tag);
 
                 return $this->redirect($this->generateUrl($this->routeAdminTag));
             }

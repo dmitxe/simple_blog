@@ -4,6 +4,7 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
             - @smart_blog.article.repository
+            - @smart_blog.cache
             - @event_dispatcher
             - %smart_blog.items_per_page%
 
@@ -12,6 +13,7 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
             - @smart_blog.article.repository
+            - @smart_blog.cache
             - @smart_blog.tag.repository
             - @event_dispatcher
             - @router

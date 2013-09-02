@@ -2,6 +2,7 @@
 
 namespace SmartCore\Bundle\BlogBundle\Service;
 
+use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
 use SmartCore\Bundle\BlogBundle\Event\FilterArticleEvent;
 use SmartCore\Bundle\BlogBundle\Model\ArticleInterface;
@@ -34,13 +35,16 @@ class ArticleService extends AbstractBlogService
     public function __construct(
         EntityManager $em,
         ArticleRepositoryInterface $articlesRepo,
+        Cache $cache,
         EventDispatcherInterface $eventDispatcher,
         $itemsPerPage = 10
     ) {
         $this->articlesRepo     = $articlesRepo;
+        $this->cache            = $cache;
         $this->em               = $em;
         $this->eventDispatcher  = $eventDispatcher;
         $this->eventClass       = 'SmartCore\Bundle\BlogBundle\SmartBlogEvents'; // @todo эксперименты с событиями.
+
         $this->setItemsCountPerPage($itemsPerPage);
     }
 
@@ -68,6 +72,14 @@ class ArticleService extends AbstractBlogService
     public function get($id)
     {
         return $this->articlesRepo->find($id);
+    }
+
+    /**
+     * @return Cache
+     */
+    public function getCache()
+    {
+        return $this->cache;
     }
 
     /**
@@ -171,14 +183,21 @@ class ArticleService extends AbstractBlogService
      *
      * @todo выделить методы create, update, detele в "article manager".
      */
-    public function update(ArticleInterface $article)
+    public function update(ArticleInterface $article, $setUpdatedAt = true)
     {
         $event = new FilterArticleEvent($article);
         $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_PRE_UPDATE, $event);
 
         // @todo убрать в мэнеджер.
+        if ($setUpdatedAt) {
+            $article->setUpdated();
+        }
+
         $this->em->persist($article);
         $this->em->flush($article);
+
+        $this->cache->delete('archive_monthly');
+        $this->cache->delete('tag_cloud_zend');
 
         $event = new FilterArticleEvent($article);
         $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_UPDATE, $event);

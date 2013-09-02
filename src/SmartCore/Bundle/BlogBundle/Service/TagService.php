@@ -2,6 +2,7 @@
 
 namespace SmartCore\Bundle\BlogBundle\Service;
 
+use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use SmartCore\Bundle\BlogBundle\Event\FilterTagEvent;
@@ -40,12 +41,14 @@ class TagService extends AbstractBlogService
     public function __construct(
         EntityManager $em,
         ArticleRepositoryInterface $articlesRepo,
+        Cache $cache,
         EntityRepository $tagsRepo,
         EventDispatcherInterface $eventDispatcher,
         RouterInterface $router,
         $itemsPerPage = 10)
     {
         $this->articlesRepo     = $articlesRepo;
+        $this->cache            = $cache;
         $this->em               = $em;
         $this->eventDispatcher  = $eventDispatcher;
         $this->router           = $router;
@@ -60,6 +63,14 @@ class TagService extends AbstractBlogService
     public function get($id)
     {
         return $this->tagsRepo->find($id);
+    }
+
+    /**
+     * @return \Doctrine\Common\Cache\Cache
+     */
+    public function getCache()
+    {
+        return $this->cache;
     }
 
     /**
@@ -193,6 +204,8 @@ class TagService extends AbstractBlogService
         // @todo убрать в мэнеджер.
         $this->em->persist($tag);
         $this->em->flush($tag);
+
+        $this->cache->delete('tag_cloud_zend');
 
         $event = new FilterTagEvent($tag);
         $this->eventDispatcher->dispatch(SmartBlogEvents::TAG_POST_UPDATE, $event);

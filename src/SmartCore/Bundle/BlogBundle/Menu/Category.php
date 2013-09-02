@@ -20,20 +20,9 @@ class Category extends ContainerAware
             throw new \Exception('Надо указать categoryClass в опциях');
         }
 
-        $categoryClass = $options['categoryClass'];
-
-        $cacheKey = md5('knp_menu_category_tree' . $categoryClass);
-
-        $menu = $this->container->get('smart_blog.cache')->fetch($cacheKey);
-
-        if (false === $menu) {
-            $menu = $factory->createItem('categories');
-            $this->addChild($menu, null, $categoryClass);
-            $this->removeFactory($menu);
-
-            // @todo настройка времени хранения кеша и инвалидация.
-            $this->container->get('smart_blog.cache')->save($cacheKey, $menu, 3000);
-        }
+        $menu = $factory->createItem('categories');
+        $this->addChild($menu, null, $options['categoryClass']);
+        $this->removeFactory($menu);
 
         return $menu;
     }

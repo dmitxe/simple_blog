@@ -83,8 +83,9 @@ class ArticleController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
-        $article = $this->get($this->articleServiceName)->get($id);
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
+        $article        = $articleService->get($id);
 
         if (null === $article) {
             throw $this->createNotFoundException();
@@ -95,18 +96,7 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-
-                // @todo запаковать обновление статьи в менеджер.
-
-                $article = $form->getData();
-                $article->setUpdated();
-
-                /** @var \Doctrine\ORM\EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
-
-                $this->get('smart_blog.cache')->delete($this->bundleName . 'tag_cloud_zend');
+                $articleService->update($form->getData());
 
                 return $this->redirect($this->generateUrl($this->routeAdminArticle));
             }
@@ -123,25 +113,16 @@ class ArticleController extends Controller
      */
     public function createAction(Request $request)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Model\ArticleInterface $article */
-        $article = $this->get($this->articleServiceName)->create();
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
+        $article        = $articleService->create();
 
         $form = $this->createForm(new ArticleCreateFormType(get_class($article)), $article);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-
-                // @todo запаковать создание статьи в менеджер.
-
-                $article = $form->getData();
-
-                /** @var \Doctrine\ORM\EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
-
-                $this->get('smart_blog.cache')->delete($this->bundleName . 'tag_cloud_zend');
+                $articleService->update($form->getData(), false);
 
                 return $this->redirect($this->generateUrl($this->routeAdminArticle));
             }

@@ -7,6 +7,7 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
             - @dmitxe_news.article.repository
+            - @smart_blog.cache
             - @event_dispatcher
             - %smart_blog.items_per_page%
 

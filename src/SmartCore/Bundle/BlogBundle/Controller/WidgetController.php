@@ -63,33 +63,21 @@ class WidgetController extends Controller
      * @param integer $limit
      * @return Response
      */
-    public function archiveArticlesAction($limit = 24)
+    public function archiveMonthlyAction($limit = 24)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-        $archiveMonthly = $articleService->getArchiveMonthly($limit);
+        $archive        = $articleService->getCache()->fetch('archive_monthly');
 
-        return $this->render($this->bundleName . ':Widget:archive_articles.html.twig', [
-            'archiveMonthly' => $archiveMonthly,
-        ]);
-    }
+        if (false === $archive) {
+            $archive = $this->renderView($this->bundleName . ':Widget:archive_articles.html.twig', [
+                'archiveMonthly' => $articleService->getArchiveMonthly($limit),
+            ]);
 
-    /**
-     * @param string $url
-     * @param string $title
-     * @param string $description
-     * @param string $image
-     * @return Response
-     */
-    public function buttonsLikeAction($url='', $title = '', $description = '',  $image = '')
-    {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
-        return $this->render($this->bundleName . ':Widget:socialButtons.html.twig', [
-            'url' => $url,
-            'title' => $title,
-            'description' => $description,
-            'image' => $image,
-        ]);
+            $articleService->getCache()->save('archive_monthly', $archive);
+        }
+
+        return new Response($archive);
     }
 
     /**
@@ -99,11 +87,16 @@ class WidgetController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
         $categoryService = $this->get($this->categoryServiceName);
-        $category = $categoryService->create();
+        $categoryTree    = $categoryService->getCache()->fetch('knp_menu_category_tree');
 
-        return $this->render($this->bundleName . ':Widget:category_tree.html.twig', [
-            'categoryClass' => get_class($category),
-        ]);
+        if (false === $categoryTree) {
+            $categoryTree = $this->renderView($this->bundleName . ':Widget:category_tree.html.twig', [
+                'categoryClass' => $categoryService->getCategoryClass(),
+            ]);
+            $categoryService->getCache()->save('knp_menu_category_tree', $categoryTree);
+        }
+
+        return new Response($categoryTree);
     }
 
     /**
@@ -111,16 +104,34 @@ class WidgetController extends Controller
      */
     public function tagCloudAction()
     {
-        $cloud = $this->get('smart_blog.cache')->fetch($this->bundleName . 'tag_cloud_zend');
+        /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
+        $tagService = $this->get($this->tagServiceName);
+        $cloud      = $tagService->getCache()->fetch('tag_cloud_zend');
 
         if (false === $cloud) {
-            /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
-            $tagService = $this->get($this->tagServiceName);
-
             $cloud = $tagService->getCloudZend($this->routeTag)->render();
-            $this->get('smart_blog.cache')->save($this->bundleName . 'tag_cloud_zend', $cloud);
+            $tagService->getCache()->save('tag_cloud_zend', $cloud);
         }
 
         return new Response($cloud);
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param string $description
+     * @param string $image
+     * @return Response
+     *
+     * @todo убрать в SmartSocialBundle
+     */
+    public function buttonsLikeAction($url = '', $title = '', $description = '',  $image = '')
+    {
+        return $this->render($this->bundleName . ':Widget:socialButtons.html.twig', [
+            'title'       => $title,
+            'description' => $description,
+            'image'       => $image,
+            'url'         => $url,
+        ]);
     }
 }

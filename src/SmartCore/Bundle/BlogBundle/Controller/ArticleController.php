@@ -150,8 +150,6 @@ class ArticleController extends Controller
 
             if ($form->isValid()) {
                 $article = $form->getData();
-                $article->setUpdated(); // @todo убрать в сервис.
-
                 $articleService->update($article);
 
                 return $this->redirect($this->generateUrl($this->routeArticle, ['slug' => $article->getSlug()] ));
@@ -171,8 +169,7 @@ class ArticleController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-
-        $article = $articleService->create();
+        $article        = $articleService->create();
 
         // @todo эксперименты с событиями.
 //        $this->class = 'SmartCore\Bundle\BlogBundle\SmartBlogEvents';
@@ -187,7 +184,7 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $articleService->update($article);
+                $articleService->update($article, false);
 
                 return $this->redirect($this->generateUrl($this->routeArticle, ['slug' => $article->getSlug()] ));
             }

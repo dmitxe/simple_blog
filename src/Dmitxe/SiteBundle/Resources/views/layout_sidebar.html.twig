@@ -21,10 +21,10 @@
     <script src="{{ asset('js/syntaxhighlighter/scripts/shBrushCpp.js') }}"></script>
 
     <script type="text/javascript">
-        //          SyntaxHighlighter.config.bloggerMode = true;
+        // SyntaxHighlighter.config.bloggerMode = true;
         SyntaxHighlighter.defaults['toolbar'] = false;
         SyntaxHighlighter.all();
-        //           hljs.initHighlightingOnLoad();
+        // hljs.initHighlightingOnLoad();
     </script>
 
 {% endblock html_head_scripts %}
@@ -113,7 +113,7 @@
                         </div>
 
                         <div class="portlet-content">
-                            {{ render(controller('SmartBlogBundle:Widget:archiveArticles', {'limit': 24 })) }}
+                            {{ render(controller('SmartBlogBundle:Widget:archiveMonthly')) }}
                         </div>
 
                         <div class="portlet-decoration">

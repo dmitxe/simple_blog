@@ -32,9 +32,9 @@ class CategoryService extends AbstractBlogService
      */
     public function __construct(EntityManager $em, EntityRepository $categoriesRepo, Cache $cache, $itemsPerPage = 10)
     {
-        $this->cache              = $cache;
-        $this->categoriesRepo     = $categoriesRepo;
-        $this->em                 = $em;
+        $this->cache            = $cache;
+        $this->categoriesRepo   = $categoriesRepo;
+        $this->em               = $em;
 
         $this->setItemsCountPerPage($itemsPerPage);
     }
@@ -46,6 +46,22 @@ class CategoryService extends AbstractBlogService
     public function get($id)
     {
         return $this->categoriesRepo->find($id);
+    }
+
+    /**
+     * @return \Doctrine\Common\Cache\Cache
+     */
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryClass()
+    {
+        return $this->categoriesRepo->getClassName();
     }
 
     /**
@@ -68,8 +84,7 @@ class CategoryService extends AbstractBlogService
         $this->em->persist($category);
         $this->em->flush($category);
 
-        $cacheKey = md5('knp_menu_category_tree' . get_class($category));
-        $this->cache->delete($cacheKey);
+        $this->cache->delete('knp_menu_category_tree');
     }
 
     /**

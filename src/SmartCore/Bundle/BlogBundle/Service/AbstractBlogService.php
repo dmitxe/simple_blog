@@ -2,12 +2,19 @@
 
 namespace SmartCore\Bundle\BlogBundle\Service;
 
+use Doctrine\Common\Cache\Cache;
+
 abstract class AbstractBlogService
 {
     /**
-     * @var \SmartCore\Bundle\BlogBundle\Repository\ArticleRepository
+     * @var \SmartCore\Bundle\BlogBundle\Repository\ArticleRepositoryInterface
      */
     protected $articlesRepo;
+
+    /**
+     * @var Cache
+     */
+    protected $cache;
 
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
@@ -20,7 +27,7 @@ abstract class AbstractBlogService
     protected $itemsPerPage;
 
     /**
-     * @return int
+     * @return integer
      */
     public function getItemsCountPerPage()
     {
@@ -28,7 +35,7 @@ abstract class AbstractBlogService
     }
 
     /**
-     * @param int $count
+     * @param integer $count
      * @return $this
      */
     public function setItemsCountPerPage($count)
