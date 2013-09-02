@@ -11,9 +11,10 @@ class ArticleController extends BaseArticleController
      */
     public function __construct()
     {
+        $this->bundleName            = 'DmitxeNewsBundle';
+
         $this->articleServiceName    = 'dmitxe_news.article';
         $this->routeAdminArticle     = 'dmitxe_news_admin_index';
         $this->routeAdminArticleEdit = 'dmitxe_news_admin_edit';
-        $this->bundleName            = 'DmitxeNewsBundle';
     }
 }
