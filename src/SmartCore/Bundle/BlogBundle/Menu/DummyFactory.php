@@ -7,7 +7,7 @@ use Knp\Menu\NodeInterface;
 
 class DummyFactory implements FactoryInterface
 {
-    public function createItem($name, array $options = array())
+    public function createItem($name, array $options = [])
     {
 
     }

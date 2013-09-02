@@ -64,43 +64,39 @@ class ContactType extends AbstractType
     {
         /*
         $builder
-            ->add('title', 'choice', array(
+            ->add('title', 'choice', [
                 'choices'            => Contact::getTitles(),
                 'expanded'           => true,
                 'label'              => 'mremi_contact.form.title',
                 'translation_domain' => self::TRANSLATION_DOMAIN,
-            ));
+            ]);
         */
-        $builder->add('firstName', 'text',  array('label' => 'mremi_contact.form.first_name', 'translation_domain' => self::TRANSLATION_DOMAIN))
-            ->add('lastName',  'text',  array('label' => 'mremi_contact.form.last_name',  'translation_domain' => self::TRANSLATION_DOMAIN))
-            ->add('email',     'email', array('label' => 'mremi_contact.form.email',      'translation_domain' => self::TRANSLATION_DOMAIN));
+        $builder
+            ->add('firstName', 'text',  ['label' => 'mremi_contact.form.first_name', 'translation_domain' => self::TRANSLATION_DOMAIN])
+            ->add('lastName',  'text',  ['label' => 'mremi_contact.form.last_name',  'translation_domain' => self::TRANSLATION_DOMAIN])
+            ->add('email',     'email', ['label' => 'mremi_contact.form.email',      'translation_domain' => self::TRANSLATION_DOMAIN]);
 
         if ($subjects = $this->subjectProvider->getSubjects()) {
-            $builder
-                ->add('subject', 'choice', array(
-                    'choices'            => $subjects,
-                    'label'              => 'mremi_contact.form.subject',
-                    'translation_domain' => self::TRANSLATION_DOMAIN,
-                ));
+            $builder->add('subject', 'choice', [
+                'choices'            => $subjects,
+                'label'              => 'mremi_contact.form.subject',
+                'translation_domain' => self::TRANSLATION_DOMAIN,
+            ]);
         } else {
-            $builder->add('subject', 'text', array('label' => 'mremi_contact.form.subject', 'translation_domain' => self::TRANSLATION_DOMAIN));
+            $builder->add('subject', 'text', ['label' => 'mremi_contact.form.subject', 'translation_domain' => self::TRANSLATION_DOMAIN]);
         }
 
-
-        $builder->add('message', 'textarea', array('label' => 'mremi_contact.form.message', 'translation_domain' => self::TRANSLATION_DOMAIN));
+        $builder->add('message', 'textarea', ['label' => 'mremi_contact.form.message', 'translation_domain' => self::TRANSLATION_DOMAIN]);
 
         if (!$this->captchaDisabled) {
-            $builder->add('captcha', $this->captchaType, array(
+            $builder->add('captcha', $this->captchaType, [
                 'label'              => 'mremi_contact.form.captcha',
                 'translation_domain' => self::TRANSLATION_DOMAIN,
                 'mapped'             => false,
-            ));
+            ]);
         }
 
-        $builder->add('save', 'submit', [
-            'label' => 'mremi_contact.form_submit',
-            'translation_domain' => self::TRANSLATION_DOMAIN,
-        ]);
+        $builder->add('save', 'submit', ['label' => 'mremi_contact.form_submit', 'translation_domain' => self::TRANSLATION_DOMAIN]);
     }
 
     /**
@@ -108,10 +104,10 @@ class ContactType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => $this->class,
             'intention'  => 'contact',
-        ));
+        ]);
     }
 
     /**

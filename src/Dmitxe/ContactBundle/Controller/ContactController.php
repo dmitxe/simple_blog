@@ -54,9 +54,9 @@ class ContactController extends BaseContactController
             }
         }
 
-        return $this->render('MremiContactBundle:Contact:index.html.twig', array(
+        return $this->render('MremiContactBundle:Contact:index.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -76,9 +76,9 @@ class ContactController extends BaseContactController
             throw new AccessDeniedException('Please fill the contact form');
         }
 
-        return $this->render('MremiContactBundle:Contact:confirm.html.twig', array(
+        return $this->render('MremiContactBundle:Contact:confirm.html.twig', [
             'contact' => $contact,
-        ));
+        ]);
     }
 
     /**
