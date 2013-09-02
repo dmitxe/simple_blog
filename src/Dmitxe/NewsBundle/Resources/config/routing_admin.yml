@@ -1,13 +1,23 @@
 dmitxe_news_admin_index:
-    path: /
+    path: /article/
     defaults: { _controller: DmitxeNewsBundle:Admin/Article:index }
 
 dmitxe_news_admin_create:
-    path: /create/
+    path: /article/create/
     defaults: { _controller: DmitxeNewsBundle:Admin/Article:create }
 
 dmitxe_news_admin_edit:
-    path: /{id}/
+    path: /article/{id}/
     defaults: { _controller: DmitxeNewsBundle:Admin/Article:edit }
+    requirements:
+        id: \d+
+
+dmitxe_news_admin_tag:
+    path: /tag/
+    defaults: { _controller: DmitxeNewsBundle:Admin/Tag:index }
+
+dmitxe_news_admin_tag_edit:
+    path: /tag/{id}/
+    defaults: { _controller: DmitxeNewsBundle:Admin/Tag:edit }
     requirements:
         id: \d+

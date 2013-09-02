@@ -23,3 +23,9 @@ dmitxe_news_page_index:
 dmitxe_news_page:
     path: /page/{page}/
     defaults: { _controller: DmitxeNewsBundle:Article:page }
+    requirements:
+        page: \d+
+
+dmitxe_news_tag:
+    path: /tag/{slug}/
+    defaults: { _controller: DmitxeNewsBundle:Tag:showArticles }

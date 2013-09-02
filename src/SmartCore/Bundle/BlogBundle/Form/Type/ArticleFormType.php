@@ -1,6 +1,8 @@
 <?php
 namespace SmartCore\Bundle\BlogBundle\Form\Type;
 
+use SmartCore\Bundle\BlogBundle\Model\CategorizedInterface;
+use SmartCore\Bundle\BlogBundle\Model\TaggableInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -43,11 +45,16 @@ class ArticleFormType extends AbstractType
             ->add('keywords', null, ['attr' => ['class' => 'input-block-level']])
         ;
 
-        if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\CategoryTrait', class_uses($this->class, false))) {
-            $builder->add('category', null, ['attr' => ['class' => 'input-block-level']]); // @todo сделать отображение вложенных категорий.
+        if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\CategoryTrait', class_uses($this->class, false))
+            or (new $this->class) instanceof CategorizedInterface
+        ) {
+            // @todo сделать отображение вложенных категорий.
+            $builder->add('category', null, ['attr' => ['class' => 'input-block-level']]);
         }
 
-        if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\TagTrait', class_uses($this->class, false))) {
+        if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\TagTrait', class_uses($this->class, false))
+            or (new $this->class) instanceof TaggableInterface
+        ) {
             $builder->add('tags', null, [
                 'expanded' => true,
                 'required' => false,

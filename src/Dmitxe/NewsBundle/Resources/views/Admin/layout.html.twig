@@ -5,5 +5,11 @@
 {% block content %}
     {{ parent() }}
 
+    {{ knp_menu_render('DmitxeNewsBundle:AdminMenu:main', {
+            'currentClass': 'active',
+            'clear_matcher': false,
+        })
+    }}
+
     {% block smart_blog_content %}{% endblock %}
 {% endblock %}

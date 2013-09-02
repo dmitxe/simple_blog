@@ -87,6 +87,11 @@ liip_doctrine_cache:
             #type: memcache
             type: file_system
             directory: "%kernel.cache_dir%/smart_blog"
+        dmitxe_news:
+            namespace: "dmitxe_news_%secret%"
+            #type: memcache
+            type: file_system
+            directory: "%kernel.cache_dir%/dmitxe_news"
 
 mopa_bootstrap:
     form:

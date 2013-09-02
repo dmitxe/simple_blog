@@ -47,11 +47,11 @@ class TagController extends Controller
      */
     public function __construct()
     {
-        $this->tagServiceName   = 'smart_blog.tag';
-        $this->routeIndex       = 'smart_blog_tag_index';
-        $this->routeAdminTag    = 'smart_blog_admin_tag';
-        $this->routeAdminTagEdit= 'smart_blog_admin_tag_edit';
-        $this->bundleName       = 'SmartBlogBundle';
+        $this->tagServiceName    = 'smart_blog.tag';
+        $this->routeIndex        = 'smart_blog_tag_index';
+        $this->routeAdminTag     = 'smart_blog_admin_tag';
+        $this->routeAdminTagEdit = 'smart_blog_admin_tag_edit';
+        $this->bundleName        = 'SmartBlogBundle';
     }
 
     /**

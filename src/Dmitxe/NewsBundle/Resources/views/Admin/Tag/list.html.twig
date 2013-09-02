@@ -1,0 +1,50 @@
+{% extends 'DmitxeNewsBundle:Admin:layout.html.twig' %}
+
+{% block smart_blog_content %}
+
+    <div class="span3">
+        {{ form(form, {'attr': {'class': 'well'} }) }}
+    </div>
+
+    <div class="span8">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Заголовок</th>
+                <th>Slug</th>
+                <th>Вес</th>
+                <th>Дата создания</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tag in pagerfanta.currentPageResults %}
+                <tr>
+                    <td>{{ tag.id }}</td>
+                    <td>
+                        <a href="{{ path('dmitxe_news_admin_tag_edit', {'id': tag.id}) }}" title="Редактировать">
+                            {{ tag.title }}
+                        </a>
+                    </td>
+                    <td>{{ tag.slug }}</td>
+                    <td>{{ tag.weight }}</td>
+                    <td>{{ tag.createdAt | localizeddate() }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <p>Всего тэгов: {{ pagerfanta.count }}</p>
+
+        {% block smart_blog_tags_paginator %}
+            {% if pagerfanta.haveToPaginate %}
+                {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+                        'routeName': 'dmitxe_news_admin_tag',
+                        'css_container_class': 'pagination pagination-centered',
+                    })
+                }}
+            {% endif %}
+        {% endblock smart_blog_tags_paginator %}
+    </div>
+
+{% endblock smart_blog_content %}

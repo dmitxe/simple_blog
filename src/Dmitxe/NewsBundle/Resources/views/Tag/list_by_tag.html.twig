@@ -1,0 +1,22 @@
+{% extends 'DmitxeNewsBundle:Article:list.html.twig' %}
+
+{% block smart_blog_content %}
+    <h1>Новости по тэгу: {{ tag }}</h1>
+    <p>Всего: {{ pagerfanta.count }}</p>
+
+    {% block smart_blog_content_articles %}
+        {{ parent() }}
+    {% endblock smart_blog_content_articles %}
+
+    {% block smart_blog_articles_paginator %}
+        {% if pagerfanta.haveToPaginate %}
+            {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+                    'next_message': 'Вперёд &rarr;',
+                    'prev_message': '&larr; Назад',
+                    'css_container_class': 'pagination pagination-centered',
+                })
+            }}
+        {% endif %}
+    {% endblock smart_blog_articles_paginator %}
+
+{% endblock smart_blog_content %}

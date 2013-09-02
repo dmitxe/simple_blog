@@ -15,6 +15,10 @@
 
             <p>{{ article.annotation }}</p>
 
+            {% for tag in article.tags %}
+                <a href="{{ path('dmitxe_news_tag', {'slug': tag.slug}) }}"><span class="label label-info">{{ tag }}</span></a>
+            {% endfor %}
+
             <hr/>
         {% endfor %}
     {% endblock smart_blog_content_articles %}
