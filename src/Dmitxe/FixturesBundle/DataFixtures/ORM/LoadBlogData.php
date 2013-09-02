@@ -149,7 +149,7 @@ class LoadBlogData extends ContainerAware implements FixtureInterface, OrderedFi
         $tag18 = new Tag('Линейный градиент');
         $tag18->setSlug('linear_gradient');
         $tag19 = new Tag('Подсветка кода');
-        $tag19->setSlug('сode_illumination');
+        $tag19->setSlug('code_illumination');
         $tag20 = new Tag('Twitter Bootstrap');
         $tag20->setSlug('twitter_bootstrap');
         $tag21 = new Tag('Формы');
