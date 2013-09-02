@@ -11,6 +11,7 @@
 /web/assetic/
 /web/bundles/
 /web/uploads/
+/web/sitemap.xml
 /composer.lock
 /composer.phar
 !*.gitkeep

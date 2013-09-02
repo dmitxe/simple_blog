@@ -36,17 +36,19 @@ class AppKernel extends Kernel
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new FM\ElfinderBundle\FMElfinderBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+            new FOS\RestBundle\FOSRestBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Mremi\ContactBundle\MremiContactBundle(),
             new SmartCore\Bundle\HtmlBundle\HtmlBundle(),
             new SmartCore\Bundle\BlogBundle\SmartBlogBundle(),
             new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
             new SmartCore\Bundle\GalleryBundle\SmartGalleryBundle(),
             new SmartCore\Bundle\SimpleProfilerBundle\SmartSimpleProfilerBundle(),
             new SmartCore\Bundle\TexterBundle\SmartTexterBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle($this),
-            new FOS\RestBundle\FOSRestBundle(),
-            new FOS\CommentBundle\FOSCommentBundle(),
-            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
-            new Mremi\ContactBundle\MremiContactBundle(),
+            new SmartCore\Bundle\SocialBundle\SmartSocialBundle(),
+            new SmartCore\Bundle\SitemapBundle\SmartSitemapBundle(),
 
             new Dmitxe\SiteBundle\DmitxeSiteBundle(),
             new Dmitxe\UserBundle\DmitxeUserBundle(),
@@ -57,7 +59,6 @@ class AppKernel extends Kernel
             new Dmitxe\GalleryBundle\DmitxeGalleryBundle(),
             new Dmitxe\CommentBundle\DmitxeCommentBundle(),
             new Dmitxe\ContactBundle\DmitxeContactBundle(),
-            new SmartCore\Bundle\SocialBundle\SmartSocialBundle(),
         );
 
         if (in_array($this->getEnvironment(), ['dev'])) {

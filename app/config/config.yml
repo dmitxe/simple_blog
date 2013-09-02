@@ -222,6 +222,18 @@ smart_blog:
     category_class: Dmitxe\BlogBundle\Entity\Category
     items_per_page: 10
 
+smart_sitemap:
+    base_url: %base_url%
+    #limit:      50000
+    #target:     %kernel.root_dir%/../web
+    ignores:
+        - 'http:'
+        - 'https:'
+        - /blog/tag/
+        - /blog/archive/
+        - /blog/category/
+        #- '*sort=' # @todo
+
 services:
     twig_extension.intl:
         class: Twig_Extensions_Extension_Intl

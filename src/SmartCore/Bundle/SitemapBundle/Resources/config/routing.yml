@@ -1,0 +1,3 @@
+smart_sitemap_homepage:
+    pattern:  /sm/
+    defaults: { _controller: SmartSitemapBundle:Default:index }
