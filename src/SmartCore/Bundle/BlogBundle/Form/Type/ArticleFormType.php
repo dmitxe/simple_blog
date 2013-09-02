@@ -1,8 +1,6 @@
 <?php
 namespace SmartCore\Bundle\BlogBundle\Form\Type;
 
-use SmartCore\Bundle\BlogBundle\Model\CategorizedInterface;
-use SmartCore\Bundle\BlogBundle\Model\TaggableInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
