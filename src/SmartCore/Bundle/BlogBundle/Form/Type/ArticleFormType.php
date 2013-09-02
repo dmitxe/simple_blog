@@ -46,14 +46,14 @@ class ArticleFormType extends AbstractType
         ;
 
         if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\CategoryTrait', class_uses($this->class, false))
-            or (new $this->class) instanceof CategorizedInterface
+            or array_key_exists('SmartCore\Bundle\BlogBundle\Model\CategorizedInterface', class_implements($this->class, false))
         ) {
             // @todo сделать отображение вложенных категорий.
             $builder->add('category', null, ['attr' => ['class' => 'input-block-level']]);
         }
 
         if (array_key_exists('SmartCore\Bundle\BlogBundle\Model\TagTrait', class_uses($this->class, false))
-            or (new $this->class) instanceof TaggableInterface
+            or array_key_exists('SmartCore\Bundle\BlogBundle\Model\TaggableInterface', class_implements($this->class, false))
         ) {
             $builder->add('tags', null, [
                 'expanded' => true,
