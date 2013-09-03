@@ -26,7 +26,7 @@ class LoadTexterData extends ContainerAware implements FixtureInterface, Ordered
         $text->setName('about');
         $text->setText('<p>На этом сайте собраны различная полезная информация по тематике сайтостроения.</p>
 <p>Информация больше собрана для себя, впрочем, надеюсь, что она будет также полезна и другим программистам.</p>
-<p>Если Вам нужно создать сайт под ключ - свяжитесь со мной через <a href="/contact/">форму обратной связи</a>.</p>
+<p>Если Вам нужно создать сайт под ключ - свяжитесь со мной через <a href="/contacts/">форму обратной связи</a>.</p>
 <p>Данный блог написан на фреймворке <a href="http://symfony.com/" target="_blank">Symfony2</a>.</p>');
         $manager->persist($text);
 
