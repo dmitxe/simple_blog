@@ -2,21 +2,60 @@
 
 namespace SmartCore\Bundle\MediaBundle\Service;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use SmartCore\Bundle\MediaBundle\Entity\Category;
 use SmartCore\Bundle\MediaBundle\Entity\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class CollectionService
 {
-    public function __construct()
+    /**
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var KernelInterface
+     */
+    protected $kernel;
+
+    /**
+     * @var EntityRepository
+     */
+    protected $collectionsRepo;
+
+    /**
+     * @var EntityRepository
+     */
+    protected $filesRepo;
+
+    /**
+     * @var EntityRepository
+     */
+    protected $storagesRepo;
+
+    /**
+     * @param EntityManager $em
+     * @param KernelInterface $kernel
+     */
+    public function __construct(EntityManager $em, KernelInterface $kernel)
     {
-        // @todo
+        $this->em               = $em;
+        $this->kernel           = $kernel;
+        $this->collectionsRepo  = $em->getRepository('SmartMediaBundle:Collection');
+        $this->filesRepo        = $em->getRepository('SmartMediaBundle:File');
+        $this->storagesRepo     = $em->getRepository('SmartMediaBundle:Storage');
     }
 
     /**
      * @param UploadedFile $file
+     * @param Category $category
+     * @param array $tags
      * @return int - ID файла в коллекции.
      */
-    public function createFile(UploadedFile $file)
+    public function createFile(UploadedFile $file, $category = null, array $tags = null)
     {
         // @todo
     }
@@ -43,13 +82,24 @@ class CollectionService
     }
 
     /**
-     * @param int $id
-     * @param array|null $params
+     * @param integer $id
+     * @param array|null $transforms
      * @return string
      */
-    public function getUriByFileId($id, array $params = null)
+    public function getUriByFileId($id, array $transforms = null)
     {
-        // @todo
+        /** @var File $file */
+        $file = $this->filesRepo->find($id);
+
+        $fileUrl =
+            $file->getStorage()->getBaseUrl() .
+            $file->getCollection()->getRelativePath() .
+            $file->getRelativePath() . '/' .
+            $file->getFilename();
+
+        $fileUrl = str_replace('{basePath}', $this->kernel->getContainer()->get('request')->getBasePath(), $fileUrl);
+
+        return $fileUrl;
     }
 
     /**

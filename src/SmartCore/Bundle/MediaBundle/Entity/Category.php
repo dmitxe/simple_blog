@@ -23,38 +23,46 @@ class Category
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="pid")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children", fetch="EAGER")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      *
      * @var Category
-     **/
+     */
     protected $parent;
 
     /**
-     * @var string
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent", fetch="LAZY")
+     * @ORM\OrderBy({"slug" = "ASC"})
      *
+     * @var Category[]|ArrayCollection
+     */
+    protected $children;
+
+    /**
      * @ORM\Column(type="string", length=32)
+     *
+     * @var string
      */
     protected $slug;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     protected $title;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * @var ArrayCollection|File[]
-     *
      * @ORM\OneToMany(targetEntity="File", mappedBy="category")
+     *
+     * @var File[]|ArrayCollection
      */
     protected $files;
 
@@ -73,6 +81,14 @@ class Category
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     /**

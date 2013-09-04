@@ -4,6 +4,7 @@ namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use SmartCore\Bundle\MediaBundle\Entity\Storage;
 
 /**
  * @ORM\Entity
@@ -19,25 +20,33 @@ class Collection
     protected $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=128)
      *
-     * @ORM\Column(type="string", length=64)
+     * @var string
      */
     protected $title;
 
     /**
-     * @var string
+     * @ORM\Column(type="text", nullable=true)
      *
-     * @ORM\Column(type="text")
+     * @var string
      */
     protected $description;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="array")
+     *
+     * @var array
      */
     protected $params;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Storage", cascade={"persist"})
+     * @ORM\JoinColumn(name="default_storage_id", nullable=false)
+     *
+     * @var Storage
+     */
+    protected $defaultStorage;
 
     /**
      * Относительный путь можно менять, только если нету файлов в коллекции
@@ -53,30 +62,30 @@ class Collection
      * Маска имени файла. Если пустая строка, то использовать оригинальное имя файла,
      * совместимое с вебформатом т.е. без пробелов и русских букв.
      *
-     * @var string
-     *
      * @ORM\Column(name="filename_pattern", type="string", length=64)
+     *
+     * @var string
      */
     protected $filenamePattern;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="file_relative_path_pattern", type="string", length=255)
+     *
+     * @var string
      */
     protected $fileRelativePathPattern;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * @var ArrayCollection|File[]
-     *
      * @ORM\OneToMany(targetEntity="File", mappedBy="collection")
+     *
+     * @var File[]|ArrayCollection
      */
     protected $files;
 
@@ -91,8 +100,8 @@ class Collection
         $this->files            = new ArrayCollection();
         $this->relativePath     = $relativePath;
 
-        $this->filenamePattern          = '%H_%i_%RAND(10)';
-        $this->fileRelativePathPattern  = '%Y/%m/%d/';
+        $this->filenamePattern          = '{hour}_{minutes}_{rand(10)}';
+        $this->fileRelativePathPattern  = '{year}/{month}/{day}/';
     }
 
     /**
@@ -109,6 +118,25 @@ class Collection
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @param Storage $defaultStorage
+     * @return $this
+     */
+    public function setDefaultStorage(Storage $defaultStorage)
+    {
+        $this->defaultStorage = $defaultStorage;
+
+        return $this;
+    }
+
+    /**
+     * @return Storage
+     */
+    public function getDefaultStorage()
+    {
+        return $this->defaultStorage;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace SmartCore\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use SmartCore\Bundle\MediaBundle\Model\ProviderInterface;
 
 /**
  * @ORM\Entity
@@ -19,44 +20,42 @@ class Storage
     protected $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=255)
      *
-     * @ORM\Column(type="string", length=32)
+     * @var string instanceof ProviderInterface
      */
     protected $provider;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $title;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", name="base_url", length=100)
      *
-     * @ORM\Column(type="string", length=255)
+     * @var string
      */
-    protected $path;
+    protected $baseUrl;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @ORM\Column(type="string", length=255)
+     * @var string
      */
     protected $description;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * @var ArrayCollection|File[]
-     *
      * @ORM\OneToMany(targetEntity="File", mappedBy="storage")
+     *
+     * @var File[]|ArrayCollection
      */
     protected $files;
 
@@ -78,22 +77,22 @@ class Storage
     }
 
     /**
-     * @param string $path
+     * @param string $baseUrl
      * @return $this
      */
-    public function setPath($path)
+    public function setBaseUrl($baseUrl)
     {
-        $this->path = $path;
-    
+        $this->baseUrl = $baseUrl;
+
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getPath()
+    public function getBaseUrl()
     {
-        return $this->path;
+        return $this->baseUrl;
     }
 
     /**
@@ -108,7 +107,7 @@ class Storage
     }
 
     /**
-     * @return string
+     * @return ProviderInterface
      */
     public function getProvider()
     {

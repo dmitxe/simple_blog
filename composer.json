@@ -27,6 +27,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/comment-bundle": "dev-master",
         "mopa/bootstrap-bundle": "dev-master",
+        "knplabs/gaufrette": ">=0.1.4",
         "knplabs/knp-gaufrette-bundle" : "v0.1.4",
         "knplabs/knp-menu-bundle": "v2.0.0-alpha1",
         "liip/doctrine-cache-bundle": "dev-master",

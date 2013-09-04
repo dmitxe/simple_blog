@@ -2,7 +2,7 @@
 
 namespace SmartCore\Bundle\MediaBundle\Service;
 
-class MediaService
+class MediaCloudService
 {
     public function __construct()
     {
