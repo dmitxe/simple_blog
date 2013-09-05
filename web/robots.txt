@@ -1,4 +1,17 @@
 # www.robotstxt.org/
 # www.google.com/support/webmasters/bin/answer.py?hl=en&answer=156449
 
+User-agent: Yandex
+Disallow: /assetic
+Disallow: /assets
+Disallow: /css
+Disallow: /js
+Host: www.dmitxe.ru
+
 User-agent: *
+Disallow: /assetic
+Disallow: /assets
+Disallow: /css
+Disallow: /js
+
+Sitemap: http://www.dmitxe.ru/sitemap.xml

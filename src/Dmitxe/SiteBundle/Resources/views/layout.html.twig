@@ -7,6 +7,7 @@
 {% endblock html_head_meta %}
 
 {% block html_head_links %}{{ parent() }}
+    <link rel="icon" type="image/x-icon" href="{{ asset('/favicon.ico') }}" />
     <link href="{{ asset('assets/bootstrap/2.3.2/css/bootstrap.min.css') }}" rel="stylesheet">
     <style type="text/css">
         body {

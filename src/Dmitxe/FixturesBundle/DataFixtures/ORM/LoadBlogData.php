@@ -159,6 +159,7 @@ class LoadBlogData extends ContainerAware implements FixtureInterface, OrderedFi
         $tag23 = new Tag('phpStorm');
         $tag24 = new Tag('Memcached');
         $tag25 = new Tag('Debian');
+        $tag26 = new Tag('Twig');
 
         $article = new Article();
         $article->setTitle('Хлебные крошки в Yii')
@@ -323,6 +324,10 @@ php app/console doctrine:schema:create</pre>
 	Загрузка фикстур:</p>
 <pre class="brush: php; toolbar: true;">
 php app/console doctrine:fixtures:load</pre>
+<p>
+	Обновление схемы базы:</p>
+<pre class="brush: php; toolbar: true;">
+php app/console doctrine:schema:update --force</pre>
 <p>
 	Создание бандла:</p>
 <pre class="brush: php; toolbar: true;">
@@ -685,6 +690,44 @@ filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr=&#39;#3437CD&#
             ->addTag($tag8)
             ->addTag($tag9)
             ->addTag($tag10)
+            ->setAuthor($user)
+        ;
+        $manager->persist($article);
+
+        $article = new Article();
+        $article->setTitle('Twig в Symfony2: работа с датой и временем.')
+            ->setSlug('twig_in_symfony2_work_with_date_and_time')
+            ->setAnnotation('Поначалу возник недоуменный вопрос: как в twig отдать дату в нужном формате? Неужели дату можно форматировать только в контролере? Но погуглив, нашел ответы на свои вопросы.')
+            ->setText('<p></p>
+<hr id="readmore" />
+<p>Форматирование даты:</p>
+<pre class="brush: php; toolbar: true;">
+	var_date|date("d.m.y")
+</pre>
+<p>Получение текущей даты:</p>
+<pre class="brush: php; toolbar: true;">
+	"new"|date("d.m.y")
+</pre>
+<p>Интернационализация:</p>
+<p>1. Подключаем сервис в конфиге Symfony2</p>
+<pre class="brush: php; toolbar: true;">
+	services:
+        twig_extension.intl:
+            class: Twig_Extensions_Extension_Intl
+            tags: [{ name: "twig.extension" }]
+</pre>
+<p>2. Пример вызова</p>
+<pre class="brush: php; toolbar: true;">
+	{{ item.date|localizeddate("none", "none", null, null, "dd. LLLL YYYY") }}
+</pre>
+')
+            ->setCategory($category_symfony2)
+            ->setDescription('Symfony2 работа с датой и временем из Twig')
+            ->setKeywords('Symfony2, Twig, дата и время')
+            ->setCreatedAt(new \DateTime('2013-09-05 18:19:56'))
+            ->addTag($tag26)
+            ->addTag($tag2)
+            ->addTag($tag14)
             ->setAuthor($user)
         ;
         $manager->persist($article);

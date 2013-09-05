@@ -2,15 +2,10 @@
 
 {% block content %}
     {{ parent() }}
-    <h1>Персональный блог</h1>
-    <h2>Тренировочный проект на Symfony2</h2>
 
-    <div class="container-fluid blog-article-box">
-        <p>Вот так вот ;) Тут будет мега блог ;)</p>
-    </div>
-
-    <h1>Провера текстера</h1>
-
+    <h1>Добро пожаловать!</h1>
     {{ texter(1) }}
+
+    {{ render(controller('DmitxeBlogBundle:Article:index', {'page': page})) }}
 
 {% endblock content %}
