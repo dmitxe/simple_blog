@@ -1,6 +1,6 @@
 dmitxe_news_index:
     path: /
-    defaults: { _controller: DmitxeNewsBundle:Article:page }
+    defaults: { _controller: DmitxeNewsBundle:Article:index }
 
 dmitxe_news_article:
     path: /{slug}.html
