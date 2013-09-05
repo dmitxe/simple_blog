@@ -73,11 +73,32 @@ class ArticleController extends Controller
     }
 
     /**
+     * @return Response
+     */
+    public function indexAction()
+    {
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
+
+        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoryQuery()));
+        $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
+        $pagerfanta->setCurrentPage(1);
+
+        return $this->render($this->bundleName . ':Article:list.html.twig', [
+            'pagerfanta' => $pagerfanta,
+        ]);
+    }
+
+    /**
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function pageAction($page = 1)
     {
+        if ($page == 1) {
+            return $this->redirect($this->generateUrl($this->routeIndex));
+        }
+
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
 

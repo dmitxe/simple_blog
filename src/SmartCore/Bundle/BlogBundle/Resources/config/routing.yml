@@ -1,6 +1,6 @@
 smart_blog_index:
     path: /
-    defaults: { _controller: SmartBlogBundle:Article:page }
+    defaults: { _controller: SmartBlogBundle:Article:index }
 
 smart_blog_article:
     path: /{slug}.html
