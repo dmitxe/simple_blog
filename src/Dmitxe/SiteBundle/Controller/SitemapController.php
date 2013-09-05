@@ -13,7 +13,7 @@ class SitemapController extends Controller
         $items = [];
         $item = [];
         // Статичные страницы
-        $item['url'] = $this->generateUrl('dmitxe_site_index');
+        $item['url'] = $this->generateUrl('smart_blog_index');
         $item['lastmod'] = date('Y-m-d'); //@todo сделать где-то хранение даты
         $item['changefreq'] = 'always';
         $item['priority'] = '1.0';

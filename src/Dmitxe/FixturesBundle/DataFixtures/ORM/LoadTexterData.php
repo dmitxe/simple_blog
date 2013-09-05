@@ -16,8 +16,8 @@ class LoadTexterData extends ContainerAware implements FixtureInterface, Ordered
     public function load(ObjectManager $manager)
     {
         $text = new Text();
-        $text->setName(1);
-        $text->setText('<p>Меня зовут Дмитрий. Я веб-программист, занимаюсь созданием сайтов.
+        $text->setName('welcome');
+        $text->setText('<h1>Добро пожаловать!</h1><p>Меня зовут Дмитрий. Я веб-программист, занимаюсь созданием сайтов.
 На этом блоге находятся мои заметки по программированию. Многие идеи взяты у других авторов,
 часть текста - первод с английского, что-то придумал сам).</p> ');
         $manager->persist($text);

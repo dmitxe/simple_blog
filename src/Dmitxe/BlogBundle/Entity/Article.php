@@ -5,12 +5,12 @@ namespace Dmitxe\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use SmartCore\Bundle\BlogBundle\Model\Article as SmartArticle;
 use SmartCore\Bundle\BlogBundle\Model\CategoryTrait;
+use SmartCore\Bundle\BlogBundle\Model\ImagedArticleInterface;
 use SmartCore\Bundle\BlogBundle\Model\SignedArticleInterface;
 use SmartCore\Bundle\BlogBundle\Model\TagTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="SmartCore\Bundle\BlogBundle\Repository\ArticleRepository")
@@ -20,7 +20,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      }
  * )
  */
-class Article extends SmartArticle implements SignedArticleInterface
+class Article extends SmartArticle implements SignedArticleInterface, ImagedArticleInterface
 {
     use CategoryTrait;
     use TagTrait;
@@ -36,16 +36,15 @@ class Article extends SmartArticle implements SignedArticleInterface
      *     maxSize="1M",
      *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
      * )
-     * @Vich\UploadableField(mapping="blog_image", fileNameProperty="image_name")
      *
-     * @var File $image
+     * @var UploadedFile $image
      */
     protected $image;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $image_name;
+    protected $image_id;
 
     /**
      * @ORM\Column(type="boolean")
@@ -78,6 +77,43 @@ class Article extends SmartArticle implements SignedArticleInterface
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * @param UploadedFile $image
+     * @return $this
+     */
+    public function setImage(UploadedFile $image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param integer $image_id
+     * @return $this
+     */
+    public function setImageId($image_id)
+    {
+        $this->image_id = $image_id;
+
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getImageId()
+    {
+        return $this->image_id;
     }
 
     /**

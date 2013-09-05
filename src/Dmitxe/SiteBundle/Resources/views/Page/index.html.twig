@@ -3,7 +3,6 @@
 {% block content %}
     {{ parent() }}
 
-    <h1>Добро пожаловать!</h1>
     {{ texter(1) }}
 
     {{ render(controller('DmitxeBlogBundle:Article:index', {'page': page})) }}

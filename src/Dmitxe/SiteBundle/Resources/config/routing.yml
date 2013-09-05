@@ -1,10 +1,11 @@
-dmitxe_site_index:
-    path: /
-    defaults: { _controller: DmitxeSiteBundle:Page:index }
+#dmitxe_site_index:
+#    path: /
+#    defaults: { _controller: SmartBlogBundle:Article:page }
+    #defaults: { _controller: DmitxeSiteBundle:Page:index }
 
-dmitxe_site_index_page:
-    path: /{page}
-    defaults: { _controller: DmitxeSiteBundle:Page:index }
+#dmitxe_site_index_page:
+#    path: /{page}
+#    defaults: { _controller: DmitxeSiteBundle:Page:index }
 
 dmitxe_site_admin:
     path: /admin/

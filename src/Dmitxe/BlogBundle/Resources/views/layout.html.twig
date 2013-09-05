@@ -2,11 +2,13 @@
 
 {% block html_head_meta %} {{ parent() }} {% endblock html_head_meta %}
 
+{#
 {% if breadcrumbs != '' %}
     {% set breadcrumbs = '<a href="' ~ path('smart_blog_index') ~ '">Блог</a> » ' ~ breadcrumbs %}
 {% else %}
     {% set breadcrumbs = '<span>Блог</span>' ~ breadcrumbs %}
 {% endif %}
+#}
 
 {% block html_head_title %} Блог &raquo; {{ parent() }} {% endblock html_head_title %}
 

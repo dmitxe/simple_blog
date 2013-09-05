@@ -214,12 +214,12 @@ fm_elfinder:
                 upload_deny: ['all']
                 upload_max_size: 2M
 
-vich_uploader:
-    db_driver: orm
-    mappings:
-        blog_image:
-            uri_prefix: /images/blog
-            upload_destination: %kernel.root_dir%/../web/images/blog
+#vich_uploader:
+#    db_driver: orm
+#    mappings:
+#        blog_image:
+#            uri_prefix: /images/blog
+#            upload_destination: %kernel.root_dir%/../web/images/blog
 
 smart_blog:
     article_class: Dmitxe\BlogBundle\Entity\Article

@@ -7,6 +7,10 @@
 
 {% block smart_blog_content %}
 
+    {% if pagerfanta.currentPage == 1 %}
+        {{ texter('welcome') }}
+    {% endif %}
+
     {% block smart_blog_content_articles %}
         {% for article in pagerfanta.currentPageResults %}
             <h2><a href="{{ path('smart_blog_article', {'slug': article.slug}) }}">{{ article.title }}</a></h2>

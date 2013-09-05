@@ -31,7 +31,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new Vich\UploaderBundle\VichUploaderBundle(),
+            //new Vich\UploaderBundle\VichUploaderBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),

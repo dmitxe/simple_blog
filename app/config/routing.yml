@@ -1,3 +1,7 @@
+dmitxe_blog:
+    resource: "@DmitxeBlogBundle/Resources/config/routing.yml"
+    prefix:   /
+
 smart_social:
     resource: "@SmartSocialBundle/Resources/config/routing.yml"
     prefix:   /
@@ -32,10 +36,6 @@ smart_blog_admin_tag:
 smart_texter:
     resource: "@SmartTexterBundle/Resources/config/routing_admin.yml"
     prefix:   /admin/texter/
-
-dmitxe_blog:
-    resource: "@DmitxeBlogBundle/Resources/config/routing.yml"
-    prefix:   /blog/
 
 dmitxe_news:
     resource: "@DmitxeNewsBundle/Resources/config/routing.yml"
