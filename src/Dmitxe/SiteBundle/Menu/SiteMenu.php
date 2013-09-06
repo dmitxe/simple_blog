@@ -21,6 +21,7 @@ class SiteMenu extends ContainerAware
         $menu->addChild('Контакты',     ['route' => 'mremi_contact_form']);
         $menu->addChild('News',     ['route' => 'dmitxe_news_index']);
         $menu->addChild('Gallery',  ['route' => 'smart_gallery_index']);
+        $menu->addChild('Карта сайта',     ['route' => 'dmitxe_sitemap_html']);
 
         if (true === $this->container->get('security.context')->isGranted('ROLE_BLOGGER')) {
             $menu->addChild('Create Article', ['route' => 'smart_blog_article_create']);

@@ -77,4 +77,15 @@ class Article extends SmartArticle implements TaggableInterface
     {
         return $this->tags;
     }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return $this
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
 }

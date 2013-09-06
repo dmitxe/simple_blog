@@ -1,0 +1,12 @@
+{% extends '@DmitxeSite/layout_sidebar.html.twig' %}
+
+{% set breadcrumbs = '<span>Карта сайта</span>' %}
+
+{% block content %}
+    {{ parent() }}
+    <ul style="list-style: none;">
+    {% for item in items %}
+        <li><a href="{{ item.url }}" style="padding-left:{{ item.level*20 }}px;">{{ item.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock content %}

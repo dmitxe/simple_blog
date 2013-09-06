@@ -14,3 +14,7 @@ dmitxe_sitemap_xml:
     path: /sitemap.xml
     defaults: { _controller: DmitxeSiteBundle:Sitemap:xml, _format: xml }
     requirements: { _format: (xml), _method: GET }
+
+dmitxe_sitemap_html:
+    path: /sitemap/
+    defaults: { _controller: DmitxeSiteBundle:Sitemap:html }
