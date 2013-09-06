@@ -113,3 +113,9 @@ a.fos_comment_thread_feed {
 .fos_comment_comment_score {
     display: inline-block;
 }
+
+/* Собственные стили */
+
+.fos_comment_comment_replies {
+    margin-left: 40px;
+}

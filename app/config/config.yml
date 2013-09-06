@@ -115,14 +115,18 @@ fos_comment:
             thread:  fos_comment.manager.thread.acl
             comment: fos_comment.manager.comment.acl
             vote:    fos_comment.manager.vote.acl
+        form_factory:
+            comment: fos_comment.form_factory.comment.default
+        spam_detection:
+            comment: fos_comment.spam_detection.comment.akismet
     acl_roles:
         comment:
-            create: ROLE_USER
+            create: IS_AUTHENTICATED_ANONYMOUSLY
             view: IS_AUTHENTICATED_ANONYMOUSLY
             edit: ROLE_ADMIN
             delete: ROLE_ADMIN
         thread:
-            create: ROLE_USER
+            create: IS_AUTHENTICATED_ANONYMOUSLY
             view: IS_AUTHENTICATED_ANONYMOUSLY
             edit: ROLE_ADMIN
             delete: ROLE_ADMIN
@@ -131,6 +135,11 @@ fos_comment:
             view: IS_AUTHENTICATED_ANONYMOUSLY
             edit: ROLE_ADMIN
             delete: ROLE_ADMIN
+
+ornicar_akismet:
+    api_key:        8e2b9ed788f4
+    url:            http://dmitxe.ru
+    service:        ornicar_akismet.akismet_stub
 
 genemu_form:
     captcha: ~

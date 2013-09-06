@@ -69,11 +69,12 @@
         </p>
     {% endif %}
 
-    {% if is_granted('ROLE_USER') %}
+{#    {% if is_granted('ROLE_USER') %}
+#}
        {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}
-    {% else %}
-       <br />
-       <p style="margin-top:20px">Войдите, чтобы оставить комментрарий</p>
-    {% endif %}
+    {#    {% else %}
+           <br />
+           <p style="margin-top:20px">Войдите, чтобы оставить комментрарий</p>
+        {% endif %} #}
 
 {% endblock smart_blog_content %}
