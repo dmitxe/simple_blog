@@ -119,3 +119,7 @@ a.fos_comment_thread_feed {
 .fos_comment_comment_replies {
     margin-left: 40px;
 }
+
+.fos_comment_comment_replies .fos_comment_comment_replies .fos_comment_comment_replies .fos_comment_comment_replies{
+    margin-left: 0;
+}
