@@ -32,22 +32,6 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
     }
 
     /**
-     * @param CategoryInterface|null $category
-     * @param integer|null $offset
-     * @param integer|null $limit
-     * @return ArticleInterface[]|null
-     */
-    public function findByCategory(CategoryInterface $category = null, $limit = null, $offset = null)
-    {
-        $query = $this
-            ->getFindByCategoryQuery($category)
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
-
-        return $query->getResult();
-    }
-
-    /**
      * @param CategoryInterface[]|array $categories
      * @param int|null $limit
      * @param int|null $offset

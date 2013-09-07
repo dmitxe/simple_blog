@@ -10,7 +10,7 @@ smart_blog_admin_index:
     path:   /admin/blog/
     defaults: { _controller: DmitxeSiteBundle:Admin:adminBlog }
 
-dmitxe_sitemap_xml:
+dmitxe_sitemap_xml: # @todo судя по всему этот маршрут и контроллер ненужен т.к. сделан внешний паук.
     path: /sitemap.xml
     defaults: { _controller: DmitxeSiteBundle:Sitemap:xml, _format: xml }
     requirements: { _format: (xml), _method: GET }

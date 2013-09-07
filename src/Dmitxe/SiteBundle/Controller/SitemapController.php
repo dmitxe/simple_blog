@@ -8,6 +8,9 @@ use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
 
 class SitemapController extends Controller
 {
+    /**
+     * @todo удалить.
+     */
     public function xmlAction()
     {
         $changefreq = 'weekly';
@@ -64,17 +67,18 @@ class SitemapController extends Controller
             $items[] = $item;
         }
 
-//        ld($articles);
-
         $response = new Response();
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/xml');
-        $content = $this->renderView('DmitxeSiteBundle:Sitemap:sitemap.xml.twig', ['items' => $items]);
-        $response->setContent($content);
+        $response->setContent($this->renderView('DmitxeSiteBundle:Sitemap:sitemap.xml.twig', ['items' => $items]));
         return $response;
- //       return $this->render('DmitxeSiteBundle:Sitemap:sitemap.xml.twig', ['items' => $items]);
     }
 
+    /**
+     * @return Response
+     *
+     * @todo не красиво как-то выглядит карта сайта... мне кажется ненадо заголовки статей в неё толкать.
+     */
     public function htmlAction()
     {
         $items = [];
@@ -102,7 +106,7 @@ class SitemapController extends Controller
         $articles = $articleService->getFindByCategoryQuery()->getResult();
 
         foreach ($articles as $article) {
-            $item['url'] = $this->generateUrl('smart_blog_article', ['slug' => $article->getSlug()]);
+            $item['url'] = $this->generateUrl('dmitxe_news_article', ['slug' => $article->getSlug()]);
             $item['title'] = $article->getTitle();
             $item['level'] = 1;
             $items[] = $item;
@@ -152,6 +156,7 @@ class SitemapController extends Controller
             $level--;
         }
     }
+
     /**
      * Выборка статей в категории.
      *
@@ -161,9 +166,7 @@ class SitemapController extends Controller
      */
     protected function addArticles(Array &$items, &$level = 0, CategoryInterface $parent= null)
     {
-
-        if (!is_null($parent))
-        {
+        if (!is_null($parent)) {
             /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
             $articleService = $this->get('smart_blog.article');
             $articles = $articleService->getByCategories([$parent]);

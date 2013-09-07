@@ -22,14 +22,6 @@ interface ArticleRepositoryInterface
 
     /**
      * @param CategoryInterface|null $category
-     * @param int|null $offset
-     * @param int|null $limit
-     * @return ArticleInterface[]|null
-     */
-    public function findByCategory(CategoryInterface $category = null, $limit = null, $offset = null);
-
-    /**
-     * @param CategoryInterface|null $category
      * @return \Doctrine\ORM\Query
      */
     public function getFindByCategoryQuery(CategoryInterface $category = null);

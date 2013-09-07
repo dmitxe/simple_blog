@@ -64,7 +64,44 @@ class ArticleService extends AbstractBlogService
 
         return $article;
     }
-    
+
+    /**
+     * @param ArticleInterface $article
+     */
+    public function update(ArticleInterface $article, $setUpdatedAt = true)
+    {
+        $event = new FilterArticleEvent($article);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_PRE_UPDATE, $event);
+
+        if ($setUpdatedAt) {
+            $article->setUpdated();
+        }
+
+        $this->em->persist($article);
+        $this->em->flush($article);
+
+        $this->cache->delete('archive_monthly');
+        $this->cache->delete('tag_cloud_zend');
+
+        $event = new FilterArticleEvent($article);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_UPDATE, $event);
+    }
+
+    /**
+     * @param ArticleInterface $article
+     */
+    public function delete(ArticleInterface $article)
+    {
+        $event = new FilterArticleEvent($article);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_PRE_DELETE, $event);
+
+        $this->em->remove($article);
+        $this->em->flush($article);
+
+        $event = new FilterArticleEvent($article);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_DELETE, $event);
+    }
+
     /**
      * @param int $id
      * @return ArticleInterface|null
@@ -124,30 +161,6 @@ class ArticleService extends AbstractBlogService
     }
 
     /**
-     * @param TagInterface $tag
-     * @param int|null $limit
-     * @param int|null $offset
-     * @return ArticleInterface[]|null
-     *
-     * @todo постраничность.
-     */
-    public function getByTag(TagInterface $tag, $limit  = null, $offset = null)
-    {
-        return $this->articlesRepo->findByTag($tag);
-    }
-
-    /**
-     * @param int|null $year
-     * @param int|null $month
-     * @param int|null $day
-     * @return ArticleInterface[]|null
-     */
-    public function getByDate($year = null, $month = null, $day = null)
-    {
-        // @todo
-    }
-
-    /**
      * @param string $slug
      * @return ArticleInterface|null
      */
@@ -176,31 +189,6 @@ class ArticleService extends AbstractBlogService
         }
 
         return $this->articlesRepo->findLast($limit);
-    }
-
-    /**
-     * @param ArticleInterface $article
-     *
-     * @todo выделить методы create, update, detele в "article manager".
-     */
-    public function update(ArticleInterface $article, $setUpdatedAt = true)
-    {
-        $event = new FilterArticleEvent($article);
-        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_PRE_UPDATE, $event);
-
-        // @todo убрать в мэнеджер.
-        if ($setUpdatedAt) {
-            $article->setUpdated();
-        }
-
-        $this->em->persist($article);
-        $this->em->flush($article);
-
-        $this->cache->delete('archive_monthly');
-        $this->cache->delete('tag_cloud_zend');
-
-        $event = new FilterArticleEvent($article);
-        $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_UPDATE, $event);
     }
 
     /**
