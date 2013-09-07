@@ -119,6 +119,8 @@ fos_comment:
             comment: fos_comment.form_factory.comment.default
         spam_detection:
             comment: fos_comment.spam_detection.comment.akismet
+        markup: markup.exercise_html_purifier
+#        markup: markup.bbcode
     acl_roles:
         comment:
             create: IS_AUTHENTICATED_ANONYMOUSLY
@@ -140,6 +142,14 @@ ornicar_akismet:
     api_key:        8e2b9ed788f4
     url:            http://dmitxe.ru
     service:        ornicar_akismet.akismet_stub
+
+exercise_html_purifier:
+    default:
+        Cache.SerializerPath: '%kernel.cache_dir%/htmlpurifier'
+    custom:
+        Core.Encoding: 'utf-8'
+    bbcode:
+        HTML.Allowed: ''
 
 genemu_form:
     captcha: ~
@@ -252,3 +262,9 @@ services:
     twig_extension.intl:
         class: Twig_Extensions_Extension_Intl
         tags: [{ name: 'twig.extension' }]
+    markup.exercise_html_purifier:
+        class: FOS\CommentBundle\Markup\HtmlPurifier
+        arguments: [ @exercise_html_purifier.default ]
+    markup.bbcode:
+        class: Dmutxe\CommentBundle\Markup\BBCode
+        arguments: [ @exercise_html_purifier.bbcode ]
