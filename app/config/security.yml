@@ -26,8 +26,8 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/blog/create/, roles: ROLE_BLOGGER }
-        - { path: ^/blog/edit/, roles: ROLE_BLOGGER }
+        - { path: ^/create/, roles: ROLE_BLOGGER }
+        - { path: ^/edit/, roles: ROLE_BLOGGER }
         - { path: ^/news/create/, roles: ROLE_NEWSMAKER }
         - { path: ^/news/edit/, roles: ROLE_NEWSMAKER }
         - { path: ^/efconnect, roles: [ROLE_BLOGGER, ROLE_NEWSMAKER] }
