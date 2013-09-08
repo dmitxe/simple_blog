@@ -1,33 +1,33 @@
-smart_blog_index:
+smart_blog.article.index:
     path: /
     defaults: { _controller: SmartBlogBundle:Article:index }
 
-smart_blog_article:
+smart_blog.article.show:
     path: /{slug}.html
     defaults: { _controller: SmartBlogBundle:Article:show }
 
-smart_blog_article_create:
+smart_blog.article.create:
     path: /create/
     defaults: { _controller: SmartBlogBundle:Article:create }
 
-smart_blog_article_edit:
+smart_blog.article.edit:
     path: /edit/{id}/
     defaults: { _controller: SmartBlogBundle:Article:edit }
     requirements:
         id: \d+
 
-smart_blog_page_index:
+smart_blog.article.list_page_1_redirection_TO_smart_blog.article.index:
     path: /page/
-    defaults: { _controller: SmartBlogBundle:Article:page }
+    defaults: { _controller: SmartBlogBundle:Article:list }
 
-smart_blog_page:
+smart_blog.article.list:
     path: /page/{page}/
-    defaults: { _controller: SmartBlogBundle:Article:page }
+    defaults: { _controller: SmartBlogBundle:Article:list }
 
-smart_blog_category:
-    path: /category/{slug}/
+smart_blog.category.articles:
+    path: /category/{slug}
     defaults:
-        _controller: SmartBlogBundle:Category:index
+        _controller: SmartBlogBundle:Category:articles
         slug: ""
     requirements:
         slug: ".+"
@@ -40,7 +40,7 @@ smart_blog_tag:
     path: /tag/{slug}/
     defaults: { _controller: SmartBlogBundle:Tag:showArticles }
 
-smart_blog_archive:
+smart_blog_archive: # @todo
     path: /archive/
     defaults: { _controller: SmartBlogBundle:Article:archive }
 
@@ -57,14 +57,10 @@ smart_blog_archive_monthly:
         year:  \d+
         month: \d+
 
-smart_blog_archive_dayly: # @todo
+smart_blog_archive_daily: # @todo
     path: /archive/{year}/{month}/{day}/
-    defaults: { _controller: SmartBlogBundle:Article:archiveDayly }
+    defaults: { _controller: SmartBlogBundle:Article:archiveDaily }
     requirements:
         year:  \d+
         month: \d+
         day:   \d+
-
-#smart_blog_admin:
-#    resource: "@SmartBlogBundle/Resources/config/routing_admin.yml"
-#    prefix: /admin/

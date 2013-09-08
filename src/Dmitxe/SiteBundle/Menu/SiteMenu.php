@@ -16,15 +16,15 @@ class SiteMenu extends ContainerAware
     {
         $menu = $factory->createItem('site_main');
         $menu->setChildrenAttribute('class', isset($options['class']) ? $options['class'] : 'nav');
-        $menu->addChild('Blog',     ['route' => 'smart_blog_index']);
-        $menu->addChild('О сайте',     ['route' => 'dmitxe_site_about']);
+        $menu->addChild('Blog',         ['route' => 'smart_blog.article.index']);
+        $menu->addChild('О сайте',      ['route' => 'dmitxe_site_about']);
         $menu->addChild('Контакты',     ['route' => 'mremi_contact_form']);
-        $menu->addChild('News',     ['route' => 'dmitxe_news_index']);
-        $menu->addChild('Gallery',  ['route' => 'smart_gallery_index']);
-        $menu->addChild('Карта сайта',     ['route' => 'dmitxe_sitemap_html']);
+        $menu->addChild('News',         ['route' => 'dmitxe_news_index']);
+        $menu->addChild('Gallery',      ['route' => 'smart_gallery_index']);
+        $menu->addChild('Карта сайта',  ['route' => 'dmitxe_sitemap_html']);
 
         if (true === $this->container->get('security.context')->isGranted('ROLE_BLOGGER')) {
-            $menu->addChild('Create Article', ['route' => 'smart_blog_article_create']);
+            $menu->addChild('Create Article', ['route' => 'smart_blog.article.create']);
         }
 
         if (true === $this->container->get('security.context')->isGranted('ROLE_NEWSMAKER')) {

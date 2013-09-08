@@ -40,6 +40,16 @@ class CategoryService extends AbstractBlogService
     }
 
     /**
+     * @param array $criteria
+     * @param array $orderBy
+     * @return CategoryInterface
+     */
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
+        return $this->categoriesRepo->findOneBy($criteria, $orderBy);
+    }
+
+    /**
      * @param int $id
      * @return CategoryInterface|null
      */

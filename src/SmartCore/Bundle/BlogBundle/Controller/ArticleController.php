@@ -49,8 +49,8 @@ class ArticleController extends Controller
         $this->bundleName           = 'SmartBlogBundle';
 
         $this->articleServiceName   = 'smart_blog.article';
-        $this->routeIndex           = 'smart_blog_index';
-        $this->routeArticle         = 'smart_blog_article';
+        $this->routeIndex           = 'smart_blog.article.index';
+        $this->routeArticle         = 'smart_blog.article.show';
     }
 
     /**
@@ -73,16 +73,22 @@ class ArticleController extends Controller
     }
 
     /**
+     * @param Request $requst
      * @return Response
      */
-    public function indexAction()
+    public function indexAction(Request $requst)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
 
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoryQuery()));
         $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
-        $pagerfanta->setCurrentPage(1);
+
+        try {
+            $pagerfanta->setCurrentPage($requst->query->get('page', 1));
+        } catch (NotValidCurrentPageException $e) {
+            return $this->redirect($this->generateUrl($this->routeIndex));
+        }
 
         return $this->render($this->bundleName . ':Article:list.html.twig', [
             'pagerfanta' => $pagerfanta,
@@ -93,7 +99,7 @@ class ArticleController extends Controller
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function pageAction($page = 1)
+    public function listAction($page = 1)
     {
         if ($page == 1) {
             return $this->redirect($this->generateUrl($this->routeIndex));

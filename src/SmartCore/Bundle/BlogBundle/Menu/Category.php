@@ -63,7 +63,7 @@ class Category extends ContainerAware
 
         /** @var CategoryInterface $category */
         foreach ($categories as $category) {
-            $uri = $router->generate('smart_blog_category', ['slug' => $category->getSlugFull()]);
+            $uri = $router->generate('smart_blog.category.articles', ['slug' => $category->getSlugFull()]) . '/';
             $menu->addChild($category->getTitle(), ['uri' => $uri])
                 ->setAttributes([
                     'class' => 'folder',
@@ -117,7 +117,7 @@ class Category extends ContainerAware
 
         /** @var CategoryInterface $category */
         foreach ($categories as $category) {
-            $uri = $router->generate('smart_blog_admin_category_edit', ['id' => $category->getId()]);
+            $uri = $router->generate('smart_blog_admin_category_edit', ['id' => $category->getId()]) . '/';
             $menu->addChild($category->getTitle(), ['uri' => $uri])
                 ->setAttributes([
                     'class' => 'folder',

@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManager;
 use SmartCore\Bundle\BlogBundle\Event\FilterArticleEvent;
 use SmartCore\Bundle\BlogBundle\Model\ArticleInterface;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
-use SmartCore\Bundle\BlogBundle\Model\TagInterface;
 use SmartCore\Bundle\BlogBundle\Repository\ArticleRepositoryInterface;
 use SmartCore\Bundle\BlogBundle\SmartBlogEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -148,6 +147,15 @@ class ArticleService extends AbstractBlogService
     public function getFindByCategoryQuery(CategoryInterface $category = null)
     {
         return $this->articlesRepo->getFindByCategoryQuery($category);
+    }
+
+    /**
+     * @param array $categories
+     * @return \Doctrine\ORM\Query
+     */
+    public function getFindByCategoriesQuery(array $categories = [], $limit = null, $offset = null)
+    {
+        return $this->articlesRepo->getFindByCategoriesQuery($categories, $limit, $offset);
     }
 
     /**

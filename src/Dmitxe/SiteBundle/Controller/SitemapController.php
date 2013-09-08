@@ -17,7 +17,7 @@ class SitemapController extends Controller
         $items = [];
         $item = [];
         // Статичные страницы
-        $item['url'] = $this->generateUrl('smart_blog_index');
+        $item['url'] = $this->generateUrl('smart_blog.article.index');
         $item['lastmod'] = date('Y-m-d'); //@todo сделать где-то хранение даты
         $item['changefreq'] = 'always';
         $item['priority'] = '1.0';
@@ -34,7 +34,7 @@ class SitemapController extends Controller
         $categories = $categoryService->all();
 
         foreach ($categories as $category) {
-            $item['url'] = $this->generateUrl('smart_blog_category', ['slug' => $category->getslugFull()]);
+            $item['url'] = $this->generateUrl('smart_blog.category.articles', ['slug' => $category->getslugFull()]) . '/';
             $item['lastmod'] = date('Y-m-d');
             $item['changefreq'] = $changefreq;
             $item['priority'] = '0.8';
@@ -47,7 +47,7 @@ class SitemapController extends Controller
         $articles = $articleService->getFindByCategoryQuery()->getResult();
 
         foreach ($articles as $article) {
-            $item['url'] = $this->generateUrl('smart_blog_article', ['slug' => $article->getSlug()]);
+            $item['url'] = $this->generateUrl('smart_blog.article.show', ['slug' => $article->getSlug()]);
             $item['lastmod'] = $article->getCreatedAt()->format('Y-m-d');
             $item['changefreq'] = $changefreq;
             $item['priority'] = '0.8';
@@ -60,7 +60,7 @@ class SitemapController extends Controller
         $articles = $articleService->getFindByCategoryQuery()->getResult();
 
         foreach ($articles as $article) {
-            $item['url'] = $this->generateUrl('smart_blog_article', ['slug' => $article->getSlug()]);
+            $item['url'] = $this->generateUrl('smart_blog.article.show', ['slug' => $article->getSlug()]);
             $item['lastmod'] = $article->getCreatedAt()->format('Y-m-d');
             $item['changefreq'] = $changefreq;
             $item['priority'] = '0.8';
@@ -83,7 +83,7 @@ class SitemapController extends Controller
     {
         $items = [];
         $item = [];
-        $item['url'] = $this->generateUrl('smart_blog_index');
+        $item['url'] = $this->generateUrl('smart_blog.article.index');
         $item['title'] = 'Блог';
         $item['level'] = 0;
         $items[] = $item;
@@ -146,7 +146,7 @@ class SitemapController extends Controller
         /** @var CategoryInterface $category */
         foreach ($categories as $category) {
             $item = [];
-            $item['url'] = $router->generate('smart_blog_category', ['slug' => $category->getSlugFull()]);
+            $item['url'] = $router->generate('smart_blog.category.articles', ['slug' => $category->getSlugFull()]);
             $item['title'] = $category->getTitle();
             $item['level'] = $level;
             $menu[] = $item;
@@ -171,7 +171,7 @@ class SitemapController extends Controller
             $articleService = $this->get('smart_blog.article');
             $articles = $articleService->getByCategories([$parent]);
             foreach ($articles as $article) {
-                $item['url'] = $this->generateUrl('smart_blog_article', ['slug' => $article->getSlug()]);
+                $item['url'] = $this->generateUrl('smart_blog.article.show', ['slug' => $article->getSlug()]);
                 $item['title'] = $article->getTitle();
                 $item['level'] = $level;
                 $items[] = $item;

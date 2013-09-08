@@ -5,9 +5,6 @@ namespace Dmitxe\BlogBundle\Controller;
 use Dmitxe\BlogBundle\Entity\Article;
 use Dmitxe\BlogBundle\Form\Type\ArticleEditFormType;
 use SmartCore\Bundle\BlogBundle\Controller\ArticleController as BaseController;
-use Pagerfanta\Exception\NotValidCurrentPageException;
-use Pagerfanta\Pagerfanta;
-use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends BaseController
@@ -45,11 +42,8 @@ class ArticleController extends BaseController
      */
     public function __construct()
     {
-        $this->bundleName           = 'DmitxeBlogBundle';
-
-        $this->articleServiceName   = 'smart_blog.article';
-        $this->routeIndex           = 'smart_blog_index';
-        $this->routeArticle         = 'smart_blog_article';
+        parent::__construct();
+        $this->bundleName = 'DmitxeBlogBundle';
     }
 
     /**

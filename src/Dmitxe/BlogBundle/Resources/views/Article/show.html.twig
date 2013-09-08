@@ -15,7 +15,7 @@
 
 {% block html_head_scripts %}{{ parent() }}
     <script type="text/javascript">
-        var pathbs = 'http://{{ app.request.host ~ app.request.getBaseURL() }}';
+        var pathbs = 'http://{{ app.request.host ~ app.request.getBaseUrl() }}';
         var typeGet="0";
         if(!window.VK) {
             document.write(unescape('<script type="text/javascript" src="http://vk.com/js/api/openapi.js">%3C/script%3E'));
@@ -28,10 +28,10 @@
 {% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
 
 {% if article.category %}
-    {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': article.category.slugFull}) ~ '">' ~ article.category ~ '</a> &raquo; ' ~ breadcrumbs %}
+    {% set breadcrumbs = '<a href="' ~ path('smart_blog.category.articles', {'slug': article.category.slugFull}) ~ '/">' ~ article.category ~ '</a> &raquo; ' ~ breadcrumbs %}
 
     {% for category in article.category.parents %}
-        {% set breadcrumbs = '<a href="' ~ path('smart_blog_category', {'slug': category.slugFull}) ~ '">' ~ category ~ '</a> &raquo; ' ~ breadcrumbs %}
+        {% set breadcrumbs = '<a href="' ~ path('smart_blog.category.articles', {'slug': category.slugFull}) ~ '/">' ~ category ~ '</a> &raquo; ' ~ breadcrumbs %}
     {% endfor %}
 {% endif %}
 
@@ -48,7 +48,7 @@
 
     <p>{{ article.text|raw }}</p>
 
-    {{ render(controller('SmartSocialBundle:Share:index', { 'url': path('smart_blog_article', {'slug': article.slug}) })) }}
+    {{ render(controller('SmartSocialBundle:Share:index', { 'url': path('smart_blog.article.show', {'slug': article.slug}) })) }}
 
     {% if article.tags|length %}
         {{ 'Tags'|trans }}:
@@ -59,22 +59,16 @@
 
     {% if article.category %}
         {{ 'Category'|trans }}:
-        <a href="{{ path('smart_blog_category', {'slug': article.category.slugFull}) }}"><span class="label label-success">{{ article.category }}</span></a>
+        <a href="{{ path('smart_blog.category.articles', {'slug': article.category.slugFull}) }}/"><span class="label label-success">{{ article.category }}</span></a>
     {% endif %}
 
     {% if is_granted('ROLE_BLOGGER') %}
         <hr />
         <p>
-        <a href="{{ path('smart_blog_article_edit', {'id': article.id}) }}" class="btn">Редактирование</a>
+        <a href="{{ path('smart_blog.article.edit', {'id': article.id}) }}" class="btn">Редактирование</a>
         </p>
     {% endif %}
 
-{#    {% if is_granted('ROLE_USER') %}
-#}
-       {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}
-    {#    {% else %}
-           <br />
-           <p style="margin-top:20px">Войдите, чтобы оставить комментрарий</p>
-        {% endif %} #}
+    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}
 
 {% endblock smart_blog_content %}

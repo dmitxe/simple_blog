@@ -3,12 +3,13 @@
 namespace SmartCore\Bundle\BlogBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Pagerfanta\Exception\NotValidCurrentPageException;
+use Pagerfanta\Pagerfanta;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
+use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @todo наследуемость как контроллеры статей и тэгов.
- */
 class CategoryController extends Controller
 {
     /**
@@ -19,11 +20,11 @@ class CategoryController extends Controller
     protected $bundleName;
 
     /**
-     * Маршрут на список категорий.
+     * Имя сервиса по работе со статьями.
      *
      * @var string
      */
-    protected $routeIndex;
+    protected $articleServiceName;
 
     /**
      * Имя сервиса по работе с категориями.
@@ -33,37 +34,41 @@ class CategoryController extends Controller
     protected $categoryServiceName;
 
     /**
+     * Маршрут на список категорий.
+     *
+     * @var string
+     */
+    protected $routeIndex;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->categoryServiceName  = 'smart_blog.category';
-        $this->routeIndex           = 'smart_blog_category_index';
         $this->bundleName           = 'SmartBlogBundle';
+
+        $this->articleServiceName   = 'smart_blog.article';
+        $this->categoryServiceName  = 'smart_blog.category';
+        $this->routeIndex           = 'smart_blog.category.articles';
     }
 
     /**
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @todo постраничность.
      */
-    public function indexAction($slug = null)
+    public function articlesAction(Request $requst, $slug = null)
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $categoriesRepo = $em->getRepository('DmitxeBlogBundle:Category'); // @todo прокидывать имя класса категорий.
+        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
+        $categoryService = $this->get($this->categoryServiceName);
 
         $requestedCategories = [];
         $parent = null;
         foreach (explode('/', $slug) as $categoryName) {
-
             if (strlen($categoryName) == 0) {
                 break;
             }
 
-            $category = $categoriesRepo->findOneBy([
+            $category = $categoryService->findOneBy([
                 'parent' => $parent,
                 'slug'   => $categoryName,
             ]);
@@ -84,14 +89,22 @@ class CategoryController extends Controller
 
         $this->addChild($categories, $lastCategory);
 
-        $articleService = $this->get('smart_blog.article');
+        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
+        $articleService = $this->get($this->articleServiceName);
 
-        $articles = $articleService->getByCategories($categories->getValues());
+        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoriesQuery($categories->getValues())));
+        $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
 
-        return $this->render('SmartBlogBundle:Category:articles.html.twig', [
-            'articles'      => $articles,
+        try {
+            $pagerfanta->setCurrentPage($requst->query->get('page', 1));
+        } catch (NotValidCurrentPageException $e) {
+            return $this->redirect($this->generateUrl($this->routeIndex));
+        }
+
+        return $this->render($this->bundleName . ':Category:articles.html.twig', [
             'categories'    => $requestedCategories,
             'lastCategory'  => $lastCategory,
+            'pagerfanta'    => $pagerfanta,
         ]);
     }
 

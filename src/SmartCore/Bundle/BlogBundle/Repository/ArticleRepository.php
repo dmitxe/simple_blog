@@ -39,10 +39,20 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
      */
     public function findByCategories(array $categories = [], $limit = null, $offset = null)
     {
+        return $this->getFindByCategoriesQuery($categories, $limit, $offset)->getResult();
+    }
+
+    /**
+     * @param CategoryInterface[]|array $categories
+     * @return \Doctrine\ORM\Query
+     */
+    public function getFindByCategoriesQuery(array $categories = [], $limit = null, $offset = null)
+    {
         $qb = $this
             ->createQueryBuilder('a')
             ->orderBy('a.created_at', 'DESC');
 
+        /** @var CategoryInterface $category */
         foreach ($categories as $key => $category) {
             $id = $category->getId();
 
@@ -55,21 +65,14 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
             $qb->setParameter('id' . $id, $category);
         }
 
-        $query = $qb->getQuery();
-
-        $query
+        return $qb->getQuery()
             ->setFirstResult($offset)
             ->setMaxResults($limit);
-
-        return $query->getResult();
     }
 
     /**
      * @param CategoryInterface|null $category
      * @return \Doctrine\ORM\Query
-     *
-     * @todo $category
-     * @todo enabled
      */
     public function getFindByCategoryQuery(CategoryInterface $category = null)
     {

@@ -46,11 +46,12 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
+        $this->bundleName             = 'SmartBlogBundle';
+
         $this->categoryServiceName    = 'smart_blog.category';
-        $this->routeIndex             = 'smart_blog_category_index';
+        $this->routeIndex             = 'smart_blog.category.articles';
         $this->routeAdminCategory     = 'smart_blog_admin_category';
         $this->routeAdminCategoryEdit = 'smart_blog_admin_category_edit';
-        $this->bundleName             = 'SmartBlogBundle';
     }
 
     /**
