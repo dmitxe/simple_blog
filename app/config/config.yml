@@ -119,8 +119,8 @@ fos_comment:
             comment: fos_comment.form_factory.comment.default
         spam_detection:
             comment: fos_comment.spam_detection.comment.akismet
-        markup: markup.exercise_html_purifier
-#        markup: markup.bbcode
+#        markup: markup.exercise_html_purifier
+        markup: markup.bbcode
     acl_roles:
         comment:
             create: IS_AUTHENTICATED_ANONYMOUSLY
@@ -267,4 +267,5 @@ services:
         arguments: [ @exercise_html_purifier.default ]
     markup.bbcode:
         class: Dmutxe\CommentBundle\Markup\BBCode
+        file: %kernel.root_dir%/../src/Dmitxe/CommentBundle/Markup/BBCode.php
         arguments: [ @exercise_html_purifier.bbcode ]
