@@ -1,6 +1,6 @@
 <?php
 
-namespace Dmutxe\CommentBundle\Markup\StringParser_BBCode;
+//namespace Dmutxe\CommentBundle\Markup\StringParser_BBCode;
 /**
  * Generic string parsing infrastructure
  *

@@ -46,7 +46,8 @@
         "genemu/form-bundle": "2.2.*",
         "mremi/contact-bundle": "dev-master",
         "ornicar/akismet-bundle": "dev-master",
-        "exercise/htmlpurifier-bundle": "dev-master"
+        "exercise/htmlpurifier-bundle": "dev-master",
+        "helios-ag/fm-bbcode-bundle": "6.2"
     },
     "scripts": {
         "post-install-cmd": [

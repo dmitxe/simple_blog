@@ -121,6 +121,7 @@ fos_comment:
             comment: fos_comment.spam_detection.comment.akismet
 #        markup: markup.exercise_html_purifier
         markup: markup.bbcode
+#        markup: dmitxe_comment.decoda.filter.my_comment_filter
     acl_roles:
         comment:
             create: IS_AUTHENTICATED_ANONYMOUSLY
@@ -150,6 +151,17 @@ exercise_html_purifier:
         Core.Encoding: 'utf-8'
     bbcode:
         HTML.Allowed: ''
+
+fm_bbcode:
+    filter_sets:
+        my_default_filter:
+            locale: ru
+            xhtml: true
+            filters: [ default ]
+        my_comment_filter:
+          locale: ru
+          xhtml: true
+          filters: [ default, block, code, email, image, list, quote, text, url, video ]
 
 genemu_form:
     captcha: ~
@@ -269,3 +281,7 @@ services:
         class: Dmutxe\CommentBundle\Markup\BBCode
         file: %kernel.root_dir%/../src/Dmitxe/CommentBundle/Markup/BBCode.php
         arguments: [ @exercise_html_purifier.bbcode ]
+#    dmitxe_comment.decoda.filter.my_comment_filter:
+#        class: Fully\Qualified\Filter\Class\Name
+#        tags:
+#          - { name: fm_bbcode.decoda.filter, id: my_comment_filter }

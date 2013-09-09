@@ -43,6 +43,7 @@ class AppKernel extends Kernel
             new Mremi\ContactBundle\MremiContactBundle(),
             new Ornicar\AkismetBundle\OrnicarAkismetBundle(),
             new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
+            new FM\BbcodeBundle\FMBbcodeBundle(),
             new SmartCore\Bundle\HtmlBundle\HtmlBundle(),
             new SmartCore\Bundle\BlogBundle\SmartBlogBundle(),
             new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),

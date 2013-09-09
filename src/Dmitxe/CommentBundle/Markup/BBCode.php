@@ -4,7 +4,8 @@ namespace Dmutxe\CommentBundle\Markup;
 
 use FOS\CommentBundle\Markup\ParserInterface;
 use HTMLPurifier;
-use Dmutxe\CommentBundle\Markup\StringParser_BBCode;
+require_once 'StringParser_BBCode/StringParser/BBCode.php';
+//use Dmutxe\CommentBundle\Markup\StringParser_BBCode;
 
 class BBCode implements ParserInterface
 {
