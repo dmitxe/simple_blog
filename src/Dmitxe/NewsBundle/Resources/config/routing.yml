@@ -2,6 +2,16 @@ dmitxe_news_index:
     path: /
     defaults: { _controller: DmitxeNewsBundle:Article:index }
 
+dmitxe_news_page_index.page_1_redirect_TO_index:
+    path: /page/
+    defaults: { _controller: DmitxeNewsBundle:Article:index, page: 1 }
+
+dmitxe_news_page:
+    path: /page/{page}/
+    defaults: { _controller: DmitxeNewsBundle:Article:index }
+    requirements:
+        page: \d+
+
 dmitxe_news_article:
     path: /{slug}.html
     defaults: { _controller: DmitxeNewsBundle:Article:show }
@@ -15,16 +25,6 @@ dmitxe_news_article_edit:
     defaults: { _controller: DmitxeNewsBundle:Article:edit }
     requirements:
         id: \d+
-
-dmitxe_news_page_index:
-    path: /page/
-    defaults: { _controller: DmitxeNewsBundle:Article:page }
-
-dmitxe_news_page:
-    path: /page/{page}/
-    defaults: { _controller: DmitxeNewsBundle:Article:page }
-    requirements:
-        page: \d+
 
 dmitxe_news_tag:
     path: /tag/{slug}/

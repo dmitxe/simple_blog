@@ -28,6 +28,13 @@ class ArticleController extends Controller
     protected $articleServiceName;
 
     /**
+     *
+     *
+     * @var string
+     */
+    protected $formFactoryArticleEdit;
+
+    /**
      * Маршрут на список статей.
      *
      * @var string
@@ -46,11 +53,12 @@ class ArticleController extends Controller
      */
     public function __construct()
     {
-        $this->bundleName           = 'SmartBlogBundle';
+        $this->bundleName             = 'SmartBlogBundle';
 
-        $this->articleServiceName   = 'smart_blog.article';
-        $this->routeIndex           = 'smart_blog.article.index';
-        $this->routeArticle         = 'smart_blog.article.show';
+        $this->articleServiceName     = 'smart_blog.article';
+        $this->formFactoryArticleEdit = 'smart_blog.form_factory.article.edit';
+        $this->routeIndex             = 'smart_blog.article.index';
+        $this->routeArticle           = 'smart_blog.article.show';
     }
 
     /**
@@ -74,35 +82,21 @@ class ArticleController extends Controller
 
     /**
      * @param Request $requst
-     * @return Response
+     * @param integer $page
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function indexAction(Request $requst)
+    public function indexAction(Request $requst, $page = null)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
-        $articleService = $this->get($this->articleServiceName);
+        if (null === $page and $requst->query->has('page')) {
+            $page = $requst->query->get('page');
+        }
 
-        $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoryQuery()));
-        $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
-
-        try {
-            $pagerfanta->setCurrentPage($requst->query->get('page', 1));
-        } catch (NotValidCurrentPageException $e) {
+        if ($page == 1) {
             return $this->redirect($this->generateUrl($this->routeIndex));
         }
 
-        return $this->render($this->bundleName . ':Article:list.html.twig', [
-            'pagerfanta' => $pagerfanta,
-        ]);
-    }
-
-    /**
-     * @param int $page
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function listAction($page = 1)
-    {
-        if ($page == 1) {
-            return $this->redirect($this->generateUrl($this->routeIndex));
+        if (null === $page) {
+            $page = 1;
         }
 
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
@@ -117,7 +111,7 @@ class ArticleController extends Controller
             return $this->redirect($this->generateUrl($this->routeIndex));
         }
 
-        return $this->render($this->bundleName . ':Article:list.html.twig', [
+        return $this->render($this->bundleName . ':Article:index.html.twig', [
             'pagerfanta' => $pagerfanta,
         ]);
     }
@@ -164,8 +158,7 @@ class ArticleController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-
-        $article = $articleService->get($id);
+        $article        = $articleService->get($id);
 
         if (null === $article) {
             throw $this->createNotFoundException();
