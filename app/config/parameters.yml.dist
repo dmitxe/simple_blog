@@ -15,3 +15,7 @@ parameters:
 
     locale:            ru
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    knp_disqus.api_key: 123
+    knp_disqus.secret_key: 123
+    
