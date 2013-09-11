@@ -163,6 +163,10 @@ fm_bbcode:
           xhtml: true
           filters: [ default, block, code, email, image, list, quote, text, url, video ]
 
+knp_disqus:
+    api_key: %knp_disqus.api_key%
+    secret_key: %knp_disqus.secret_key% # optional, for SSO auth only
+
 genemu_form:
     captcha: ~
 

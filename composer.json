@@ -41,6 +41,7 @@
         "smart-core/html-bundle": "dev-master",
         "stfalcon/tinymce-bundle": "0.2.1",
         "helios-ag/fm-elfinder-bundle": "1.2",
+        "knplabs/knp-disqus-bundle": "dev-master",
         "zendframework/zend-servicemanager": "2.2.*",
         "zendframework/zend-tag": "2.2.*",
         "genemu/form-bundle": "2.2.*",

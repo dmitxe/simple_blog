@@ -5,4 +5,5 @@
 {% block content %}
     {{ parent() }}
     {{ texter('about') }}
+    {{ knp_disqus_render('dolor-sid', {'identifier': '/about', 'limit': 10}) }}
 {% endblock content %}

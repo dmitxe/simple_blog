@@ -44,6 +44,7 @@ class AppKernel extends Kernel
             new Ornicar\AkismetBundle\OrnicarAkismetBundle(),
             new Exercise\HTMLPurifierBundle\ExerciseHTMLPurifierBundle(),
             new FM\BbcodeBundle\FMBbcodeBundle(),
+            new Knp\Bundle\DisqusBundle\KnpDisqusBundle(),
             new SmartCore\Bundle\HtmlBundle\HtmlBundle(),
             new SmartCore\Bundle\BlogBundle\SmartBlogBundle(),
             new SmartCore\Bundle\MediaBundle\SmartMediaBundle(),
