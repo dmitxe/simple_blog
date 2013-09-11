@@ -1,3 +1,7 @@
+parameters:
+    dmitxe_news.model.article.class: Dmitxe\NewsBundle\Entity\Article
+    dmitxe_news.model.tag.class: Dmitxe\NewsBundle\Entity\Tag
+
 services:
     dmitxe_news.article:
         class: SmartCore\Bundle\BlogBundle\Service\ArticleService
@@ -22,14 +26,30 @@ services:
     dmitxe_news.cache: # @todo настройку через конфиг.
         alias: liip_doctrine_cache.ns.dmitxe_news
 
+    dmitxe_news.article.create.form.factory:
+        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
+        arguments: [@form.factory, @dmitxe_news.article.create.form.type]
+
+    dmitxe_news.article.edit.form.factory:
+        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
+        arguments: [@form.factory, @dmitxe_news.article.edit.form.type]
+
+    dmitxe_news.article.create.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleCreateFormType
+        arguments: [%dmitxe_news.model.article.class%]
+
+    dmitxe_news.article.edit.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleEditFormType
+        arguments: [%dmitxe_news.model.article.class%]
+
     dmitxe_news.article.repository:
         class:           SmartCore\Bundle\BlogBundle\Repository\ArticleRepository
         factory_service: doctrine
         factory_method:  getRepository
-        arguments:       ['Dmitxe\NewsBundle\Entity\Article']
+        arguments:       [%dmitxe_news.model.article.class%]
 
     dmitxe_news.tag.repository:
         class:           SmartCore\Bundle\BlogBundle\Repository\TagRepository
         factory_service: doctrine
         factory_method:  getRepository
-        arguments:       ['Dmitxe\NewsBundle\Entity\Tag']
+        arguments:       [%dmitxe_news.model.tag.class%]

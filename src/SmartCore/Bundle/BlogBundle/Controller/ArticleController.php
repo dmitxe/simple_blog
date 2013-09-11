@@ -5,10 +5,9 @@ namespace SmartCore\Bundle\BlogBundle\Controller;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use SmartCore\Bundle\BlogBundle\Form\Type\ArticleCreateFormType;
-use SmartCore\Bundle\BlogBundle\Form\Type\ArticleEditFormType;
 use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 
 class ArticleController extends Controller
@@ -28,11 +27,18 @@ class ArticleController extends Controller
     protected $articleServiceName;
 
     /**
-     *
+     * Форма создания статьи.
      *
      * @var string
      */
-    protected $formFactoryArticleEdit;
+    protected $articleCreateFormFactory;
+
+    /**
+     * Форма редактирования статьи.
+     *
+     * @var string
+     */
+    protected $articleEditFormFactory;
 
     /**
      * Маршрут на список статей.
@@ -53,12 +59,13 @@ class ArticleController extends Controller
      */
     public function __construct()
     {
-        $this->bundleName             = 'SmartBlogBundle';
+        $this->bundleName               = 'SmartBlogBundle';
 
-        $this->articleServiceName     = 'smart_blog.article';
-        $this->formFactoryArticleEdit = 'smart_blog.form_factory.article.edit';
-        $this->routeIndex             = 'smart_blog.article.index';
-        $this->routeArticle           = 'smart_blog.article.show';
+        $this->articleServiceName       = 'smart_blog.article';
+        $this->articleCreateFormFactory = 'smart_blog.article.create.form.factory';
+        $this->articleEditFormFactory   = 'smart_blog.article.edit.form.factory';
+        $this->routeIndex               = 'smart_blog.article.index';
+        $this->routeArticle             = 'smart_blog.article.show';
     }
 
     /**
@@ -164,7 +171,8 @@ class ArticleController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new ArticleEditFormType(get_class($article)), $article);
+        /** @var FormInterface $form */
+        $form = $this->get($this->articleEditFormFactory)->createForm($article);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
@@ -199,7 +207,8 @@ class ArticleController extends Controller
 //        ld(\SmartCore\Bundle\BlogBundle\SmartBlogEvents::ARTICLE_CREATE);
 //        ld($class::articleCreate());
 
-        $form = $this->createForm(new ArticleCreateFormType(get_class($article)), $article);
+        /** @var FormInterface $form */
+        $form = $this->get($this->articleCreateFormFactory)->createForm($article);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 

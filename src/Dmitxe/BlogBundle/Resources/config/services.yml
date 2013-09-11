@@ -1,5 +1,6 @@
 parameters:
     dmitxe_blog.listener.article_author.class: SmartCore\Bundle\BlogBundle\EventListener\ArticleAuthorListener
+    dmitxe_blog.model.article.class: Dmitxe\BlogBundle\Entity\Article
 
 services:
     dmitxe_blog.listener.article_author:
@@ -7,3 +8,11 @@ services:
         arguments: [@security.context, @logger]
         tags:
             - { name: kernel.event_subscriber }
+
+    dmitxe_blog.article.edit.form.factory:
+        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
+        arguments: [@form.factory, @dmitxe_blog.article.edit.form.type]
+
+    dmitxe_blog.article.edit.form.type:
+        class: Dmitxe\BlogBundle\Form\Type\ArticleEditFormType
+        arguments: [%dmitxe_blog.model.article.class%]

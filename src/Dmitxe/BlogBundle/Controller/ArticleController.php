@@ -10,40 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ArticleController extends BaseController
 {
     /**
-     * Имя бандла. Для перегрузки шаблонов.
-     *
-     * @var string
-     */
-    protected $bundleName;
-
-    /**
-     * Имя сервиса по работе со статьями.
-     *
-     * @var string
-     */
-    protected $articleServiceName;
-
-    /**
-     * Маршрут на список статей.
-     *
-     * @var string
-     */
-    protected $routeIndex;
-
-    /**
-     * Маршрут просмотра статьи.
-     *
-     * @var string
-     */
-    protected $routeArticle;
-
-    /**
      * Constructor.
      */
     public function __construct()
     {
         parent::__construct();
-        $this->bundleName = 'DmitxeBlogBundle';
+
+        $this->articleEditFormFactory   = 'dmitxe_blog.article.edit.form.factory';
     }
 
     /**
@@ -53,12 +26,11 @@ class ArticleController extends BaseController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function editAction(Request $request, $id)
+    public function __editAction(Request $request, $id)
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
         $articleService = $this->get($this->articleServiceName);
-
-        $article = $articleService->get($id);
+        $article        = $articleService->get($id);
 
         if (null === $article) {
             throw $this->createNotFoundException();
@@ -72,7 +44,7 @@ class ArticleController extends BaseController
                 /** @var Article $article */
                 $article = $form->getData();
                 // @todo пока тут будет обработка загруженной картинки.
-                // ldd($article->getImage());
+                ldd($article->getImage());
 
                 $articleService->update($article);
 
