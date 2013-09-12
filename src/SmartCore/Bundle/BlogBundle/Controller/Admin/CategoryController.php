@@ -2,11 +2,6 @@
 
 namespace SmartCore\Bundle\BlogBundle\Controller\Admin;
 
-use Pagerfanta\Exception\NotValidCurrentPageException;
-use Pagerfanta\Pagerfanta;
-use SmartCore\Bundle\BlogBundle\Form\Type\CategoryCreateFormType;
-use SmartCore\Bundle\BlogBundle\Form\Type\CategoryFormType;
-use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +30,20 @@ class CategoryController extends Controller
     protected $routeCategory;
 
     /**
+     * Форма создания категории.
+     *
+     * @var string
+     */
+    protected $categoryCreateForm;
+
+    /**
+     * Форма редактирования категории.
+     *
+     * @var string
+     */
+    protected $categoryEditForm;
+
+    /**
      * Имя сервиса по работе с категориями.
      *
      * @var string
@@ -48,6 +57,8 @@ class CategoryController extends Controller
     {
         $this->bundleName             = 'SmartBlogBundle';
 
+        $this->categoryCreateForm     = 'smart_blog.category.create.form.type';
+        $this->categoryEditForm       = 'smart_blog.category.edit.form.type';
         $this->categoryServiceName    = 'smart_blog.category';
         $this->routeIndex             = 'smart_blog.category.articles';
         $this->routeAdminCategory     = 'smart_blog_admin_category';
@@ -62,9 +73,9 @@ class CategoryController extends Controller
     {
         /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
         $categoryService = $this->get($this->categoryServiceName);
-        $category = $categoryService->create();
+        $category        = $categoryService->create();
 
-        $form = $this->createForm(new CategoryCreateFormType(get_class($category)), $category);
+        $form = $this->createForm($this->get($this->categoryCreateForm), $category);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
@@ -89,20 +100,19 @@ class CategoryController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Model\CategoryInterface $category */
-        $category = $this->get($this->categoryServiceName)->get($id);
+        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
+        $categoryService = $this->get($this->categoryServiceName);
+        $category        = $categoryService->get($id);
 
         if (null === $category) {
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new CategoryFormType(get_class($category)), $category);
+        $form = $this->createForm($this->get($this->categoryEditForm), $category);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
-                $categoryService = $this->get($this->categoryServiceName);
                 $categoryService->update($category);
 
                 return $this->redirect($this->generateUrl($this->routeAdminCategory));

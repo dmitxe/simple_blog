@@ -7,12 +7,24 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use SmartCore\Bundle\BlogBundle\Form\Type\ArticleCreateFormType;
-use SmartCore\Bundle\BlogBundle\Form\Type\ArticleEditFormType;
 use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 
 class ArticleController extends Controller
 {
+    /**
+     * Форма создания статьи.
+     *
+     * @var string
+     */
+    protected $articleCreateForm;
+
+    /**
+     * Форма редактирования статьи.
+     *
+     * @var string
+     */
+    protected $articleEditForm;
+
     /**
      * Имя сервиса по работе со статьями.
      *
@@ -46,10 +58,13 @@ class ArticleController extends Controller
      */
     public function __construct()
     {
+        $this->bundleName            = 'SmartBlogBundle';
+
+        $this->articleCreateForm     = 'smart_blog.article.create.form.type';
+        $this->articleEditForm       = 'smart_blog.article.edit.form.type';
         $this->articleServiceName    = 'smart_blog.article';
         $this->routeAdminArticle     = 'smart_blog_admin_article';
         $this->routeAdminArticleEdit = 'smart_blog_admin_article_edit';
-        $this->bundleName            = 'SmartBlogBundle';
     }
 
     /**
@@ -91,7 +106,7 @@ class ArticleController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new ArticleEditFormType(get_class($article)), $article);
+        $form = $this->createForm($this->get($this->articleEditForm), $article);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
@@ -117,7 +132,7 @@ class ArticleController extends Controller
         $articleService = $this->get($this->articleServiceName);
         $article        = $articleService->create();
 
-        $form = $this->createForm(new ArticleCreateFormType(get_class($article)), $article);
+        $form = $this->createForm($this->get($this->articleCreateForm), $article);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 

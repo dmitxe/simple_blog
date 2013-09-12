@@ -26,14 +26,6 @@ services:
     dmitxe_news.cache: # @todo настройку через конфиг.
         alias: liip_doctrine_cache.ns.dmitxe_news
 
-    dmitxe_news.article.create.form.factory:
-        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
-        arguments: [@form.factory, @dmitxe_news.article.create.form.type]
-
-    dmitxe_news.article.edit.form.factory:
-        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
-        arguments: [@form.factory, @dmitxe_news.article.edit.form.type]
-
     dmitxe_news.article.create.form.type:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleCreateFormType
         arguments: [%dmitxe_news.model.article.class%]

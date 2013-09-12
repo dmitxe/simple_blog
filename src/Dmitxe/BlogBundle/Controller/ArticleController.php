@@ -16,7 +16,7 @@ class ArticleController extends BaseController
     {
         parent::__construct();
 
-        $this->articleEditFormFactory   = 'dmitxe_blog.article.edit.form.factory';
+        $this->articleEditForm  = 'dmitxe_blog.article.edit.form.type';
     }
 
     /**

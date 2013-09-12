@@ -29,21 +29,21 @@ services:
     smart_blog.cache: # @todo настройку через конфиг.
         alias: liip_doctrine_cache.ns.smart_blog
 
-    smart_blog.article.create.form.factory:
-        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
-        arguments: [@form.factory, @smart_blog.article.create.form.type]
-
     smart_blog.article.create.form.type:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleCreateFormType
         arguments: [%smart_blog.model.article.class%]
 
-    smart_blog.article.edit.form.factory:
-        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
-        arguments: [@form.factory, @smart_blog.article.edit.form.type]
-
     smart_blog.article.edit.form.type:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleEditFormType
         arguments: [%smart_blog.model.article.class%]
+
+    smart_blog.category.create.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\CategoryCreateFormType
+        arguments: [%smart_blog.model.category.class%]
+
+    smart_blog.category.edit.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\CategoryEditFormType
+        arguments: [%smart_blog.model.category.class%]
 
     smart_blog.article.repository:
         class:           SmartCore\Bundle\BlogBundle\Repository\ArticleRepository

@@ -9,10 +9,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    dmitxe_blog.article.edit.form.factory:
-        class: SmartCore\Bundle\BlogBundle\Form\Factory\FormFactory
-        arguments: [@form.factory, @dmitxe_blog.article.edit.form.type]
-
     dmitxe_blog.article.edit.form.type:
         class: Dmitxe\BlogBundle\Form\Type\ArticleEditFormType
         arguments: [%dmitxe_blog.model.article.class%]
