@@ -7,8 +7,6 @@ use Pagerfanta\Pagerfanta;
 use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Zend\Tag\Cloud;
 
 class TagController extends Controller
 {
@@ -53,7 +51,7 @@ class TagController extends Controller
     }
 
     /**
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -68,7 +66,7 @@ class TagController extends Controller
     /**
      * @param Request $requst
      * @param string $slug
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function showArticlesAction(Request $requst, $slug)
     {

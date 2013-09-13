@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use SmartCore\Bundle\BlogBundle\Event\FilterTagEvent;
 use SmartCore\Bundle\BlogBundle\Model\TagInterface;
 use SmartCore\Bundle\BlogBundle\Repository\ArticleRepositoryInterface;
+use SmartCore\Bundle\BlogBundle\SmartBlogEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
-use SmartCore\Bundle\BlogBundle\SmartBlogEvents;
 use Zend\Tag\Cloud;
 
 class TagService extends AbstractBlogService
@@ -33,6 +33,7 @@ class TagService extends AbstractBlogService
     /**
      * @param EntityManager $em
      * @param ArticleRepositoryInterface $articlesRepo
+     * @param Cache $cache
      * @param EntityRepository $tagsRepo
      * @param EventDispatcherInterface $eventDispatcher
      * @param RouterInterface $router
@@ -53,7 +54,38 @@ class TagService extends AbstractBlogService
         $this->eventDispatcher  = $eventDispatcher;
         $this->router           = $router;
         $this->tagsRepo         = $tagsRepo;
+
         $this->setItemsCountPerPage($itemsPerPage);
+    }
+
+    /**
+     * @return TagInterface
+     */
+    public function create()
+    {
+        $class = $this->tagsRepo->getClassName();
+
+        $tag = new $class();
+
+        $event = new FilterTagEvent($tag);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::TAG_CREATE, $event);
+
+        return $tag;
+    }
+
+    /**
+     * @param TagInterface $tag
+     */
+    public function update(TagInterface $tag)
+    {
+        $event = new FilterTagEvent($tag);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::TAG_PRE_UPDATE, $event);
+
+        $this->em->persist($tag);
+        $this->em->flush($tag);
+
+        $event = new FilterTagEvent($tag);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::TAG_POST_UPDATE, $event);
     }
 
     /**
@@ -66,20 +98,18 @@ class TagService extends AbstractBlogService
     }
 
     /**
-     * @return \Doctrine\Common\Cache\Cache
+     * @return TagInterface[]|null
+     * @throws \Exception
+     *
+     * @todo нормальный выброс исключения.
      */
-    public function getCache()
+    public function getAll()
     {
-        return $this->cache;
-    }
+        if (null === $this->tagsRepo) {
+            throw new \Exception('Необходимо сконфигурировать тэги.');
+        }
 
-    /**
-     * @param TagInterface $tag
-     * @return \Doctrine\ORM\Query
-     */
-    public function getFindByTagQuery(TagInterface $tag)
-    {
-        return $this->articlesRepo->getFindByTagQuery($tag);
+        return $this->tagsRepo->findAll();
     }
 
     /**
@@ -110,23 +140,32 @@ class TagService extends AbstractBlogService
     }
 
     /**
-     * @return TagInterface[]|null
-     * @throws \Exception
-     *
-     * @todo нормальный выброс исключения.
+     * @return Cache
      */
-    public function getAll()
+    public function getCache()
     {
-        if (null === $this->tagsRepo) {
-            throw new \Exception('Необходимо сконфигурировать тэги.');
-        }
-
-        return $this->tagsRepo->findAll();
+        return $this->cache;
     }
 
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function getFindAllQuery()
+    {
+        return $this->tagsRepo->getFindAllQuery();
+    }
 
     /**
-     * @param $route
+     * @param TagInterface $tag
+     * @return \Doctrine\ORM\Query
+     */
+    public function getFindByTagQuery(TagInterface $tag)
+    {
+        return $this->articlesRepo->getFindByTagQuery($tag);
+    }
+
+    /**
+     * @param string $route
      * @return array
      *
      * @todo сделать в сущности тэга weight, который будет автоматически инкрементироваться и декрементироваться при измнениях в статьях.
@@ -136,6 +175,7 @@ class TagService extends AbstractBlogService
         $cloud = [];
         $tags = $this->getAll();
 
+        /** @var TagInterface $tag */
         foreach ($tags as $tag) {
             $cloud[] = [
                 'tag'    => $tag,
@@ -151,7 +191,7 @@ class TagService extends AbstractBlogService
     }
 
     /**
-     * @param $route
+     * @param string $route
      * @return Cloud
      */
     public function getCloudZend($route)
@@ -174,48 +214,5 @@ class TagService extends AbstractBlogService
                 ],
             ]
         ]);
-    }
-
-    /**
-     * @return TagInterface
-     */
-    public function create()
-    {
-        $class = $this->tagsRepo->getClassName();
-
-        $tag = new $class('');
-
-        $event = new FilterTagEvent($tag);
-        $this->eventDispatcher->dispatch(SmartBlogEvents::TAG_CREATE, $event);
-
-        return $tag;
-    }
-
-    /**
-     * @param TagInterface $tag
-     *
-     * @todo выделить методы create, update, detele в "article manager".
-     */
-    public function update(TagInterface $tag)
-    {
-        $event = new FilterTagEvent($tag);
-        $this->eventDispatcher->dispatch(SmartBlogEvents::TAG_PRE_UPDATE, $event);
-
-        // @todo убрать в мэнеджер.
-        $this->em->persist($tag);
-        $this->em->flush($tag);
-
-        $this->cache->delete('tag_cloud_zend');
-
-        $event = new FilterTagEvent($tag);
-        $this->eventDispatcher->dispatch(SmartBlogEvents::TAG_POST_UPDATE, $event);
-    }
-
-    /**
-     * @return \Doctrine\ORM\Query
-     */
-    public function getFindAllQuery()
-    {
-        return $this->tagsRepo->getFindAllQuery();
     }
 }

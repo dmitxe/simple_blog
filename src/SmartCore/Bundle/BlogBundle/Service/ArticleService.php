@@ -79,9 +79,6 @@ class ArticleService extends AbstractBlogService
         $this->em->persist($article);
         $this->em->flush($article);
 
-        $this->cache->delete('archive_monthly');
-        $this->cache->delete('tag_cloud_zend');
-
         $event = new FilterArticleEvent($article);
         $this->eventDispatcher->dispatch(SmartBlogEvents::ARTICLE_POST_UPDATE, $event);
     }

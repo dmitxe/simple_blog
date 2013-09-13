@@ -5,7 +5,10 @@ namespace SmartCore\Bundle\BlogBundle\Service;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use SmartCore\Bundle\BlogBundle\Event\FilterCategoryEvent;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
+use SmartCore\Bundle\BlogBundle\SmartBlogEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class CategoryService extends AbstractBlogService
@@ -30,13 +33,49 @@ class CategoryService extends AbstractBlogService
      * @param RouterInterface $router
      * @param int $itemsPerPage
      */
-    public function __construct(EntityManager $em, EntityRepository $categoriesRepo, Cache $cache, $itemsPerPage = 10)
+    public function __construct(
+        EntityManager $em,
+        EntityRepository $categoriesRepo,
+        Cache $cache,
+        EventDispatcherInterface $eventDispatcher,
+        $itemsPerPage = 10)
     {
         $this->cache            = $cache;
         $this->categoriesRepo   = $categoriesRepo;
         $this->em               = $em;
+        $this->eventDispatcher  = $eventDispatcher;
 
         $this->setItemsCountPerPage($itemsPerPage);
+    }
+
+    /**
+     * @return CategoryInterface
+     */
+    public function create()
+    {
+        $class = $this->categoriesRepo->getClassName();
+
+        $category = new $class();
+
+        $event = new FilterCategoryEvent($category);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::CATEGORY_CREATE, $event);
+
+        return $category;
+    }
+
+    /**
+     * @param CategoryInterface $category
+     */
+    public function update(CategoryInterface $category)
+    {
+        $event = new FilterCategoryEvent($category);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::CATEGORY_PRE_UPDATE, $event);
+
+        $this->em->persist($category);
+        $this->em->flush($category);
+
+        $event = new FilterCategoryEvent($category);
+        $this->eventDispatcher->dispatch(SmartBlogEvents::CATEGORY_POST_UPDATE, $event);
     }
 
     /**
@@ -75,29 +114,6 @@ class CategoryService extends AbstractBlogService
     }
 
     /**
-     * @return CategoryInterface
-     */
-    public function create()
-    {
-        $class = $this->categoriesRepo->getClassName();
-
-        $category = new $class('');
-
-        return $category;
-    }
-
-    /**
-     * @param CategoryInterface $category
-     */
-    public function update(CategoryInterface $category)
-    {
-        $this->em->persist($category);
-        $this->em->flush($category);
-
-        $this->cache->delete('knp_menu_category_tree');
-    }
-
-    /**
      * @return CategoryInterface[]|null
      */
     public function all()
@@ -106,6 +122,8 @@ class CategoryService extends AbstractBlogService
     }
 
     /**
+     * Получить корневые категории.
+     *
      * @return CategoryInterface[]|null
      */
     public function getRoots()

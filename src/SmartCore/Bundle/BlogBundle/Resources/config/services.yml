@@ -25,9 +25,16 @@ services:
             - @doctrine.orm.default_entity_manager
             - @smart_blog.category.repository
             - @smart_blog.cache
+            - @event_dispatcher
 
     smart_blog.cache: # @todo настройку через конфиг.
         alias: liip_doctrine_cache.ns.smart_blog
+
+    smart_blog.listener.cache.invalidate:
+        class: SmartCore\Bundle\BlogBundle\EventListener\CacheInvalidateListener
+        arguments: [@smart_blog.cache]
+        tags:
+            - { name: kernel.event_subscriber }
 
     smart_blog.article.create.form.type:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleCreateFormType
