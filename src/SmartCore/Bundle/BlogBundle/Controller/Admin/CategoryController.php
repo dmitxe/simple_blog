@@ -71,8 +71,7 @@ class CategoryController extends Controller
      */
     public function indexAction(Request $request)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
-        $categoryService = $this->get($this->categoryServiceName);
+        $categoryService = $this->getCategoryService();
         $category        = $categoryService->create();
 
         $form = $this->createForm($this->get($this->categoryCreateForm), $category);
@@ -100,8 +99,7 @@ class CategoryController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
-        $categoryService = $this->get($this->categoryServiceName);
+        $categoryService = $this->getCategoryService();
         $category        = $categoryService->get($id);
 
         if (null === $category) {
@@ -122,5 +120,13 @@ class CategoryController extends Controller
         return $this->render($this->bundleName . ':Admin/Category:edit.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @return \SmartCore\Bundle\BlogBundle\Service\CategoryService
+     */
+    protected function getCategoryService()
+    {
+        return $this->get($this->categoryServiceName);
     }
 }

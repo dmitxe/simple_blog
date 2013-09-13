@@ -55,11 +55,8 @@ class TagController extends Controller
      */
     public function indexAction()
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
-        $tagService = $this->get($this->tagServiceName);
-
         return $this->render($this->bundleName . ':Tag:index.html.twig', [
-            'cloud' => $tagService->getCloud($this->routeTag),
+            'cloud' => $this->getTagService()->getCloud($this->routeTag),
         ]);
     }
 
@@ -70,10 +67,8 @@ class TagController extends Controller
      */
     public function showArticlesAction(Request $requst, $slug)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
-        $tagService = $this->get($this->tagServiceName);
-
-        $tag = $tagService->getBySlug($slug);
+        $tagService = $this->getTagService();
+        $tag        = $tagService->getBySlug($slug);
 
         if (null === $tag) {
             throw $this->createNotFoundException('Запрошенного тега не существует.');
@@ -92,5 +87,13 @@ class TagController extends Controller
             'pagerfanta' => $pagerfanta,
             'tag'        => $tag,
         ]);
+    }
+
+    /**
+     * @return \SmartCore\Bundle\BlogBundle\Service\TagService
+     */
+    protected function getTagService()
+    {
+        return $this->get($this->tagServiceName);
     }
 }

@@ -6,7 +6,6 @@ use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 
 class ArticleController extends Controller
@@ -69,13 +68,13 @@ class ArticleController extends Controller
 
     /**
      * @param string $slug
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function showAction($slug)
     {
-        $article = $this->get($this->articleServiceName)->getBySlug($slug);
+        $article = $this->getArticleService()->getBySlug($slug);
 
         if (!$article) {
             throw $this->createNotFoundException();
@@ -89,7 +88,7 @@ class ArticleController extends Controller
     /**
      * @param Request $requst
      * @param integer $page
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $requst, $page = null)
     {
@@ -105,8 +104,7 @@ class ArticleController extends Controller
             $page = 1;
         }
 
-        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
-        $articleService = $this->get($this->articleServiceName);
+        $articleService = $this->getArticleService();
 
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByCategoryQuery()));
         $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
@@ -126,16 +124,15 @@ class ArticleController extends Controller
      * @param Request $requst
      * @param integer $year
      * @param integer $month
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function archiveMonthlyAction(Request $requst, $year = 1970, $month = 1)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
-        $articleService = $this->get($this->articleServiceName);
-
         $firstDate = new \Datetime($year . '-' . $month . '-1');
         $lastDate  = clone $firstDate;
         $lastDate->modify('+1 month');
+
+        $articleService = $this->getArticleService();
 
         $pagerfanta = new Pagerfanta(new SimpleDoctrineORMAdapter($articleService->getFindByDateQuery($firstDate, $lastDate)));
         $pagerfanta->setMaxPerPage($articleService->getItemsCountPerPage());
@@ -156,14 +153,13 @@ class ArticleController extends Controller
     /**
      * @param Request $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
-        $articleService = $this->get($this->articleServiceName);
+        $articleService = $this->getArticleService();
         $article        = $articleService->get($id);
 
         if (null === $article) {
@@ -189,12 +185,11 @@ class ArticleController extends Controller
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\ArticleService $articleService */
-        $articleService = $this->get($this->articleServiceName);
+        $articleService = $this->getArticleService();
         $article        = $articleService->create();
 
         // @todo эксперименты с событиями.
@@ -219,5 +214,13 @@ class ArticleController extends Controller
         return $this->render($this->bundleName . ':Article:create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @return \SmartCore\Bundle\BlogBundle\Service\ArticleService
+     */
+    protected function getArticleService()
+    {
+        return $this->get($this->articleServiceName);
     }
 }

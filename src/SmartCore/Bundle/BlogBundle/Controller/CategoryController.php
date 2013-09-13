@@ -59,9 +59,6 @@ class CategoryController extends Controller
      */
     public function articlesAction(Request $requst, $slug = null)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
-        $categoryService = $this->get($this->categoryServiceName);
-
         $requestedCategories = [];
         $parent = null;
         foreach (explode('/', $slug) as $categoryName) {
@@ -69,7 +66,7 @@ class CategoryController extends Controller
                 break;
             }
 
-            $category = $categoryService->findOneBy([
+            $category = $this->getCategoryService()->findOneBy([
                 'parent' => $parent,
                 'slug'   => $categoryName,
             ]);
@@ -128,5 +125,13 @@ class CategoryController extends Controller
             $categories->add($category);
             $this->addChild($categories, $category);
         }
+    }
+
+    /**
+     * @return \SmartCore\Bundle\BlogBundle\Service\CategoryService
+     */
+    protected function getCategoryService()
+    {
+        return $this->get($this->categoryServiceName);
     }
 }

@@ -4,9 +4,11 @@ namespace SmartCore\Bundle\BlogBundle\Service;
 
 use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
+use Pagerfanta\Pagerfanta;
 use SmartCore\Bundle\BlogBundle\Event\FilterArticleEvent;
 use SmartCore\Bundle\BlogBundle\Model\ArticleInterface;
 use SmartCore\Bundle\BlogBundle\Model\CategoryInterface;
+use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 use SmartCore\Bundle\BlogBundle\Repository\ArticleRepositoryInterface;
 use SmartCore\Bundle\BlogBundle\SmartBlogEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -120,6 +122,8 @@ class ArticleService extends AbstractBlogService
      * @param int|null $limit
      * @param int|null $offset
      * @return ArticleInterface[]|null
+     *
+     * @todo доделать или удалить.
      */
     public function getByCategory(CategoryInterface $category = null, $limit = null, $offset = null)
     {

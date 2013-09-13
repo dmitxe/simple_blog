@@ -75,7 +75,6 @@ class TagController extends Controller
      */
     public function indexAction(Request $request)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
         $tagService = $this->get($this->tagServiceName);
         $tag        = $tagService->create();
 
@@ -113,7 +112,6 @@ class TagController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
         $tagService = $this->get($this->tagServiceName);
         $tag        = $tagService->get($id);
 
@@ -135,5 +133,13 @@ class TagController extends Controller
         return $this->render($this->bundleName . ':Admin/Tag:edit.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @return \SmartCore\Bundle\BlogBundle\Service\TagService
+     */
+    protected function getTagService()
+    {
+        return $this->get($this->tagServiceName);
     }
 }
