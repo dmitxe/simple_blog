@@ -53,6 +53,7 @@ class CategoryController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -112,7 +113,7 @@ class CategoryController extends Controller
      * Получение всех вложенных категорий.
      *
      * @param ArrayCollection $categories
-     * @param CategoryInterface $parent
+     * @param CategoryInterface|null $parent
      */
     protected function addChild(ArrayCollection $categories, CategoryInterface $parent = null)
     {
@@ -127,18 +128,5 @@ class CategoryController extends Controller
             $categories->add($category);
             $this->addChild($categories, $category);
         }
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showSimpleListAction()
-    {
-        /** @var \SmartCore\Bundle\BlogBundle\Service\CategoryService $categoryService */
-        $categoryService = $this->get($this->categoryServiceName);
-
-        return $this->render($this->bundleName . ':Category:simple_list.html.twig', [
-            'categories' => $categoryService->all(),
-        ]);
     }
 }

@@ -34,6 +34,14 @@ services:
         class: SmartCore\Bundle\BlogBundle\Form\Type\ArticleEditFormType
         arguments: [%dmitxe_news.model.article.class%]
 
+    dmitxe_news.tag.create.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\TagCreateFormType
+        arguments: [%dmitxe_news.model.tag.class%]
+
+    dmitxe_news.tag.edit.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\TagEditFormType
+        arguments: [%dmitxe_news.model.tag.class%]
+
     dmitxe_news.article.repository:
         class:           SmartCore\Bundle\BlogBundle\Repository\ArticleRepository
         factory_service: doctrine

@@ -1,10 +1,10 @@
-{% extends 'DmitxeNewsBundle:Admin:layout.html.twig' %}
+{% extends '@DmitxeNews/Admin/layout.html.twig' %}
 
 {% block smart_blog_content %}
 
     {% block smart_blog_content_articles %}
 
-        <p><a href="{{ path('dmitxe_news_admin_create') }}" class="btn btn-success">Добавить новость</a></p>
+        <p><a href="{{ path('dmitxe_news_admin_article_create') }}" class="btn btn-success">Добавить новость</a></p>
 
         <p>Всего новостей: {{ pagerfanta.count }}</p>
 
@@ -12,9 +12,9 @@
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>Заголовок</th>
-                    <th>Аннотация</th>
-                    <th>Дата создания</th>
+                    <th>{{ 'Title'|trans }}</th>
+                    <th>{{ 'Annotation'|trans }}</th>
+                    <th>{{ 'Created at'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +22,7 @@
                 <tr>
                     <td>{{ article.id }}</td>
                     <td>
-                        <a href="{{ path('dmitxe_news_admin_edit', {'id': article.id}) }}" title="Редактировать">
+                        <a href="{{ path('dmitxe_news_admin_article_edit', {'id': article.id}) }}" title="Редактировать">
                             {{ article.title }}
                         </a>
                     </td>
@@ -37,7 +37,6 @@
     {% block smart_blog_articles_paginator %}
         {% if pagerfanta.haveToPaginate %}
             {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                    'routeName': 'dmitxe_news_admin_index',
                     'css_container_class': 'pagination pagination-centered',
                 })
             }}

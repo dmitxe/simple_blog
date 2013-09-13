@@ -1,11 +1,21 @@
 {% extends 'DmitxeBlogBundle::layout.html.twig' %}
 
+{% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
+
+{% if article.category %}
+    {% set breadcrumbs = '<a href="' ~ path('smart_blog.category.articles', {'slug': article.category.slugFull}) ~ '/">' ~ article.category ~ '</a> &raquo; ' ~ breadcrumbs %}
+
+    {% for category in article.category.parents %}
+        {% set breadcrumbs = '<a href="' ~ path('smart_blog.category.articles', {'slug': category.slugFull}) ~ '/">' ~ category ~ '</a> &raquo; ' ~ breadcrumbs %}
+    {% endfor %}
+{% endif %}
+
+{% block html_head_title %} {{ article.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
+
 {% block html_head_styles %}{{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/comments.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('js/jlike/buttons.css') }}" type="text/css" />
 {% endblock html_head_styles %}
-
-{% block html_head_title %} {{ article.title }} &raquo; {{ parent() }} {% endblock html_head_title %}
 
 {% block html_head_meta %}{{ parent() }}
     <meta content="{{ article.title }}" name="title">
@@ -22,27 +32,13 @@
         }
     </script>
     <script type="text/javascript" src="{{ asset('js/jlike/buttons.js') }}"></script>
-
 {% endblock html_head_scripts %}
-
-{% set breadcrumbs = '<span>' ~ article.title ~ '</span> ' %}
-
-{% if article.category %}
-    {% set breadcrumbs = '<a href="' ~ path('smart_blog.category.articles', {'slug': article.category.slugFull}) ~ '/">' ~ article.category ~ '</a> &raquo; ' ~ breadcrumbs %}
-
-    {% for category in article.category.parents %}
-        {% set breadcrumbs = '<a href="' ~ path('smart_blog.category.articles', {'slug': category.slugFull}) ~ '/">' ~ category ~ '</a> &raquo; ' ~ breadcrumbs %}
-    {% endfor %}
-{% endif %}
 
 {% block smart_blog_content %}
 
     <h2>{{ article.title }}</h2>
 
-    <p>
-        <i class="icon-calendar"></i> {{ article.createdAt | localizeddate('full') }}
-        , написал <i class="icon-user"></i> <a href="#">{{ article.author }}</a>
-    </p>
+    <p><i class="icon-calendar"></i> {{ article.createdAt | localizeddate('full') }}, написал <i class="icon-user"></i> <a href="#">{{ article.author }}</a></p>
 
     <p>{{ article.annotation }}</p>
 
@@ -64,9 +60,7 @@
 
     {% if is_granted('ROLE_BLOGGER') %}
         <hr />
-        <p>
-        <a href="{{ path('smart_blog.article.edit', {'id': article.id}) }}" class="btn">Редактирование</a>
-        </p>
+        <p><a href="{{ path('smart_blog.article.edit', {'id': article.id}) }}" class="btn">{{ 'Edit'|trans }}</a></p>
     {% endif %}
 
     {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'blog_' ~ article.id } %}

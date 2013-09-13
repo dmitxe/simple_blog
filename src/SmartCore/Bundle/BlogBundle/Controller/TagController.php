@@ -45,10 +45,11 @@ class TagController extends Controller
      */
     public function __construct()
     {
+        $this->bundleName       = 'SmartBlogBundle';
+
         $this->tagServiceName   = 'smart_blog.tag';
         $this->routeIndex       = 'smart_blog_tag_index';
         $this->routeTag         = 'smart_blog_tag';
-        $this->bundleName       = 'SmartBlogBundle';
     }
 
     /**
@@ -59,7 +60,7 @@ class TagController extends Controller
         /** @var \SmartCore\Bundle\BlogBundle\Service\TagService $tagService */
         $tagService = $this->get($this->tagServiceName);
 
-        return $this->render($this->bundleName . ':Tag:list.html.twig', [
+        return $this->render($this->bundleName . ':Tag:index.html.twig', [
             'cloud' => $tagService->getCloud($this->routeTag),
         ]);
     }
@@ -89,7 +90,7 @@ class TagController extends Controller
             return $this->redirect($this->generateUrl($this->routeIndex));
         }
 
-        return $this->render($this->bundleName . ':Tag:list_by_tag.html.twig', [
+        return $this->render($this->bundleName . ':Tag:show_articles.html.twig', [
             'pagerfanta' => $pagerfanta,
             'tag'        => $tag,
         ]);

@@ -1,4 +1,4 @@
-{% extends 'DmitxeNewsBundle:Admin:layout.html.twig' %}
+{% extends '@DmitxeNews/Admin/layout.html.twig' %}
 
 {% block smart_blog_content %}
 
@@ -39,7 +39,6 @@
         {% block smart_blog_tags_paginator %}
             {% if pagerfanta.haveToPaginate %}
                 {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                        'routeName': 'dmitxe_news_admin_tag',
                         'css_container_class': 'pagination pagination-centered',
                     })
                 }}

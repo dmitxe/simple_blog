@@ -1,6 +1,8 @@
-{% extends 'SmartBlogBundle:Article:list.html.twig' %}
+{% extends 'SmartBlogBundle:Article:index.html.twig' %}
 
 {% block smart_blog_content %}
+    {# @todo переводы #}
+
     <h1>Статьи по тэгу: {{ tag }}</h1>
     <p>Всего: {{ pagerfanta.count }}</p>
 

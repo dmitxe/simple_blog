@@ -4,8 +4,6 @@ namespace SmartCore\Bundle\BlogBundle\Controller\Admin;
 
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
-use SmartCore\Bundle\BlogBundle\Form\Type\TagCreateFormType;
-use SmartCore\Bundle\BlogBundle\Form\Type\TagFormType;
 use SmartCore\Bundle\BlogBundle\Pagerfanta\SimpleDoctrineORMAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +34,20 @@ class TagController extends Controller
     protected $routeTag;
 
     /**
+     * Форма создания тэга.
+     *
+     * @var string
+     */
+    protected $tagCreateForm;
+
+    /**
+     * Форма редактирования тэга.
+     *
+     * @var string
+     */
+    protected $tagEditForm;
+
+    /**
      * Имя сервиса по работе с тэгами.
      *
      * @var string
@@ -47,11 +59,14 @@ class TagController extends Controller
      */
     public function __construct()
     {
+        $this->bundleName        = 'SmartBlogBundle';
+
+        $this->tagCreateForm     = 'smart_blog.tag.create.form.type';
+        $this->tagEditForm       = 'smart_blog.tag.edit.form.type';
         $this->tagServiceName    = 'smart_blog.tag';
         $this->routeIndex        = 'smart_blog_tag_index';
         $this->routeAdminTag     = 'smart_blog_admin_tag';
         $this->routeAdminTagEdit = 'smart_blog_admin_tag_edit';
-        $this->bundleName        = 'SmartBlogBundle';
     }
 
     /**
@@ -64,7 +79,7 @@ class TagController extends Controller
         $tagService = $this->get($this->tagServiceName);
         $tag        = $tagService->create();
 
-        $form = $this->createForm(new TagCreateFormType(get_class($tag)), $tag);
+        $form = $this->createForm($this->get($this->tagCreateForm), $tag);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
@@ -84,7 +99,7 @@ class TagController extends Controller
             return $this->redirect($this->generateUrl($this->routeAdminTag));
         }
 
-        return $this->render($this->bundleName . ':Admin/Tag:list.html.twig', [
+        return $this->render($this->bundleName . ':Admin/Tag:index.html.twig', [
             'form'       => $form->createView(),
             'pagerfanta' => $pagerfanta,
         ]);
@@ -106,7 +121,7 @@ class TagController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new TagFormType(get_class($tag)), $tag);
+        $form = $this->createForm($this->get($this->tagEditForm), $tag);
         if ($request->isMethod('POST')) {
             $form->submit($request);
 

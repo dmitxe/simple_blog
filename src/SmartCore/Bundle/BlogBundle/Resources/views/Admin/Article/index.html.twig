@@ -4,18 +4,18 @@
 
     {% block smart_blog_content_articles %}
 
-        <p><a href="{{ path('smart_blog_admin_article_create') }}" class="btn btn-success">Добавить статью</a></p>
+        <p><a href="{{ path('smart_blog_admin_article_create') }}" class="btn btn-success">{{ 'Add article'|trans }}</a></p>
 
-        <p>Всего статей: {{ pagerfanta.count }}</p>
+        <p>{{ 'Total articles'|trans }}: {{ pagerfanta.count }}</p>
 
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Заголовок</th>
-                    <th>Категория</th> {# @todo убрать или сделать гибкую логику опознания налиция категорий у статей #}
-                    <th>Дата создания</th>
-                    <th>Автор</th>
+                    <th>{{ 'Title'|trans }}</th>
+                    <th>{{ 'Category'|trans }}</th> {# @todo убрать или сделать гибкую логику опознания наличия категорий у статей #}
+                    <th>{{ 'Created at'|trans }}</th>
+                    <th>{{ 'Author'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +23,7 @@
                 <tr>
                     <td>{{ article.id }}</td>
                     <td>
-                        <a href="{{ path('smart_blog_admin_article_edit', {'id': article.id}) }}" title="Редактировать">
+                        <a href="{{ path('smart_blog_admin_article_edit', {'id': article.id}) }}" title="{{ 'Edit'|trans }}">
                             {{ article.title }}
                         </a>
                     </td>
@@ -39,7 +39,6 @@
     {% block smart_blog_articles_paginator %}
         {% if pagerfanta.haveToPaginate %}
             {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
-                    'routeName': 'smart_blog_admin_article',
                     'css_container_class': 'pagination pagination-centered',
                 })
             }}

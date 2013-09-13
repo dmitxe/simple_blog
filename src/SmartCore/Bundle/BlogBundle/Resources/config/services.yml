@@ -45,6 +45,14 @@ services:
         class: SmartCore\Bundle\BlogBundle\Form\Type\CategoryEditFormType
         arguments: [%smart_blog.model.category.class%]
 
+    smart_blog.tag.create.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\TagCreateFormType
+        arguments: [%smart_blog.model.tag.class%]
+
+    smart_blog.tag.edit.form.type:
+        class: SmartCore\Bundle\BlogBundle\Form\Type\TagEditFormType
+        arguments: [%smart_blog.model.tag.class%]
+
     smart_blog.article.repository:
         class:           SmartCore\Bundle\BlogBundle\Repository\ArticleRepository
         factory_service: doctrine

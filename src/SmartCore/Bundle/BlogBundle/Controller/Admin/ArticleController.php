@@ -82,10 +82,10 @@ class ArticleController extends Controller
         try {
             $pagerfanta->setCurrentPage($requst->query->get('page', 1));
         } catch (NotValidCurrentPageException $e) {
-            return $this->redirect($this->generateUrl($this->routeIndex));
+            return $this->redirect($this->generateUrl($this->routeAdminArticle));
         }
 
-        return $this->render($this->bundleName . ':Admin/Article:list.html.twig', [
+        return $this->render($this->bundleName . ':Admin/Article:index.html.twig', [
             'pagerfanta' => $pagerfanta,
         ]);
     }

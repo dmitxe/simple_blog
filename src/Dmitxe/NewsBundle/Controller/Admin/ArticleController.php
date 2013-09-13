@@ -13,8 +13,10 @@ class ArticleController extends BaseArticleController
     {
         $this->bundleName            = 'DmitxeNewsBundle';
 
+        $this->articleCreateForm     = 'dmitxe_news.article.create.form.type';
+        $this->articleEditForm       = 'dmitxe_news.article.edit.form.type';
         $this->articleServiceName    = 'dmitxe_news.article';
-        $this->routeAdminArticle     = 'dmitxe_news_admin_index';
-        $this->routeAdminArticleEdit = 'dmitxe_news_admin_edit';
+        $this->routeAdminArticle     = 'dmitxe_news_admin_article';
+        $this->routeAdminArticleEdit = 'dmitxe_news_admin_article_edit';
     }
 }

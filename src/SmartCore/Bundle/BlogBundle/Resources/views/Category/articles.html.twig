@@ -2,6 +2,8 @@
 
 {% block smart_blog_content %}
 
+    {# @todo переводы #}
+
     <h1>Статьи в категории:
         {% for category in categories %}
             <a href="{{ path('smart_blog.category.articles', {'slug': category.slugFull}) }}/">{{ category }}</a> /
