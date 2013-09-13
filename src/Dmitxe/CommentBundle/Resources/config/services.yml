@@ -1,0 +1,6 @@
+services:
+    dmitxe_comment.form_factory.comment.default:
+        class: Dmitxe\CommentBundle\FormFactory\CommentFormFactory
+        arguments: [%fos_comment.form.comment.type%]
+        arguments: [%fos_comment.form.comment.name%]
+
