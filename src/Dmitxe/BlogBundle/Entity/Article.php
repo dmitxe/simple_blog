@@ -57,6 +57,7 @@ class Article extends SmartArticle implements SignedArticleInterface, ImagedArti
     public function __construct()
     {
         parent::__construct();
+        $this->image = null;
         $this->is_commentable = true;
     }
 
@@ -86,11 +87,12 @@ class Article extends SmartArticle implements SignedArticleInterface, ImagedArti
     public function setImage(UploadedFile $image)
     {
         $this->image = $image;
+
         return $this;
     }
 
     /**
-     * @return UploadedFile
+     * @return UploadedFile|null
      */
     public function getImage()
     {
