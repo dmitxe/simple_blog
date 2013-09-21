@@ -101,20 +101,33 @@ class SitemapService
         $client = new Client();
         /** @var Url $url */
         foreach ($urls as $url) {
-            $crawler = $client->request('GET', $this->baseUrl. $url->getLoc());
+            $crawler = $client->request('GET', $this->baseUrl . $url->getLoc());
 
-            $title = $crawler->filter('head > title')->text();
-            $title = str_replace("\n", '', $title);
-            $title = preg_replace('/[\s]{2,}/', ' ', $title);
-            $title = trim($title);
+            if ($url->getStatus() != 200) {
+                continue;
+            }
 
-            $url->setTitle($title)
-                ->setIsVisited(true);
-            $this->em->persist($url);
-            $this->em->flush($url);
+            try {
+                $title = $crawler->filter('head > title')->text();
+                $title = str_replace("\n", '', $title);
+                $title = preg_replace('/[\s]{2,}/', ' ', $title);
+                $title = trim($title);
 
-            $links = $crawler->filter('a')->extract('href');
-            $this->parseLinks($links);
+                $url->setTitle($title)
+                    ->setIsVisited(true);
+                $this->em->persist($url);
+                $this->em->flush($url);
+
+                $links = $crawler->filter('a')->extract('href');
+                $this->parseLinks($links);
+            } catch (\InvalidArgumentException $e) {
+                echo "Bad location: " . $this->baseUrl . $url->getLoc() . "\n";
+
+                $url->setStatus(500)
+                    ->setIsVisited(true);
+                $this->em->persist($url);
+                $this->em->flush($url);
+            }
         }
     }
 

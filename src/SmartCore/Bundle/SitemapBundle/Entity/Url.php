@@ -94,6 +94,13 @@ class Url
     protected $images;
 
     /**
+     * @ORM\Column(type="smallint")
+     *
+     * @var integer
+     */
+    protected $status;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -102,6 +109,7 @@ class Url
         $this->is_visited   = false;
         $this->lastmod      = null;
         $this->priority     = null;
+        $this->status       = 200;
         $this->title_dublicates = 0;
     }
 
@@ -210,6 +218,25 @@ class Url
     public function getLastmod()
     {
         return $this->lastmod;
+    }
+
+    /**
+     * @param int $status
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
