@@ -41,7 +41,7 @@
         "knplabs/knp-menu-bundle": "v2.0.0-alpha1",
         "liip/doctrine-cache-bundle": "dev-master",
         "mopa/bootstrap-bundle": "dev-master#2ad9c53da69d6a699f18a7047ec7f925308bce8d",
-        "mremi/contact-bundle": "dev-master",
+        "mremi/contact-bundle": "dev-master#e5761b1405c14daaeab35a389651dd1fe256e037",
         "ornicar/akismet-bundle": "dev-master",
         "ornicar/gravatar-bundle" : "dev-master",
         "smart-core/html-bundle": "dev-master",
