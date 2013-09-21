@@ -15,6 +15,7 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "elao/web-profiler-extra-bundle": "dev-master",
+        "egulias/listeners-debug-command-bundle": "*",
         "jms/debugging-bundle": "dev-master",
         "raulfraile/ladybug-bundle": "v0.7",
         "twig/extensions": "1.0.*",
