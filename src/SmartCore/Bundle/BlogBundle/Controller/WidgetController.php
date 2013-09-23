@@ -6,9 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @todo наследуемость как контроллеры статей и тэгов.
- */
 class WidgetController extends Controller
 {
     /**
@@ -114,24 +111,5 @@ class WidgetController extends Controller
         }
 
         return new Response($cloud);
-    }
-
-    /**
-     * @param string $url
-     * @param string $title
-     * @param string $description
-     * @param string $image
-     * @return Response
-     *
-     * @todo убрать в SmartSocialBundle
-     */
-    public function buttonsLikeAction($url = '', $title = '', $description = '',  $image = '')
-    {
-        return $this->render($this->bundleName . ':Widget:socialButtons.html.twig', [
-            'title'       => $title,
-            'description' => $description,
-            'image'       => $image,
-            'url'         => $url,
-        ]);
     }
 }
